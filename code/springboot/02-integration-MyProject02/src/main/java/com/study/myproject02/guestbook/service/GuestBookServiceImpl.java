@@ -34,7 +34,7 @@ public class GuestBookServiceImpl implements GuestBookService{
         // 비밀번호 체크
         GuestBookVO current = guestBookMapper.guestBookDetail(gvo.getG_idx());
         if(current == null || !passwordEncoder.matches(gvo.getG_pwd(), current.getG_pwd())){
-          throw new RuntimeException("비밀번호가 일치하지 않습니다.");
+          throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
         }
         return guestBookMapper.guestBookUpdate(gvo);
     }
@@ -44,7 +44,7 @@ public class GuestBookServiceImpl implements GuestBookService{
         // 비밀번호 체크
         GuestBookVO current = guestBookMapper.guestBookDetail(gvo.getG_idx());
         if(current == null || !passwordEncoder.matches(gvo.getG_pwd(), current.getG_pwd())){
-            throw new RuntimeException("비밀번호가 일치하지 않습니다.");
+            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
         }
         return guestBookMapper.guestBookDelete(gvo);
     }

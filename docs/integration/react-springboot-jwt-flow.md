@@ -1,6 +1,6 @@
 # ★ React ↔ Spring Boot — JWT 인증 연동 흐름 (최종 응용)
 
-> 프론트: [`code/react/03-integration-my-app03`](../../code/react/03-integration-my-app03) · 백엔드: [`code/springboot/02-integration-MyProject02`](../../code/springboot/02-integration-MyProject02)
+> 프론트: [`code/react/03-integration-my-app03`](https://github.com/notetester/REACT/tree/main/code/react/03-integration-my-app03) · 백엔드: [`code/springboot/02-integration-MyProject02`](https://github.com/notetester/REACT/tree/main/code/springboot/02-integration-MyProject02)
 >
 > 이 문서는 앞선 React·Spring Boot·JWT 학습이 **하나로 합쳐지는** 최종 단계입니다.
 
@@ -31,12 +31,12 @@ flowchart LR
 ## 2. Axios 인스턴스 — `api/Http.jsx`
 ```jsx
 export const api = axios.create({
-  baseURL: process.env.REACT_APP_API_BASE_URL,   // .env.development → http://localhost:8080
+  baseURL: process.env.REACT_APP_API_BASE_URL || 'http://localhost:8080',
   headers: { 'Content-Type': 'application/json' },
   withCredentials: true,                           // CORS 환경 인증 허용
 })
 ```
-> `npm start`는 `.env.development`, `npm run build`는 `.env.production`을 읽습니다.
+> 기본 URL은 `http://localhost:8080`입니다. 다른 서버를 쓸 때는 `.env.example`을 참고해 `.env.development`에 `REACT_APP_API_BASE_URL`을 설정합니다.
 
 ## 3. 로그인 시퀀스
 
@@ -113,16 +113,26 @@ sequenceDiagram
 ```jsx
 let isRefreshing = false
 let refreshSubscribers = []          // refresh 완료를 기다리는 요청들
-const onRefreshed = (t) => { refreshSubscribers.forEach(cb => cb(t)); refreshSubscribers = [] }
+const onRefreshed = (t) => {
+  refreshSubscribers.forEach(({ config, resolve }) => {
+    config.headers.Authorization = `Bearer ${t}`
+    resolve(api(config))
+  })
+  refreshSubscribers = []
+}
+const onRefreshFailed = (error) => {
+  refreshSubscribers.forEach(({ reject }) => reject(error))
+  refreshSubscribers = []
+}
 
 api.interceptors.response.use(res => res, async (error) => {
   const { config, response } = error
   if (response?.status === 401 && !config._retry) {
     config._retry = true
     if (isRefreshing) {              // 이미 재발급 중 → 끝나면 재시도하도록 큐에 등록
-      return new Promise(resolve => refreshSubscribers.push(t => {
-        config.headers.Authorization = `Bearer ${t}`; resolve(api(config))
-      }))
+      return new Promise((resolve, reject) => {
+        refreshSubscribers.push({ config, resolve, reject })
+      })
     }
     isRefreshing = true
     try {
@@ -134,8 +144,10 @@ api.interceptors.response.use(res => res, async (error) => {
       config.headers.Authorization = `Bearer ${data.accessToken}`
       return api(config)
     } catch (e) {
-      isRefreshing = false; refreshSubscribers = []
-      useAuthStore.getState().zu_logout(); window.location.href = '/login'  // refresh도 만료 → 완전 로그아웃
+      isRefreshing = false; onRefreshFailed(e)
+      useAuthStore.getState().zu_logout()
+      window.location.href = `${process.env.PUBLIC_URL || ''}/login`
+      return Promise.reject(e)                  // refresh도 만료 → 완전 로그아웃
     }
   }
   return Promise.reject(error)
@@ -164,12 +176,15 @@ export default function PrivateRoute({ children }) {
 | 토큰 재발급 | (인터셉터) | `POST /members/refresh` | ✗(공개) |
 | 내 정보 | `myPage()` | `GET /members/myPage` | ✅ |
 | 회원수정 | `updateMember(m)` | `POST /members/updateMember` | ✅ |
-| 회원탈퇴 | `deleteMember()` | `GET /members/delAccount` | ✅ |
+| 회원탈퇴 | `deleteMember()` | `DELETE /members/delAccount` | ✅ |
 | 로그아웃 | `logout()` | `POST /members/logout`(DB refresh 삭제) | ✅ |
 | 방명록 목록 | `guestbookList()` | `GET /guestbook/list` | ✗(공개) |
 | 방명록 등록/수정/삭제 | `guestbookInsert/Update/Delete` | `POST /guestbook/*` | ✅ |
 
 > 서버 `SecurityConfig`: `permitAll`(`/members/login,register,refresh`, `GET /guestbook/list`), 그 외 `authenticated`. `JwtRequestFilter`를 `UsernamePasswordAuthenticationFilter` 앞에 `addFilterBefore`로 삽입.
+
+!!! warning "학습용 토큰 저장 방식"
+    흐름을 쉽게 관찰하려고 토큰을 `localStorage`에 저장합니다. 실서비스에서는 XSS 대응, HTTPS, CSP, 토큰 저장 위치와 쿠키를 사용할 경우의 CSRF 방어를 함께 설계해야 합니다.
 
 ---
 

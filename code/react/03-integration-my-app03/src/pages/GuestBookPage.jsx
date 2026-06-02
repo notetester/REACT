@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import useGuestbookStore from "../store/useGuestbookStore"
 import { guestbookDelete, guestbookInsert, guestbookList, guestbookUpdate } from "../api/GuestBook"
 import useAuthStore from "../store/useAuthStore"
@@ -34,7 +34,7 @@ export default function GuestBookPage(params) {
 
     // 다른 곳에서 호출 가능
     // 새로 고침/추가/수정 후 재호출 필요
-    const fetchList = async ()=> {
+    const fetchList = useCallback(async ()=> {
         try {
             const res = await guestbookList()
             if(res.data.success && res.data.data){
@@ -45,10 +45,10 @@ export default function GuestBookPage(params) {
         } catch (error) {
            console.log(error)
         }
-    }
+    }, [setGuestbooks])
     useEffect(()=>{
       fetchList()
-    },[])
+    },[fetchList])
 
     const handleAdd = async () =>{
         setLoading(true)
@@ -163,6 +163,7 @@ export default function GuestBookPage(params) {
                         onClick={handleAdd}
                         disabled={loading}
                         >{loading ? '...' : '등록'}</button>
+                     {error && <p className="error-text">{error}</p>}
                 </div>
               ) : (
               <>

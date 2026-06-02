@@ -6,6 +6,7 @@ on:
     paths:
       - "docs/**"
       - "mkdocs.yml"
+      - "code/react/01-basics-my-app01/**"
       - "code/react/02-zustand-my-app02/**"
       - ".github/workflows/pages.yml"
   workflow_dispatch:
@@ -19,48 +20,56 @@ concurrency:
   group: pages
   cancel-in-progress: false
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
-      # ── 1) MkDocs Material 노트 사이트 ──
-      - uses: actions/setup-python@v5
+      # 1) MkDocs Material notes site
+      - uses: actions/setup-python@v6
         with:
           python-version: "3.x"
       - run: pip install "mkdocs-material>=9.5"
       - name: Build docs site
-        run: mkdocs build   # → ./site
+        run: mkdocs build --strict
 
-      # ── 2) Zustand 데모(my-app02) 빌드 후 /demo/zustand 에 배치 ──
-      - uses: actions/setup-node@v4
+      # 2) Static React demos
+      - uses: actions/setup-node@v6
         with:
           node-version: 20
+          cache: npm
+          cache-dependency-path: |
+            code/react/01-basics-my-app01/package-lock.json
+            code/react/02-zustand-my-app02/package-lock.json
+      - name: Build React basics demo
+        working-directory: code/react/01-basics-my-app01
+        env:
+          PUBLIC_URL: /REACT/demo/react-basics
+          REACT_APP_USE_HASH_ROUTER: "true"
+          CI: "true"
+        run: |
+          npm ci
+          npm run build
       - name: Build Zustand demo
-        continue-on-error: true
         working-directory: code/react/02-zustand-my-app02
         env:
           PUBLIC_URL: /REACT/demo/zustand
-          CI: "false"
+          REACT_APP_USE_HASH_ROUTER: "true"
+          CI: "true"
         run: |
-          # 서브경로 배포를 위해 BrowserRouter에 basename 주입(원본은 그대로, 빌드 시에만)
-          sed -i 's|<BrowserRouter>|<BrowserRouter basename={process.env.PUBLIC_URL}>|' src/App.js
           npm ci
           npm run build
-      - name: Copy demo into site
-        continue-on-error: true
+      - name: Copy demos into site
         run: |
-          mkdir -p site/demo/zustand
-          if [ -d code/react/02-zustand-my-app02/build ]; then
-            cp -r code/react/02-zustand-my-app02/build/* site/demo/zustand/
-            # SPA 새로고침 대비 폴백
-            cp site/demo/zustand/index.html site/demo/zustand/404.html || true
-          else
-            echo "demo build not found — skipping demo"
-          fi
+          mkdir -p site/demo/react-basics site/demo/zustand
+          cp -r code/react/01-basics-my-app01/build/* site/demo/react-basics/
+          cp -r code/react/02-zustand-my-app02/build/* site/demo/zustand/
 
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@v4
         with:
           path: site
 

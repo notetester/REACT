@@ -30,7 +30,6 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         // 1) Authorization 헤더 추출
         // "Authorization: Bearer 토큰" 형식
         String authHeader = request.getHeader("Authorization");
-        log.info("authHeader : {}", authHeader);
         // 2) 헤더가 없거나 Bearer 형식이 아니면 그냥 통과
         // -/members/login,  /members/refresh 같은 공개 엔드포인트는 토큰 없이 요청하므로 여기서 통과
         // 이후 SecurityConfig에서 권한 체크를 담당
@@ -41,7 +40,6 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
         // 3) "Bearer 토큰"형식 => 앞 Bearer (7자리)제거 해야 순수 토큰이다.
         String token = authHeader.substring(7);
-        log.info("token 체크 : {}", token);
 
         // 4) 토큰 검증
         try{

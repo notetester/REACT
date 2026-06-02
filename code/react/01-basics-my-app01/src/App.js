@@ -1,6 +1,5 @@
-import logo from './logo.svg';
 import './App.css';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, HashRouter, Route, Routes } from 'react-router-dom';
 import RouterTest02 from './pages/step16-Router/RouterTest02';
 import First from './pages/step16-Router/First';
 import Second from './pages/step16-Router/Second';
@@ -15,7 +14,10 @@ import AxiosTest02Detail from './pages/step18-Axios/AxiosTest02Detail';
 
 
 function App() {
-    const [data, setData] = useState([
+  // GitHub Pages에서는 정적 호스팅 새로고침 404를 피하려고 hash 라우팅을 사용한다.
+  const Router = process.env.REACT_APP_USE_HASH_ROUTER === 'true' ? HashRouter : BrowserRouter;
+
+  const [data] = useState([
     {title: "영화0", img: "movie0.jpg"},
     {title: "영화1", img: "movie1.jpg"},
     {title: "영화2", img: "movie2.jpg"},
@@ -26,7 +28,7 @@ function App() {
 
   return (
      <div className="App">
-        <BrowserRouter>
+        <Router future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
           <RouterTest02 />
           <hr />
           <Routes>
@@ -41,7 +43,7 @@ function App() {
             <Route path="/axios02" element={<AxiosTest02 />} />
             <Route path="/axios02/:id" element={<AxiosTest02Detail />} />
           </Routes>
-        </BrowserRouter>
+        </Router>
      </div>
   );
 }

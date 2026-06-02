@@ -83,7 +83,7 @@ export default function LoginPage() {
 
           <div className="muted" style={{gap:'6px'}}>
             <label className="muted" style={{fontSize:'13px'}}>비밀번호</label>
-            <input name="m_pw" value={formData.m_pw} onChange={handleChange} placeholder="비밀번호 입력" required />
+            <input type="password" name="m_pw" value={formData.m_pw} onChange={handleChange} placeholder="비밀번호 입력" required />
           </div> 
           {error && <p className="error-text">{error}</p>}
           <button type="submit" disabled={loading} style={{marginTop:'8px'}}>

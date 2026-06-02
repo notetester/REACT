@@ -1,6 +1,6 @@
 # React 03 — state(상태)와 배열 고차 메서드
 
-> 실습 코드: [`step03-state`](../../code/react/01-basics-my-app01/src/pages/step03-state) · [`step04-map`](../../code/react/01-basics-my-app01/src/pages/step04-map)
+> 실습 코드: [`step03-state`](https://github.com/notetester/REACT/tree/main/code/react/01-basics-my-app01/src/pages/step03-state) · [`step04-map`](https://github.com/notetester/REACT/tree/main/code/react/01-basics-my-app01/src/pages/step04-map)
 
 ---
 

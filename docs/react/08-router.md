@@ -1,6 +1,6 @@
 # React 08 — React Router (페이지 라우팅)
 
-> 실습 코드: `my-app01/src/pages/step15-Router`, `step16-Router` · 버전: `react-router-dom` v7
+> 실습 코드: `my-app01/src/pages/step15-Router`, `step16-Router` · 버전: `react-router-dom` v6
 
 ---
 
@@ -52,6 +52,9 @@ const { idx, name } = useParams();
 - `useNavigate()` — 코드로 페이지 이동: `const navigate = useNavigate(); navigate('/')`
 
 > 이 패턴은 이후 **Axios 상세보기**(`/axios02/:id`)와 **연동 프로젝트**의 페이지 보호(`PrivateRoute`)로 이어집니다. → [React 09](09-fetch-axios.md), [연동 흐름](../integration/react-springboot-jwt-flow.md)
+
+!!! note "GitHub Pages 데모"
+    로컬 개발에서는 `BrowserRouter`, 정적 GitHub Pages 빌드에서는 `HashRouter`를 사용합니다. 정적 서버에서 `/todo` 같은 경로를 직접 새로고침할 때 발생하는 404를 피하기 위한 선택입니다.
 
 ---
 ### 다음 단계

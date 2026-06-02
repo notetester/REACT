@@ -1,6 +1,6 @@
 # React 02 — JSX와 컴포넌트, props, 리스트 렌더링
 
-> 실습 코드: [`my-app01/src/pages/step01-jsx`](../../code/react/01-basics-my-app01/src/pages/step01-jsx) · [`step02-component`](../../code/react/01-basics-my-app01/src/pages/step02-component)
+> 실습 코드: [`my-app01/src/pages/step01-jsx`](https://github.com/notetester/REACT/tree/main/code/react/01-basics-my-app01/src/pages/step01-jsx) · [`step02-component`](https://github.com/notetester/REACT/tree/main/code/react/01-basics-my-app01/src/pages/step02-component)
 
 ---
 

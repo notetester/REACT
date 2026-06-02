@@ -1,6 +1,6 @@
 # React 01 — 소개 · 설치 · 프로젝트 구조
 
-> 실습 코드: [`code/react/01-basics-my-app01`](../../code/react/01-basics-my-app01)
+> 실습 코드: [`code/react/01-basics-my-app01`](https://github.com/notetester/REACT/tree/main/code/react/01-basics-my-app01)
 
 ---
 

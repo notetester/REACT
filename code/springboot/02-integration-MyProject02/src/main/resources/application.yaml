@@ -5,16 +5,18 @@ spring:
 
   datasource:
     driver-class-name: oracle.jdbc.OracleDriver
-    url: jdbc:oracle:thin:@localhost:1521:xe
-    username: c##dbuser
-    password: 1111
+    url: ${DB_URL:jdbc:oracle:thin:@localhost:1521:xe}
+    username: ${DB_USERNAME:c##dbuser}
+    password: ${DB_PASSWORD:1111}
 
 mybatis:
   mapper-locations: classpath:mapper/*.xml
   type-aliases-package: com.study.myproject02.*.vo
 
+# 학습용 localhost 기본값이다. 외부 배포에서는 환경변수로 덮어쓴다.
+# JWT_SECRET은 HS256을 위해 32바이트 이상이어야 한다.
 jwt:
-  secret: mys2ecretmysec2retmysecr3etmysec
-  access-token-validity: 30000    #(1000 * 60 * 5) 5분
-  refresh-token-validity: 86400000 #(1000 * 60 * 60 * 24) 1일
+  secret: ${JWT_SECRET:learning-only-local-jwt-secret-32bytes}
+  access-token-validity: ${JWT_ACCESS_TOKEN_VALIDITY:30000}       # 30초: 재발급 흐름 실습용
+  refresh-token-validity: ${JWT_REFRESH_TOKEN_VALIDITY:86400000}  # 1일
 

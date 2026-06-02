@@ -1,6 +1,6 @@
 # React 11 — Zustand 응용: 인증 · 로그인 흐름 · CRUD
 
-> 실습 코드: [`code/react/02-zustand-my-app02`](../../code/react/02-zustand-my-app02)
+> 실습 코드: [`code/react/02-zustand-my-app02`](https://github.com/notetester/REACT/tree/main/code/react/02-zustand-my-app02)
 > (이 단원의 강사 필기는 이미지로 작성되어 있어, 원본 캡처를 함께 싣습니다.)
 
 ---
@@ -88,4 +88,4 @@ const useTodoStore = create(persist((set) => ({
 
 여기까지는 **프론트 단독**(localStorage)입니다. 다음 단계에서는 동일한 Zustand 패턴 위에 **Axios + JWT**를 얹어 Spring Boot 서버와 실제로 연동합니다.
 
-→ **[★ React ↔ Spring Boot JWT 연동 흐름](../integration/react-springboot-jwt-flow.md)** ([`my-app03`](../../code/react/03-integration-my-app03) ↔ [`MyProject02`](../../code/springboot/02-integration-MyProject02))
+→ **[★ React ↔ Spring Boot JWT 연동 흐름](../integration/react-springboot-jwt-flow.md)** ([`my-app03`](https://github.com/notetester/REACT/tree/main/code/react/03-integration-my-app03) ↔ [`MyProject02`](https://github.com/notetester/REACT/tree/main/code/springboot/02-integration-MyProject02))

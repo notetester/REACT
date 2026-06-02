@@ -41,7 +41,6 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
         // 3) "Bearer 토큰"형식 => 앞 Bearer (7자리)제거 해야 순수 토큰이다.
         String token = authHeader.substring(7);
-        log.info("token 체크 : {}", token);
 
         // 4) 토큰 검증
         try{

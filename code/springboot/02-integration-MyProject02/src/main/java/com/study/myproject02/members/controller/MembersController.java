@@ -62,8 +62,9 @@ public class MembersController {
          dataVO.setMessage("회원가입 성공");
 
         }catch (Exception e){
+            log.error("회원가입 처리 실패", e);
             dataVO.setSuccess(false);
-            dataVO.setMessage("서버 오류 : " +e.getMessage());
+            dataVO.setMessage("회원가입 처리 중 오류가 발생했습니다.");
         }
         return dataVO;
     }
@@ -104,7 +105,7 @@ public class MembersController {
             Map<String,Object> map = new HashMap<>();
             map.put("accessToken",accessToken);
             map.put("refreshToken",refreshToken);
-            map.put("membersVO",membersVO);
+            map.put("membersVO", toPublicMember(membersVO));
 
             // 클라이언트에게 정보 보내기
             dataVO.setSuccess(true);
@@ -112,8 +113,9 @@ public class MembersController {
             dataVO.setData(map);
 
         } catch (Exception e) {
+            log.error("로그인 처리 실패", e);
             dataVO.setSuccess(Boolean.FALSE);
-            dataVO.setMessage("서버 오류 : " + e.getMessage());
+            dataVO.setMessage("로그인 처리 중 오류가 발생했습니다.");
         }
 
         return  dataVO;
@@ -133,11 +135,12 @@ public class MembersController {
             }else{
                 dataVO.setSuccess(Boolean.TRUE);
                 dataVO.setMessage("마이페이지 성공");
-                dataVO.setData(mvo);
+                dataVO.setData(toPublicMember(mvo));
             }
         } catch (Exception e) {
+           log.error("마이페이지 조회 실패", e);
            dataVO.setSuccess(Boolean.FALSE);
-           dataVO.setMessage(e.getMessage());
+           dataVO.setMessage("마이페이지 정보를 불러오지 못했습니다.");
         }
         return dataVO;
     }
@@ -151,7 +154,6 @@ public class MembersController {
         try{
             // 1) refreshToken 추출
             String refreshToken = body.get("refreshToken");
-            log.info("refreshToken: {}",refreshToken);
 
             // 2) 빈값 체크 : refreshTopken을 body엥 담지 않은 경우
             if(refreshToken == null ||  refreshToken.isBlank()){
@@ -196,8 +198,6 @@ public class MembersController {
             dataVO.setSuccess(true);
             dataVO.setMessage("재발급 성공");
             dataVO.setData(map);
-            log.info("refreshToken 발급성공");
-
         } catch (ExpiredJwtException e) {
             // refreshToken 만료 시 여기로 이동
             // DB에서 삭제 후 재로그인 유도 (refreshToken 까지 만료 되면 재 로그인 해야 됨)
@@ -235,7 +235,7 @@ public class MembersController {
     }
 
     // 회원탈퇴
-    @GetMapping("/delAccount")
+    @DeleteMapping("/delAccount")
     public DataVO getDelAccount(){
         DataVO dataVO = new DataVO();
         try{
@@ -273,5 +273,17 @@ public class MembersController {
             log.info("회원수정 실패");
         }
         return dataVO;
+    }
+
+    // 비밀번호 해시와 내부 상태값은 브라우저로 보내지 않는다.
+    private Map<String, String> toPublicMember(MembersVO member) {
+        Map<String, String> publicMember = new HashMap<>();
+        publicMember.put("m_id", member.getM_id());
+        publicMember.put("m_name", member.getM_name());
+        publicMember.put("m_addr", member.getM_addr());
+        publicMember.put("m_addr2", member.getM_addr2());
+        publicMember.put("m_email", member.getM_email());
+        publicMember.put("m_phone", member.getM_phone());
+        return publicMember;
     }
 }

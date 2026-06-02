@@ -87,6 +87,7 @@ export default function RegisterPage(params) {
                 <button type="submit">
                  {loading ? '처리 중...' : '회원가입' }
                 </button>
+                {error && <p className="error-text">{error}</p>}
                 <p className="muted" style={{textAlign:'center',fontSize:'13px', marginTop:'4px'}}>
                     이미 계정이 있으신가요? <Link to="/login">로그인</Link>
                 </p>

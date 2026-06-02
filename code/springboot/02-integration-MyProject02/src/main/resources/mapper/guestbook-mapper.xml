@@ -5,7 +5,10 @@
 
 <mapper namespace="com.study.myproject02.guestbook.mapper.GuestBookMapper">
    <select id="guestBookList" resultType="GuestBookVO">
-       select * from guestbook where g_active = 0 order by g_idx asc
+       select g_idx, g_writer, g_subject, g_email, g_content, g_regdate, g_active, f_name
+       from guestbook
+       where g_active = 0
+       order by g_idx asc
    </select>
     <insert id="guestBookInsert" parameterType="GuestBookVO">
         insert into guestbook(g_idx, g_writer, g_subject, g_content, g_email, g_pwd, g_regdate)

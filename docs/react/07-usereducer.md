@@ -1,6 +1,6 @@
 # React 07 — useReducer
 
-> 실습 코드: [`step14-Reducer`](../../code/react/01-basics-my-app01/src/pages/step14-Reducer)
+> 실습 코드: [`step14-Reducer`](https://github.com/notetester/REACT/tree/main/code/react/01-basics-my-app01/src/pages/step14-Reducer)
 
 ---
 

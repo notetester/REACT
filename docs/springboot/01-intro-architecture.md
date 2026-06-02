@@ -1,6 +1,6 @@
 # Spring Boot 01 — 프로젝트 구조와 레이어드 아키텍처
 
-> 실습 코드: [`code/springboot/01-jwt-MyProject01`](../../code/springboot/01-jwt-MyProject01)
+> 실습 코드: [`code/springboot/01-jwt-MyProject01`](https://github.com/notetester/REACT/tree/main/code/springboot/01-jwt-MyProject01)
 > 강사 필기(Notion) 원문 + 캡처 이미지를 코드 기준으로 정리/보강했습니다.
 
 ---
@@ -76,9 +76,9 @@ spring:
     name: MyProject01
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/dbstudy?useSSL=false&serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true
-    username: dbuser
-    password: 1234          # ⚠️ 학습용 localhost 값. 실무에서는 환경변수/시크릿으로 분리
+    url: ${DB_URL:jdbc:mysql://localhost:3306/dbstudy?useSSL=false&serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true}
+    username: ${DB_USERNAME:dbuser}
+    password: ${DB_PASSWORD:1234}  # localhost 학습 기본값, 환경변수로 덮어쓰기
 mybatis:
   mapper-locations: classpath:mapper/*.xml
   type-aliases-package: com.study.myproject01.*.vo
@@ -131,7 +131,8 @@ public class DataVO {
 - **GuestBookMapper**(`@Mapper`) ↔ `resources/mapper/guestbook-mapper.xml`
   ```xml
   <select id="guestBookList" resultType="GuestBookVO">
-    select * from guestbook where g_active = 0
+    select g_idx, g_writer, g_subject, g_email, g_content, g_regdate, g_active, f_name
+    from guestbook where g_active = 0
   </select>
   <insert id="guestBookInsert" parameterType="GuestBookVO">
     insert into guestbook(g_writer, g_subject, g_content, g_email, g_pwd, g_regdate)
@@ -145,7 +146,7 @@ public class DataVO {
 
 ![Postman 컬렉션](../assets/img/springboot-day01/sb1_06.png)
 
-`GET /guestbook/list` → `{success, message, data:[...]}` (비밀번호는 BCrypt 해시로 저장됨에 주목)
+`GET /guestbook/list` → `{success, message, data:[...]}`. 공개 목록 응답에는 비밀번호 필드를 포함하지 않습니다.
 
 ![guestbook list 응답](../assets/img/springboot-day01/sb1_11.png)
 

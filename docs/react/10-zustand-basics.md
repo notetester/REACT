@@ -1,6 +1,6 @@
 # React 10 — Zustand 기초 (전역 상태관리)
 
-> 실습 코드: [`code/react/02-zustand-my-app02`](../../code/react/02-zustand-my-app02)
+> 실습 코드: [`code/react/02-zustand-my-app02`](https://github.com/notetester/REACT/tree/main/code/react/02-zustand-my-app02)
 
 ---
 

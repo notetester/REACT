@@ -3,11 +3,13 @@ package com.study.myproject01.guestbook.controller;
 import com.study.myproject01.common.vo.DataVO;
 import com.study.myproject01.guestbook.service.GuestBookService;
 import com.study.myproject01.guestbook.vo.GuestBookVO;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Slf4j
 @RestController
 @RequestMapping("/guestbook")
 public class GuestBookController {
@@ -28,8 +30,9 @@ public class GuestBookController {
               dataVO.setData(gustbookList);
           }
         }catch (Exception e){
+           log.error("방명록 목록 조회 실패", e);
            dataVO.setSuccess(Boolean.FALSE);
-           dataVO.setMessage(e.getMessage());
+           dataVO.setMessage("방명록 목록을 불러오지 못했습니다.");
         }
         return dataVO;
     }
@@ -47,8 +50,9 @@ public class GuestBookController {
                dataVO.setMessage("등록 성공");
            }
         }catch (Exception e){
+            log.error("방명록 등록 실패", e);
             dataVO.setSuccess(Boolean.FALSE);
-            dataVO.setMessage(e.getMessage());
+            dataVO.setMessage("방명록을 등록하지 못했습니다.");
         }
         return dataVO;
     }
@@ -59,8 +63,9 @@ public class GuestBookController {
         try{
 
         }catch (Exception e){
+            log.error("방명록 상세 조회 실패", e);
             dataVO.setSuccess(Boolean.FALSE);
-            dataVO.setMessage(e.getMessage());
+            dataVO.setMessage("방명록 상세 정보를 불러오지 못했습니다.");
         }
         return dataVO;
     }

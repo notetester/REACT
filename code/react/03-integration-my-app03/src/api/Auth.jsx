@@ -23,7 +23,7 @@ export const myPage = () =>
     api.get('/members/myPage')
 
 export const deleteMember = () =>
-    api.get('/members/delAccount')
+    api.delete('/members/delAccount')
 
 export const updateMember = (member) =>
     api.post('/members/updateMember', member)
@@ -65,7 +65,16 @@ let refreshSubscribers = [] // refresh 완료를 기다리는 요청들
 
 // refresh 완료 후 대기중인 요청들에게 새 토큰 전달
 const onRefreshed = (newAccessToken) => {
-    refreshSubscribers.forEach(k=>k(newAccessToken))
+    refreshSubscribers.forEach(({config, resolve}) => {
+        config.headers.Authorization = `Bearer ${newAccessToken}`
+        resolve(api(config))
+    })
+    refreshSubscribers=[]
+}
+
+// refresh 실패 시 대기 중인 요청도 함께 종료
+const onRefreshFailed = (error) => {
+    refreshSubscribers.forEach(({reject}) => reject(error))
     refreshSubscribers=[]
 }
 
@@ -89,17 +98,13 @@ api.interceptors.response.use(
         // 재시도 하지 않는 경우 (나중에)
         // config._retry 는 재시도 방지
         if(response?.status === 401 && !config._retry){
-            console.log("response : ",  response)
             config._retry = true
 
             // 이미 refresh 진행 중이면 완료될 때까지 대기 후 재시도 
             if(isRefreshing){
                 // 성공적으로 완료됐다는 의미
-              return new Promise((resolve)=>{
-                    refreshSubscribers.push((newAccessToken) => {
-                        config.headers.Authorization = `Bearer ${newAccessToken}`
-                        resolve(api(config))
-                    })
+              return new Promise((resolve, reject)=>{
+                    refreshSubscribers.push({config, resolve, reject})
               })
             }
             
@@ -142,10 +147,11 @@ api.interceptors.response.use(
 
             } catch (error) {
                 isRefreshing = false
-                refreshSubscribers = []
+                onRefreshFailed(error)
                 // refreshToken 도 만료 - 완전 로그아웃
                 useAuthStore.getState().zu_logout()
-                window.location.href = "/login"
+                window.location.href = `${process.env.PUBLIC_URL || ''}/login`
+                return Promise.reject(error)
             }
         }
 

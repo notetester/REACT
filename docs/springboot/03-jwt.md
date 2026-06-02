@@ -1,6 +1,6 @@
 # Spring Boot 03 — JWT 인증
 
-> 실습 코드: [`code/springboot/01-jwt-MyProject01`](../../code/springboot/01-jwt-MyProject01) · 참조: <https://jwt.io/>
+> 실습 코드: [`code/springboot/01-jwt-MyProject01`](https://github.com/notetester/REACT/tree/main/code/springboot/01-jwt-MyProject01) · 참조: <https://jwt.io/>
 
 ---
 
@@ -45,9 +45,9 @@ implementation 'io.jsonwebtoken:jjwt-jackson:0.11.5'
 ### application.yaml
 ```yaml
 jwt:
-  secret: mysecretmy1secretmys3ecretmysecr   # 32바이트(HS256용). ⚠️ 학습용 — 실무는 환경변수로
-  access-token-validity: 300000      # 1000*60*5 = 5분  (MyProject01)
-  refresh-token-validity: 86400000   # 1000*60*60*24 = 1일
+  secret: ${JWT_SECRET:learning-only-local-jwt-secret-32bytes}
+  access-token-validity: ${JWT_ACCESS_TOKEN_VALIDITY:300000}      # 5분 (MyProject01)
+  refresh-token-validity: ${JWT_REFRESH_TOKEN_VALIDITY:86400000}  # 1일
 ```
 > ⚠️ 프로젝트별로 값이 다릅니다: **MyProject01** `access=300000`(5분), **MyProject02** `access=30000`(30초, 리프레시 흐름을 빨리 테스트하려는 값). refresh는 둘 다 1일.
 

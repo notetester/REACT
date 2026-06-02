@@ -40,9 +40,8 @@ public class SecurityConfig {
                 // CORS를 설정한다는 건 ‘출처가 다른 서버 간의 리소스 공유’를 허용한다는 거죠.(서버와 클라이언트간의 출쳐가 다른다.)
                 // 서로 다른 출처일 때 리소스 요청과 응답을 차단하는 정책 (서로 다른 출처일 때 리소스 요청과 응답을 차단하는 정책)
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-                // CSRF 보호 비활성 ( JWT 토큰 사용 시 일반적으로 비활성
-                // CSRF : 사용자가 로그인 된 상태를 악용하여, 악의적인 사이트가 사용자의 권한으로 요청을 보내도록 만드는 공격
-                //         JWT 를 사용하면 CSRF의 위헙이 없음
+                // Authorization 헤더로 토큰을 직접 보내는 실습 구조이므로 CSRF 보호를 비활성화한다.
+                // 쿠키에 인증 정보를 저장해 자동 전송하는 구조라면 JWT여도 별도 CSRF 방어가 필요하다.
                 .csrf(csrf -> csrf.disable())
                 // Spring Security의 세션 관리 필터 자체가 제거
                 //.sessionManagement(sessionManagement -> sessionManagement.disable())

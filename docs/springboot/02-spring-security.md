@@ -1,6 +1,6 @@
 # Spring Boot 02 — Spring Security
 
-> 실습 코드: [`code/springboot/01-jwt-MyProject01`](../../code/springboot/01-jwt-MyProject01)
+> 실습 코드: [`code/springboot/01-jwt-MyProject01`](https://github.com/notetester/REACT/tree/main/code/springboot/01-jwt-MyProject01)
 > 참조: <https://docs.spring.io/spring-security/reference/servlet/configuration/java.html>
 
 ---
@@ -64,13 +64,13 @@ public class SecurityConfig {
         http
           // ① CORS — 출처가 다른 서버 간 리소스 공유 허용 (React:3000 ↔ Spring:8080)
           .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-          // ② CSRF 비활성 — JWT 사용 시 CSRF 위험이 없으므로 끔
+          // ② Authorization 헤더 JWT 실습 구조이므로 CSRF 보호 비활성
           .csrf(csrf -> csrf.disable())
           // ③ 세션 STATELESS — 세션을 만들지 않음(JWT 권장)
           .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
           // ④ 요청별 권한
           .authorizeHttpRequests(auth -> auth
-              .requestMatchers("/members/**").permitAll()
+              .requestMatchers("/members/login", "/members/register", "/members/refresh").permitAll()
               .requestMatchers("/guestbook/**").permitAll()
               .anyRequest().authenticated());
         return http.build();
@@ -91,7 +91,7 @@ public class SecurityConfig {
 ```
 
 > 💡 **CORS**: 서로 다른 출처(origin) 간 요청을 차단하는 브라우저 정책. React(3000)와 Spring(8080)은 포트가 다르므로 출처가 다릅니다 → 서버에서 명시적으로 허용해야 합니다.
-> 💡 **CSRF**: 로그인된 상태를 악용해 악성 사이트가 사용자 권한으로 요청을 보내는 공격. JWT(헤더 기반)는 쿠키 자동전송에 의존하지 않으므로 비활성화합니다.
+> 💡 **CSRF**: 로그인된 상태를 악용해 악성 사이트가 사용자 권한으로 요청을 보내는 공격. 이 실습은 브라우저가 자동 전송하지 않는 Authorization 헤더에 JWT를 넣으므로 CSRF 보호를 비활성화합니다. JWT를 쿠키에 저장해 자동 전송한다면 별도 CSRF 방어가 필요합니다.
 
 ## 6. `AppConfig` — 비밀번호 암호화
 

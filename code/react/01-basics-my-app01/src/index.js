@@ -3,8 +3,6 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 // import App from './App';
 import reportWebVitals from './reportWebVitals';
-import UseReducerTest03 from './pages/step14-Reducer/UseReducerTest03';
-import RouterTest01 from './pages/step15-Router/RouterTest01';
 import App from './App';
 // import Book from './pages/step01-jsx/Book';
 // import Library from './pages/step01-jsx/Library';

@@ -1,6 +1,6 @@
 # React 05 — Hooks
 
-> 실습 코드: [`step11-hook`](../../code/react/01-basics-my-app01/src/pages/step11-hook)
+> 실습 코드: [`step11-hook`](https://github.com/notetester/REACT/tree/main/code/react/01-basics-my-app01/src/pages/step11-hook)
 
 ---
 

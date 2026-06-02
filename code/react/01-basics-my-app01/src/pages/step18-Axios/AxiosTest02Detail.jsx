@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 export default function AxiosTest02Detail(params) {
@@ -8,7 +8,7 @@ export default function AxiosTest02Detail(params) {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    const getData = async () =>{
+    const getData = useCallback(async () =>{
         try{
            const response = await axios.get(`https://api.tvmaze.com/shows/${id}`);
            setMovie(response.data)
@@ -17,12 +17,12 @@ export default function AxiosTest02Detail(params) {
         }finally{
            setLoading(false);
         }
-    }
+    }, [id])
 
-    // 의존성 배열이 비어있으면 맨 처음 한번 만 
+    // id가 바뀌면 해당 상세 정보를 다시 불러온다.
     useEffect(()=>{
       getData();
-    },[]);
+    },[getData]);
 
     // 로딩 중
     if(loading) return <p>불러오는 중 ... </p>

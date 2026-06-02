@@ -1,6 +1,5 @@
-// Zustand의 create 함수와 persist 미들웨어를 가져온다
+// Zustand의 create 함수를 가져온다.
 import { create } from 'zustand'
-import { persist } from 'zustand/middleware'
 
 // 미들웨어 사용하지 않는이유 : Auth.jsx에서 localStorage에 직접 사용
 
