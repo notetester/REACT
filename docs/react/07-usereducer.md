@@ -4,15 +4,7 @@
 
 ---
 
-## 바로 확인하는 실행 결과
-
-금액을 입력하고 예금·출금을 눌러 보세요. 버튼의 `dispatch(action)`이 reducer를 거쳐 새 잔고 state를 만드는 흐름을 확인할 수 있습니다.
-
-<div class="react-live-preview">
-  <iframe class="react-live-frame react-live-frame--compact" src="/REACT/demo/react-basics/#/lab/reducer" title="useReducer 은행 실행 결과" loading="lazy"></iframe>
-</div>
-
-<p class="react-live-links"><a href="/REACT/demo/react-basics/#/lab/reducer" target="_blank" rel="noopener">↗ 새 탭에서 크게 보기</a></p>
+> 각 코드 **바로 아래에 그 코드의 실행 결과**를 붙였습니다. 직접 조작해 보세요. 전체를 한 화면에서 비교하려면 → [결과 탐색기](/REACT/demo/react-basics/#/lab)
 
 ## useReducer 란?
 
@@ -38,6 +30,9 @@ flowchart LR
 ```
 
 ## 예제 (카운터)
+<div class="cr" markdown="1">
+<div class="cr__code" markdown="1">
+
 ```jsx
 function reducer(state, action) {
   switch (action.type) {
@@ -60,6 +55,13 @@ function Counter() {
   );
 }
 ```
+
+</div>
+<div class="cr__view">
+<p class="cr__label">▶ 결과 — 같은 dispatch→reducer→state 패턴의 실습 은행 예제(금액 입력 후 예금·출금)</p>
+<iframe class="cr__frame" src="/REACT/demo/react-basics/#/lab/embed/reducer-bank" loading="lazy" title="useReducer 결과"></iframe>
+</div>
+</div>
 
 > **useState vs useReducer**: 단순 상태는 `useState`, 여러 값이 함께 바뀌거나 변경 규칙이 복잡하면 `useReducer`가 깔끔합니다. (reducer의 `action` 패턴은 이후 Redux/Zustand 이해에도 도움)
 

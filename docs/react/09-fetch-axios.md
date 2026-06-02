@@ -4,15 +4,7 @@
 
 ---
 
-## 바로 확인하는 실행 결과
-
-Axios가 외부 API에서 영화 목록을 가져오는 동안 로딩 상태가 보이고, 요청이 끝나면 이미지와 장르가 렌더링됩니다. 이미지를 누르면 URL 파라미터를 사용하는 상세 화면으로 이동합니다.
-
-<div class="react-live-preview">
-  <iframe class="react-live-frame react-live-frame--tall" src="/REACT/demo/react-basics/#/axios02" title="Axios 영화 API 실행 결과" loading="lazy"></iframe>
-</div>
-
-<p class="react-live-links"><a href="/REACT/demo/react-basics/#/axios02" target="_blank" rel="noopener">↗ 새 탭에서 크게 보기</a></p>
+> 아래 **2번 Axios 코드 바로 다음에 그 코드의 실행 결과**(TVmaze 공개 API 호출)를 붙였습니다. 전체를 크게 보려면 → [결과 탐색기](/REACT/demo/react-basics/#/lab)
 
 ## 1. Fetch API — 브라우저 내장
 
@@ -35,6 +27,9 @@ useEffect(() => {
 `axios`는 브라우저/Node용 Promise 기반 HTTP 라이브러리. **자동 JSON 변환**, 인터셉터 등 편의 기능 제공. 설치: `npm install axios`
 
 ### async/await + 로딩/에러 처리 (step18)
+<div class="cr" markdown="1">
+<div class="cr__code" markdown="1">
+
 ```jsx
 const [list, setList] = useState([]);
 const [loading, setLoading] = useState(true);
@@ -62,6 +57,13 @@ return list.map((k) => (
   </Link>
 ));
 ```
+
+</div>
+<div class="cr__view">
+<p class="cr__label">▶ 결과 — 로딩 표시 후 TVmaze 공개 API의 목록 렌더(이미지 클릭 → 상세)</p>
+<iframe class="cr__frame cr__frame--tall" src="/REACT/demo/react-basics/#/axios02" loading="lazy" title="Axios 실행 결과"></iframe>
+</div>
+</div>
 
 > **Fetch vs Axios**: Fetch는 내장(설치 불필요)이지만 JSON 변환·에러 처리를 직접 해야 함. Axios는 자동 JSON 변환 + **인터셉터**(요청/응답 가로채기)가 강력 → 연동 프로젝트에서 **JWT 토큰 자동 주입/재발급**에 활용. → [연동 흐름](../integration/react-springboot-jwt-flow.md)
 

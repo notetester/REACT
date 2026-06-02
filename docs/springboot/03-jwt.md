@@ -124,7 +124,95 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
 > 만료 시 401 `token expired`를 받은 클라이언트는 `POST /members/refresh`로 재발급을 시도합니다. (→ [연동 흐름](../integration/react-springboot-jwt-flow.md))
 
-## 8. Postman 테스트
+## 8. 요청 → 응답으로 보는 토큰 생애주기 (Postman/curl)
+
+JWT 인증은 **로그인으로 발급 → 요청마다 사용 → 만료 → Refresh로 재발급**의 생애주기를 돕니다. 각 단계가 실제로 어떤 요청·응답인지 봅니다. (토큰은 `header.payload.signature` 3토막이며, 지면상 `…`로 줄였습니다.)
+
+!!! success "① 로그인 → Access·Refresh 토큰 발급 · `POST /members/login`"
+    아이디·비밀번호가 맞으면 **두 종류의 토큰**과 회원 정보를 함께 내려줍니다.
+
+    ```http
+    POST /members/login HTTP/1.1
+    Host: localhost:8080
+    Content-Type: application/json
+    { "m_id": "study", "m_pw": "1111" }
+    ```
+    응답 — 토큰 2종 + 회원정보:
+    ```http
+    HTTP/1.1 200 OK
+    Content-Type: application/json
+    { "success": true, "message": "로그인 성공",
+      "data": {
+        "accessToken":  "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzdHVkeSIsImV4cCI6MTcwOTk5OTk5OX0.4Q8sf…",
+        "refreshToken": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzdHVkeSIsImV4cCI6MTcxMDA4NjM5OX0.91aBz…",
+        "membersVO":    { "m_id": "study", "m_name": "스터디" }
+      } }
+    ```
+    클라이언트는 이 토큰들을 localStorage 등에 저장합니다. `accessToken`은 짧게(MyProject01 5분), `refreshToken`은 길게(1일) 둡니다.
+
+!!! success "② 발급한 Access Token으로 보호 자원 접근 · `GET /members/myPage`"
+    ```http
+    GET /members/myPage HTTP/1.1
+    Host: localhost:8080
+    Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzdHVkeSIsImV4cCI6MTcwOTk5OTk5OX0.4Q8sf…
+    ```
+    ```http
+    HTTP/1.1 200 OK
+    Content-Type: application/json
+    { "success": true, "message": "마이페이지 성공", "data": { "m_id": "study" } }
+    ```
+    `JwtRequestFilter`가 서명·만료를 검증하고 `SecurityContextHolder`에 인증을 등록합니다. → [Security 편 ③](02-spring-security.md)
+
+!!! warning "③ Access Token 만료 → 401 · `GET /members/myPage`"
+    유효시간이 지나 `exp`가 과거가 된 토큰입니다.
+
+    ```http
+    GET /members/myPage HTTP/1.1
+    Host: localhost:8080
+    Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzdHVkeSIsImV4cCI6MTYwMDAwMDAwMH0.k3Vd9…
+    ```
+    ```http
+    HTTP/1.1 401 Unauthorized
+    Content-Type: application/json
+    { "success": false, "message": "token expired" }
+    ```
+    `validateToken()`이 `ExpiredJwtException`을 잡아 401을 반환합니다. 이제 ④로 재발급을 시도합니다.
+
+!!! success "④ Refresh Token으로 새 토큰 재발급 · `POST /members/refresh`"
+    만료된 access 대신, 아직 살아 있는 **refresh**로 새 토큰을 받습니다.
+
+    ```http
+    POST /members/refresh HTTP/1.1
+    Host: localhost:8080
+    Content-Type: application/json
+    { "refreshToken": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzdHVkeSIsImV4cCI6MTcxMDA4NjM5OX0.91aBz…" }
+    ```
+    ```http
+    HTTP/1.1 200 OK
+    Content-Type: application/json
+    { "success": true, "message": "토큰 재발급 성공",
+      "data": {
+        "accessToken":  "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzdHVkeSIsImV4cCI6MTcxMDAwMDMwMH0.NEWac…",
+        "refreshToken": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzdHVkeSIsImV4cCI6MTcxMDA4OTk5OX0.NEWre…"
+      } }
+    ```
+    서버는 refresh의 서명·만료(및 DB 보관본)를 확인하고 새 access(+회전된 refresh)를 발급합니다. 클라이언트는 원래 요청을 새 access로 재시도합니다. → [연동 흐름](../integration/react-springboot-jwt-flow.md)
+
+!!! failure "⑤ Refresh Token도 만료·위조 → 401 · `POST /members/refresh`"
+    ```http
+    POST /members/refresh HTTP/1.1
+    Host: localhost:8080
+    Content-Type: application/json
+    { "refreshToken": "<만료되었거나 DB와 불일치하는 토큰>" }
+    ```
+    ```http
+    HTTP/1.1 401 Unauthorized
+    Content-Type: application/json
+    { "success": false, "message": "유효하지 않은 refresh token" }
+    ```
+    여기서는 재발급이 불가능하므로 **재로그인**(①)으로 돌아갑니다.
+
+### 로그인 단계의 실패 응답 (요약)
 
 | 케이스 | 응답 |
 |--------|------|

@@ -4,15 +4,7 @@
 
 ---
 
-## 바로 확인하는 실행 결과
-
-두 버튼은 서로 다른 state를 바꿉니다. 첫 번째 카운터를 바꿀 때만 `[count]`에 연결한 Effect가 실행되는 모습을 브라우저 개발자 도구 Console과 함께 확인하세요.
-
-<div class="react-live-preview">
-  <iframe class="react-live-frame react-live-frame--compact" src="/REACT/demo/react-basics/#/lab/hooks" title="Hooks useEffect 실행 결과" loading="lazy"></iframe>
-</div>
-
-<p class="react-live-links"><a href="/REACT/demo/react-basics/#/lab/hooks" target="_blank" rel="noopener">↗ 새 탭에서 크게 보기</a></p>
+> 각 코드 **바로 아래에 그 코드의 실행 결과**를 붙였습니다. 직접 조작해 보세요. 전체를 한 화면에서 비교하려면 → [결과 탐색기](/REACT/demo/react-basics/#/lab)
 
 ## Hook 이란?
 
@@ -30,12 +22,23 @@ const [상태값, set함수] = useState(초기값);
 
 Effect는 React 바깥의 시스템과 동기화할 때 사용합니다. 서버 데이터 요청, 브라우저 이벤트 구독, 타이머, 외부 위젯 연결 등이 대표 예입니다. 렌더링 중 계산할 수 있는 값을 다시 state로 맞추는 용도에는 대개 필요하지 않습니다.
 
+<div class="cr" markdown="1">
+<div class="cr__code" markdown="1">
+
 ```jsx
 useEffect(() => {
   const timerId = setInterval(() => console.log('tick'), 1000);
   return () => clearInterval(timerId);  // cleanup
 }, []);
 ```
+
+</div>
+<div class="cr__view">
+<p class="cr__label">▶ 결과 — 첫 카운터를 바꿀 때만 Effect 실행(Console 확인)</p>
+<iframe class="cr__frame" src="/REACT/demo/react-basics/#/lab/embed/effect-deps" loading="lazy" title="useEffect 의존성 결과"></iframe>
+</div>
+</div>
+
 | 의존성배열 | 실행 시점 |
 |-----------|-----------|
 | 생략 | 렌더링 될 때마다 |
@@ -51,16 +54,37 @@ React는 Effect가 다시 실행되기 전과 컴포넌트가 사라질 때 clea
 
 ## 3. `useMemo` — 계산 결과 캐싱(메모이제이션)
 값을 다시 계산하지 않고 이전 계산값을 재사용 → 불필요한 재계산 방지.
+<div class="cr" markdown="1">
+<div class="cr__code" markdown="1">
+
 ```jsx
 const cached = useMemo(() => 무거운계산(a, b), [a, b]);
 ```
+
+</div>
+<div class="cr__view">
+<p class="cr__label">▶ 결과 — 의존성이 그대로면 재계산 생략(캐싱)</p>
+<iframe class="cr__frame cr__frame--short" src="/REACT/demo/react-basics/#/lab/embed/usememo" loading="lazy" title="useMemo 결과"></iframe>
+</div>
+</div>
+
 용도: 무거운 계산(반복문/정렬/필터), 자식에 전달하는 복잡한 값.
 
 ## 4. `useCallback` — 함수 자체를 캐싱
 `useMemo`는 *값*을, `useCallback`은 *함수*를 캐싱. 자식 컴포넌트에 함수를 props로 전달할 때 불필요한 리렌더를 막습니다.
+<div class="cr" markdown="1">
+<div class="cr__code" markdown="1">
+
 ```jsx
 const memoizedFn = useCallback(() => doSomething(a), [a]);
 ```
+
+</div>
+<div class="cr__view">
+<p class="cr__label">▶ 결과 — 함수 참조 유지로 자식 불필요 리렌더 방지</p>
+<iframe class="cr__frame cr__frame--short" src="/REACT/demo/react-basics/#/lab/embed/usecallback" loading="lazy" title="useCallback 결과"></iframe>
+</div>
+</div>
 
 !!! note "메모이제이션은 정확성을 위한 필수 문법이 아닙니다"
     `useMemo`, `useCallback`은 성능 최적화 도구입니다. 모든 값과 함수를 습관적으로 감싸면 의존성 관리만 복잡해질 수 있습니다. 먼저 코드가 정확하게 동작하게 만들고, 실제로 반복 계산이나 불필요한 렌더링이 문제가 될 때 적용하세요.
@@ -75,10 +99,20 @@ const inputRef = useRef(null);
 
 ## 6. `useId` — 고유 ID 자동 생성
 같은 컴포넌트를 여러 번 써도 ID가 겹치지 않음. `label`의 `htmlFor`와 `input`의 `id`를 묶으면 label 클릭 시 input 포커스.
+<div class="cr" markdown="1">
+<div class="cr__code" markdown="1">
+
 ```jsx
 const id = useId();
 <label htmlFor={id}>이름</label><input id={id} />
 ```
+
+</div>
+<div class="cr__view">
+<p class="cr__label">▶ 결과 — label 클릭 시 연결된 input에 포커스</p>
+<iframe class="cr__frame cr__frame--short" src="/REACT/demo/react-basics/#/lab/embed/useid" loading="lazy" title="useId 결과"></iframe>
+</div>
+</div>
 
 ---
 ### 다음 단계

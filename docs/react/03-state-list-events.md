@@ -4,19 +4,14 @@
 
 ---
 
-## 바로 확인하는 실행 결과
-
-카운터의 `+`, `-` 버튼을 누르면 `useState`가 바뀌고 화면도 다시 렌더링됩니다. 오른쪽에는 `filter`와 `map`을 거친 관리자 댓글만 남습니다.
-
-<div class="react-live-preview">
-  <iframe class="react-live-frame" src="/REACT/demo/react-basics/#/lab/state-lists" title="state 배열 고차 메서드 실행 결과" loading="lazy"></iframe>
-</div>
-
-<p class="react-live-links"><a href="/REACT/demo/react-basics/#/lab/state-lists" target="_blank" rel="noopener">↗ 새 탭에서 크게 보기</a></p>
+> 각 코드 **바로 아래에 그 코드의 실행 결과**를 붙였습니다. 직접 조작해 보세요. 전체를 한 화면에서 비교하려면 → [결과 탐색기](/REACT/demo/react-basics/#/lab)
 
 ## 1. 왜 state(상태)가 필요한가? — step03
 
 일반 변수는 값을 바꿔도 **화면이 다시 그려지지 않습니다.**
+
+<div class="cr" markdown="1">
+<div class="cr__code" markdown="1">
 
 ```jsx
 export default function NumberCount() {
@@ -31,13 +26,31 @@ export default function NumberCount() {
 }
 ```
 
+</div>
+<div class="cr__view">
+<p class="cr__label">▶ 결과 — 일반 변수라 화면은 그대로(+를 눌러도 5, Console만 증가)</p>
+<iframe class="cr__frame cr__frame--short" src="/REACT/demo/react-basics/#/lab/embed/state-why" loading="lazy" title="일반 변수 결과"></iframe>
+</div>
+</div>
+
 > **핵심:** "React는 한번 렌더링되면 다시 렌더링될 때까지 화면 변화가 없다. React에게 *상태가 변경됐다*고 지시해야 다시 렌더링하고 변경된 값이 반영된다." → 그 지시 수단이 **상태관리(state)** = `useState`.
+
+<div class="cr" markdown="1">
+<div class="cr__code" markdown="1">
 
 ```jsx
 import { useState } from 'react';
 const [cnt, setCnt] = useState(5);
 const increment = () => setCnt(cnt + 1);   // set함수로 변경 → 자동 리렌더링
 ```
+
+</div>
+<div class="cr__view">
+<p class="cr__label">▶ 결과 — useState로 바꾸니 +/- 에 따라 화면이 리렌더</p>
+<iframe class="cr__frame cr__frame--short" src="/REACT/demo/react-basics/#/lab/embed/state-counter" loading="lazy" title="useState 카운터 결과"></iframe>
+</div>
+</div>
+
 → 자세한 Hook 사용법은 [React 05 — Hooks](05-hooks.md).
 
 ### state는 렌더링 시점의 스냅샷
@@ -61,23 +74,69 @@ setCnt(prev => prev + 1);
 | `some` | 하나라도 true → true (OR) | boolean |
 | `every` | 모두 true → true (AND) | boolean |
 
+<div class="cr" markdown="1">
+<div class="cr__code" markdown="1">
+
 ```jsx
 // filter — isAdmin인 것만 렌더링
 comments.filter(k => k.isAdmin).map(k => <Comment key={k.idx} name={k.name} comment={k.comment} />)
+```
 
+</div>
+<div class="cr__view">
+<p class="cr__label">▶ 결과 — filter로 관리자 댓글만 남김</p>
+<iframe class="cr__frame cr__frame--short" src="/REACT/demo/react-basics/#/lab/embed/array-filter" loading="lazy" title="filter 결과"></iframe>
+</div>
+</div>
+
+<div class="cr" markdown="1">
+<div class="cr__code" markdown="1">
+
+```jsx
 // find — 첫 관리자 1명 (삼항연산자로 분기)
 const result = comments.find(k => k.isAdmin);
 { result ? <Comment name={result.name} comment={result.comment} /> : <p>조건 만족 항목 없음</p> }
+```
 
+</div>
+<div class="cr__view">
+<p class="cr__label">▶ 결과 — find로 첫 관리자 1명만</p>
+<iframe class="cr__frame cr__frame--short" src="/REACT/demo/react-basics/#/lab/embed/array-find" loading="lazy" title="find 결과"></iframe>
+</div>
+</div>
+
+<div class="cr" markdown="1">
+<div class="cr__code" markdown="1">
+
+```jsx
 // reduce — 누적 통계
 const stat = comments.reduce((acc, k) => {
   acc.total++; if (k.isAdmin) acc.adminCount++; return acc;
 }, { total: 0, adminCount: 0 });   // 두 번째 인자 = 초기값
+```
 
+</div>
+<div class="cr__view">
+<p class="cr__label">▶ 결과 — reduce로 전체/관리자 수 집계</p>
+<iframe class="cr__frame cr__frame--short" src="/REACT/demo/react-basics/#/lab/embed/array-reduce" loading="lazy" title="reduce 결과"></iframe>
+</div>
+</div>
+
+<div class="cr" markdown="1">
+<div class="cr__code" markdown="1">
+
+```jsx
 // some / every
 comments.some(k => k.isAdmin)    // 관리자 댓글이 하나라도 있나?
 comments.every(k => k.isAdmin)   // 모두 관리자 댓글인가?
 ```
+
+</div>
+<div class="cr__view">
+<p class="cr__label">▶ 결과 — some(하나라도) / every(모두) 판정</p>
+<iframe class="cr__frame cr__frame--short" src="/REACT/demo/react-basics/#/lab/embed/array-someevery" loading="lazy" title="some every 결과"></iframe>
+</div>
+</div>
 
 ## 3. 배열 state는 직접 변경하지 않기
 

@@ -38,19 +38,15 @@
   }
 }
 
-/* ── 코드 ↔ 결과 좌우 배치 (각 코드 블록 옆에 그 예제의 실행 결과) ── */
+/* ── 코드 → 결과 (코드 바로 아래에 그 예제의 실행 결과를 풀폭으로) ── */
 .cr {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: 0.9rem;
-  align-items: stretch;
-  margin: 0.9rem 0 1.3rem;
+  margin: 0.9rem 0 1.5rem;
 }
 .cr__code { min-width: 0; }
 .cr__code > .highlight,
-.cr__code > pre { margin: 0; height: 100%; }
+.cr__code > pre { margin: 0; }
 .cr__view {
-  min-width: 0;
+  margin-top: 0.55rem;
   display: flex;
   flex-direction: column;
   border: 1px solid var(--md-default-fg-color--lightest);
@@ -61,23 +57,21 @@
 }
 .cr__label {
   margin: 0;
-  padding: 4px 10px;
-  font-size: 0.74rem;
+  padding: 5px 12px;
+  font-size: 0.76rem;
   color: var(--md-default-fg-color--light);
   background: var(--md-default-fg-color--lightest);
 }
 .cr__frame {
   display: block;
   width: 100%;
-  min-height: 360px;
-  flex: 1;
+  min-height: 340px;
   border: 0;
   background: #fff;
 }
-.cr__frame--short { min-height: 270px; }
-.cr__frame--tall { min-height: 470px; }
+.cr__frame--short { min-height: 260px; }
+.cr__frame--tall { min-height: 480px; }
 
-@media (max-width: 960px) {
-  .cr { grid-template-columns: 1fr; }
-  .cr__frame { min-height: 320px; }
+@media (max-width: 720px) {
+  .cr__frame { min-height: 360px; }
 }
