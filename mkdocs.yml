@@ -61,14 +61,17 @@ nav:
       - "09 Fetch·Axios": react/09-fetch-axios.md
       - "10 Zustand 기초": react/10-zustand-basics.md
       - "11 Zustand 인증·CRUD": react/11-zustand-auth-crud.md
+      - "12 최신 React 학습 로드맵": react/12-modern-react-roadmap.md
   - Spring Boot:
       - "01 구조·MyBatis": springboot/01-intro-architecture.md
       - "02 Spring Security": springboot/02-spring-security.md
       - "03 JWT": springboot/03-jwt.md
+      - "04 REST API 품질": springboot/04-rest-api-quality.md
   - 연동(최종 응용):
       - "React ↔ Spring Boot JWT 흐름": integration/react-springboot-jwt-flow.md
       - "온라인 mock 데모와 Actions 스냅샷": integration/online-demo-and-snapshot.md
       - "Actions API 실행 결과": generated/integration-snapshot.md
+      - "최종 홈페이지 완성 로드맵": integration/final-homepage-roadmap.md
   - 실행 가이드:
       - "로컬 실습 실행": guide/01-local-setup.md
       - "Windows 로컬 DB 설치": guide/02-local-db-setup.md
@@ -77,3 +80,4 @@ nav:
       - "원본 자료 수집 범위": reference/source-coverage.md
       - "원본 이미지 카탈로그": reference/image-catalog.md
       - "보강 기록과 정오표": reference/errata.md
+      - "최신 공식 문서 감수 기록": reference/official-reference-audit.md

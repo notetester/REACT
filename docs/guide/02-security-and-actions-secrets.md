@@ -31,12 +31,13 @@ GitHub-hosted runner는 개발 PC의 localhost DB에 접근하지 않습니다. 
 | React 3개 | `npm ci`, 테스트, production build |
 | Spring Boot 2개 | 컴파일, `contextLoads`, Gradle build |
 | MyProject01 MySQL smoke | 임시 MySQL 시작, 스키마 초기화, Spring Boot 실행, `GET /guestbook/list` 실제 호출 |
+| MyProject02 H2 snapshot | 임시 H2 Oracle mode 시작, 회원가입·로그인·JWT 인증·방명록 CRUD 실제 호출 |
 
 MySQL 컨테이너의 비밀번호는 해당 CI 실행이 끝나면 함께 사라지는 학습용 값입니다. Repository secret이 필요하지 않습니다.
 
-MyProject02의 Oracle XE 실제 연동은 CI에 포함하지 않습니다. XE 초기화가 무겁고 Oracle 이미지 준비 과정에 라이선스 확인이 필요하기 때문입니다. [Windows 로컬 DB 설치와 초기화](02-local-db-setup.md)의 체크리스트로 검증합니다.
+MyProject02의 Oracle XE 자체는 CI에 포함하지 않습니다. XE 초기화가 무겁고 Oracle 이미지 준비 과정에 라이선스 확인이 필요하기 때문입니다. 대신 Pages workflow가 `snapshot` 프로필의 H2 메모리 DB에서 실제 Spring Boot API 흐름을 호출합니다. H2는 Oracle XE를 대체하는 운영 DB가 아니라 자동 재현용 보조 환경입니다.
 
-GitHub Pages에는 문서와 DB가 필요 없는 React 데모 2개만 배포합니다. Spring Boot 서버, Oracle DB와 `my-app03` 최종 연동 앱은 Pages에서 실행되지 않습니다.
+GitHub Pages에는 문서와 React 데모 3개를 배포합니다. `my-app03` 데모는 브라우저 localStorage mock API를 사용하므로 서버와 DB 없이 UI 흐름을 체험할 수 있습니다. 실제 Spring Boot 결과는 [Actions API 스냅샷](../generated/integration-snapshot.md)에서 구분해 확인합니다.
 
 ## 프론트엔드 주의점
 

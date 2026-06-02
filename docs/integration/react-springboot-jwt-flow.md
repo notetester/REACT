@@ -196,3 +196,5 @@ export default function PrivateRoute({ children }) {
 ### 관련 문서
 - [Spring Boot 03 — JWT](../springboot/03-jwt.md) · [Spring Security](../springboot/02-spring-security.md)
 - [React 10 — Zustand 기초](../react/10-zustand-basics.md) · [React 09 — Fetch/Axios](../react/09-fetch-axios.md)
+- [Spring Boot 04 — REST API 품질](../springboot/04-rest-api-quality.md)
+- [최종 프로젝트 — 간단한 홈페이지 완성 로드맵](final-homepage-roadmap.md)

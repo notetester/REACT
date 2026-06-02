@@ -11,15 +11,18 @@
 
 | 구분 | 중간 프로젝트 | 최종 프로젝트 |
 |------|--------------|--------------|
-| 프레임워크 | Spring **MVC** | **Spring Boot** |
+| 애플리케이션 구성 | 전통적 Spring MVC 설정 | **Spring Boot 자동 설정** |
 | 빌드 도구 | **Maven** (`pom.xml`) | **Gradle** (`build.gradle`) |
 | 화면 | JSP | **React** |
 | 톰캣 | 외부 톰캣 | 내부 톰캣(내장) |
 | 패키징 | `war` | `jar` |
-| 주 사용처 | 관공서(전자정부프레임워크) | 민간기업 |
+| 특징 | 외부 서버·설정 파일을 직접 다루는 경우가 많음 | 내장 서버와 자동 설정으로 빠르게 시작 |
 | 자바 | Java 21 | Java 21 |
 
-→ 최종 프로젝트는 **Spring Boot + Gradle + React**, AWS 배포까지 진행합니다.
+→ 최종 프로젝트는 **Spring Boot + Gradle + React** 조합입니다.
+
+!!! note "Spring MVC와 Spring Boot는 서로 반대말이 아닙니다"
+    Spring MVC는 Servlet 기반 웹 프레임워크이고, Spring Boot는 설정과 실행을 단순화하는 도구입니다. 이 교재의 Spring Boot 앱도 내부적으로 Spring MVC를 사용합니다. 강의의 표는 프로젝트 구성 방식과 배포 경험의 차이를 비교한 것입니다.
 
 ## 2. 프로젝트 생성 (IntelliJ + start.spring.io)
 
@@ -31,7 +34,7 @@ IntelliJ `새 프로젝트 → Spring Boot`. 이름 `MyProject01`, 타입 `Gradl
 
 ![의존성 선택](../assets/img/springboot-day01/sb1_01.png)
 
-> 생성 마법사에서는 Spring Boot 3.5.x로 시작하지만, 본 실습의 최종 `build.gradle`은 아래와 같이 정리되어 있습니다.
+> 본 실습의 최종 `build.gradle`은 Spring Boot `4.0.6`으로 정리되어 있습니다. 공식 [System Requirements](https://docs.spring.io/spring-boot/system-requirements.html)에 따르면 `4.0.6`은 Java 17 이상을 요구하고 Java 26까지 호환됩니다. 이 교재는 Java 21로 통일합니다.
 
 ### Gradle 파일 역할
 | 파일 | 역할 |
@@ -155,3 +158,4 @@ public class DataVO {
 ### 다음 단계
 - [Spring Boot 02 — Spring Security](02-spring-security.md)
 - [Spring Boot 03 — JWT](03-jwt.md)
+- [Spring Boot 04 — REST API 품질](04-rest-api-quality.md)

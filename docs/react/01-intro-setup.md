@@ -20,13 +20,14 @@
 |------|------|
 | CSR | Client Side Rendering — 클라이언트가 동적으로 화면 렌더링 |
 | SPA | Single Page Application — 하나의 HTML로, 새로고침 없이 페이지 전환 |
-| SSR | Server Side Rendering — 서버에서 먼저 렌더링(예: Next.js) |
+| SSR | Server Side Rendering — 서버에서 먼저 렌더링 |
+| SSG | Static Site Generation — 빌드 시 HTML을 미리 생성 |
 
-→ React는 기본적으로 **SPA + CSR**.
+→ 이 저장소의 실습은 **SPA + CSR** 방식입니다. React 자체가 CSR만 강제하는 것은 아닙니다. 최신 React 프레임워크는 CSR, SPA, SSG, SSR을 요구사항에 맞게 선택할 수 있습니다.
 
 ## 2. 설치
 
-1. **Node.js** 설치 (NVM 권장). React 19는 Node 18.x/20.x(LTS) 권장.
+1. **Node.js** 설치 (NVM 권장). 이 저장소의 재현 환경은 Node 20입니다.
    - `nvm install 20` → `nvm use 20` → `node -v` / `npm -v`로 확인
 
 ![nvm 설치](../assets/img/day01-theory/d1t_00.png)
@@ -38,14 +39,15 @@
 
 | | CRA (Create React App) | Vite |
 |---|---|---|
-| 특징 | 전통적·보편적 구조 | 빠르고 가벼운 빌드 도구 |
+| 특징 | 기존 강의 코드 보존·복습용 | 신규 기초 SPA 연습에 적합한 빌드 도구 |
 | 생성 | `npx create-react-app my-app01 --template cra-template --react-version 19` | `npm create vite@latest my-app02` |
 | 실행 | `npm start` → :3000 | `npm install` → `npm run dev` → :5173 |
 
 ![CRA 생성](../assets/img/day01-theory/d1t_02.png)
 ![Vite 생성](../assets/img/day01-theory/d1t_03.png)
 
-> 본 실습의 `my-app01/02/03`은 모두 **CRA(react-scripts)** 기반입니다.
+!!! warning "신규 앱에는 CRA를 선택하지 않습니다"
+    본 실습의 `my-app01/02/03`은 원본 강의 흐름을 보존하기 위해 모두 **CRA(react-scripts)** 기반입니다. React 팀은 2025년 2월 14일 [CRA 지원 종료](https://react.dev/blog/2025/02/14/sunsetting-create-react-app)를 발표했습니다. 새 앱은 [React 공식 시작 가이드](https://react.dev/learn/start-a-new-react-project)에 따라 프레임워크 또는 Vite 같은 빌드 도구를 검토합니다. 자세한 구분은 [React 12](12-modern-react-roadmap.md)에서 설명합니다.
 
 ### 프로젝트 구조
 ![프로젝트 구조](../assets/img/day01-theory/d1t_04.png)
@@ -71,7 +73,7 @@ index.html (HTML 뼈대) → index.js (진입점) → App.js (화면 구성)
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(<React.StrictMode><App /></React.StrictMode>);
 ```
-> `<React.StrictMode>`는 개발 중에만 동작하는 경고 도우미(배포 시 영향 없음).
+> `<React.StrictMode>`는 개발 중에만 동작하는 검사 도우미입니다. 순수하지 않은 렌더링과 Effect cleanup 누락을 찾기 위해 렌더링과 Effect를 추가로 실행할 수 있습니다. 배포 빌드의 동작에는 영향을 주지 않습니다. → [React 12](12-modern-react-roadmap.md)
 
 ![index.html → index.js → App.js 연결](../assets/img/day01-practice/d1p_02.png)
 ![브라우저 실행 결과](../assets/img/day01-practice/d1p_00.png)

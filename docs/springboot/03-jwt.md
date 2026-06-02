@@ -6,7 +6,10 @@
 
 ## 1. JWT(JSON Web Token) 란?
 
-JSON 포맷으로 데이터를 **안전하고 간결하게** 전송하는 토큰. 세 부분이 점(`.`)으로 구분됩니다: `Header.Payload.Signature`
+JSON 포맷의 클레임을 서명과 함께 전달하는 토큰. 세 부분이 점(`.`)으로 구분됩니다: `Header.Payload.Signature`
+
+!!! warning "서명은 암호화가 아닙니다"
+    일반 JWT의 Header와 Payload는 Base64URL 인코딩일 뿐 암호화되지 않습니다. 브라우저에서 내용을 읽을 수 있으므로 비밀번호, DB 접속 정보, 주민번호 같은 민감 정보를 Payload에 넣지 않습니다. Signature는 내용 변조를 탐지합니다.
 
 ![JWT 구조](../assets/img/springboot-jwt/sbjwt_00.png)
 
@@ -25,7 +28,7 @@ JSON 포맷으로 데이터를 **안전하고 간결하게** 전송하는 토큰
 8. Access Token **만료** → 9. (만료된 채) 요청 → 10. 서버가 만료 확인(401)
 11~13. 클라이언트가 **Refresh Token으로 재발급 요청** → 서버가 확인 후 **새 Access/Refresh 발급**
 
-> **왜 두 개인가?** Access Token은 수명이 짧아(탈취 위험↓) 자주 쓰이고, Refresh Token은 수명이 길어(예: 1일) Access 재발급에만 사용합니다.
+> **왜 두 개인가?** Access Token은 수명이 짧아(탈취 위험↓) 자주 쓰이고, Refresh Token은 수명이 길어(예: 1일) Access 재발급에만 사용합니다. 이 프로젝트는 Refresh Token을 DB에도 보관하고 재발급 때 회전(rotation)하여 로그아웃과 회수 흐름을 관찰합니다.
 
 ## 3. JWT 필터의 위치
 
@@ -136,3 +139,4 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
 ### 다음 단계
 - [★ React ↔ Spring Boot JWT 연동 흐름](../integration/react-springboot-jwt-flow.md)
+- [Spring Boot 04 — REST API 품질](04-rest-api-quality.md)

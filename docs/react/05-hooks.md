@@ -16,16 +16,23 @@ const [상태값, set함수] = useState(초기값);
 // set함수로 변경 → 컴포넌트 자동 리렌더링
 ```
 
-## 2. `useEffect` — 사이드 이펙트
-렌더링 외의 작업(서버 데이터 요청, DOM 수정, 타이머 등)을 처리.
+## 2. `useEffect` — 외부 시스템과 동기화
+
+Effect는 React 바깥의 시스템과 동기화할 때 사용합니다. 서버 데이터 요청, 브라우저 이벤트 구독, 타이머, 외부 위젯 연결 등이 대표 예입니다. 렌더링 중 계산할 수 있는 값을 다시 state로 맞추는 용도에는 대개 필요하지 않습니다.
+
 ```jsx
-useEffect(() => { /* 실행 코드 */ }, [의존성배열]);
+useEffect(() => {
+  const timerId = setInterval(() => console.log('tick'), 1000);
+  return () => clearInterval(timerId);  // cleanup
+}, []);
 ```
 | 의존성배열 | 실행 시점 |
 |-----------|-----------|
 | 생략 | 렌더링 될 때마다 |
-| `[]` | **최초 1회만** (마운트 시) |
+| `[]` | 마운트와 연결. 개발 StrictMode에서는 cleanup 검사를 위해 추가 실행 가능 |
 | `[특정값]` | 특정값이 변경될 때만 |
+
+React는 Effect가 다시 실행되기 전과 컴포넌트가 사라질 때 cleanup 함수를 호출합니다. 구독 해제, 타이머 해제, 요청 취소가 필요하다면 cleanup을 빠뜨리지 않습니다.
 
 ### React 생명주기(Lifecycle)
 - **마운트**(처음 등장): 컴포넌트 생성 → `useState` 초기화 → 렌더링 → `useEffect` 실행
@@ -45,6 +52,9 @@ const cached = useMemo(() => 무거운계산(a, b), [a, b]);
 const memoizedFn = useCallback(() => doSomething(a), [a]);
 ```
 
+!!! note "메모이제이션은 정확성을 위한 필수 문법이 아닙니다"
+    `useMemo`, `useCallback`은 성능 최적화 도구입니다. 모든 값과 함수를 습관적으로 감싸면 의존성 관리만 복잡해질 수 있습니다. 먼저 코드가 정확하게 동작하게 만들고, 실제로 반복 계산이나 불필요한 렌더링이 문제가 될 때 적용하세요.
+
 ## 5. `useRef` — 리렌더 없이 값 보관 / DOM 접근
 값이 바뀌어도 **리렌더링하지 않는** 상자.
 - DOM 직접 접근, 이전값 기억, 타이머 ID 보관 등
@@ -63,3 +73,4 @@ const id = useId();
 ---
 ### 다음 단계
 - [React 06 — Context API](06-context.md) · [React 07 — useReducer](07-usereducer.md)
+- [React 12 — 최신 React 학습 로드맵](12-modern-react-roadmap.md)

@@ -11,7 +11,10 @@
 const [temp, setTemp] = useState();
 useEffect(() => {
   fetch('http://api.openweathermap.org/data/2.5/weather?q=Seoul,KR&appid=...')
-    .then(res => res.json())                 // 응답을 JSON으로 변환
+    .then(res => {
+      if (!res.ok) throw new Error(`HTTP ${res.status}`); // fetch는 4xx/5xx를 자동 reject하지 않음
+      return res.json();
+    })
     .then(data => setTemp((data.main.temp - 273.15).toFixed(2) + "C"))
     .catch(err => console.error(err));
 }, []);                                        // [] → 마운트 시 1회
@@ -51,6 +54,30 @@ return list.map((k) => (
 ```
 
 > **Fetch vs Axios**: Fetch는 내장(설치 불필요)이지만 JSON 변환·에러 처리를 직접 해야 함. Axios는 자동 JSON 변환 + **인터셉터**(요청/응답 가로채기)가 강력 → 연동 프로젝트에서 **JWT 토큰 자동 주입/재발급**에 활용. → [연동 흐름](../integration/react-springboot-jwt-flow.md)
+
+## 3. Effect 안의 요청을 정리하기
+
+화면을 떠난 뒤 늦게 도착한 응답이 이전 화면의 state를 바꾸지 않도록 요청 취소를 고려합니다.
+
+```jsx
+useEffect(() => {
+  const controller = new AbortController();
+
+  async function load() {
+    const response = await fetch('/api/items', { signal: controller.signal });
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    setItems(await response.json());
+  }
+
+  load().catch(error => {
+    if (error.name !== 'AbortError') setError(error.message);
+  });
+
+  return () => controller.abort();
+}, []);
+```
+
+이 패턴은 기본 원리를 익히기에 좋습니다. 앱이 커지면 Router loader 또는 서버 상태 라이브러리로 로딩, 캐싱, 재검증을 분리할 수 있습니다. → [React 12](12-modern-react-roadmap.md)
 
 ---
 ### 다음 단계

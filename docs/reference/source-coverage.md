@@ -30,3 +30,4 @@ React Day03는 별도 텍스트 추출본이 남아 있지 않아 로컬 `my-app
 
 보존 코드에는 재현성을 높이기 위한 DB 초기화 SQL, 환경변수 폴백, 테스트 호환성 수정과 보안 보강이 추가되어 있습니다.
 
+원본 강의 이후의 최신 공식 문서 대조와 추가 학습 경로는 [최신 공식 문서 감수 기록](official-reference-audit.md), [React 12](../react/12-modern-react-roadmap.md), [Spring Boot 04](../springboot/04-rest-api-quality.md), [최종 홈페이지 로드맵](../integration/final-homepage-roadmap.md)에 정리했습니다.

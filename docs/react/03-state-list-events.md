@@ -30,6 +30,14 @@ const increment = () => setCnt(cnt + 1);   // set함수로 변경 → 자동 리
 ```
 → 자세한 Hook 사용법은 [React 05 — Hooks](05-hooks.md).
 
+### state는 렌더링 시점의 스냅샷
+
+각 렌더링 안에서 `cnt`는 고정된 값처럼 동작합니다. 이전 값을 기준으로 연속 업데이트해야 한다면 함수형 업데이트를 사용합니다.
+
+```jsx
+setCnt(prev => prev + 1);
+```
+
 ## 2. 배열 고차 메서드 — step04
 
 리스트 데이터를 다룰 때 자주 쓰는 메서드들. (보통 `filter` 후 `map`)
@@ -60,6 +68,27 @@ const stat = comments.reduce((acc, k) => {
 comments.some(k => k.isAdmin)    // 관리자 댓글이 하나라도 있나?
 comments.every(k => k.isAdmin)   // 모두 관리자 댓글인가?
 ```
+
+## 3. 배열 state는 직접 변경하지 않기
+
+React state에 들어간 배열은 읽기 전용처럼 다룹니다.
+
+| 작업 | 피하기 | 권장 |
+|---|---|---|
+| 추가 | `push` | `[...prev, newItem]` |
+| 삭제 | `splice` | `filter` |
+| 수정 | `arr[index] = value` | `map` |
+| 정렬 | 원본에 바로 `sort` | 복사 후 `sort` |
+
+```jsx
+setComments(prev => prev.map(comment =>
+  comment.idx === targetId
+    ? { ...comment, isAdmin: true }
+    : comment
+));
+```
+
+상태 구조와 불변 업데이트를 더 깊게 이해하려면 [React 12 — 최신 React 학습 로드맵](12-modern-react-roadmap.md)을 읽으세요.
 
 ---
 ### 다음 단계
