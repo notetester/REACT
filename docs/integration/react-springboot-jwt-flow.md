@@ -3,6 +3,8 @@
 > 프론트: [`code/react/03-integration-my-app03`](https://github.com/notetester/REACT/tree/main/code/react/03-integration-my-app03) · 백엔드: [`code/springboot/02-integration-MyProject02`](https://github.com/notetester/REACT/tree/main/code/springboot/02-integration-MyProject02)
 >
 > 이 문서는 앞선 React·Spring Boot·JWT 학습이 **하나로 합쳐지는** 최종 단계입니다.
+>
+> 설치 없이 화면부터 확인하려면 [온라인 mock 데모와 Actions API 스냅샷](online-demo-and-snapshot.md)을 먼저 읽으세요.
 
 ---
 
@@ -27,6 +29,9 @@ flowchart LR
 - React(3000) ↔ Spring(8080)은 **출처(origin)가 다름** → 서버 `SecurityConfig`에서 CORS로 `http://localhost:3000` 허용, `allowCredentials=true`.
 - 프론트 Axios도 `withCredentials: true`.
 - 백엔드 DB: **MyProject02 = Oracle**(`ojdbc11`, `jdbc:oracle:thin:@localhost:1521:xe`). (MyProject01은 MySQL)
+
+!!! info "온라인 데모와 자동 검증의 역할"
+    로컬 최종 실습은 Oracle XE를 사용합니다. GitHub Pages에서는 브라우저 localStorage 기반 mock API로 화면을 체험하고, GitHub Actions에서는 H2 Oracle mode로 실제 Spring Boot API 시나리오를 실행합니다.
 
 ## 2. Axios 인스턴스 — `api/Http.jsx`
 ```jsx

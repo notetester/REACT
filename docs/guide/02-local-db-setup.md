@@ -113,3 +113,8 @@ MySQL은 [GitHub Actions](https://docs.github.com/en/actions/configuring-and-man
 
 Oracle XE 컨테이너는 [Oracle 공식 Docker 이미지 안내](https://github.com/oracle/docker-images/blob/main/OracleDatabase/SingleInstance/README.md)에 따라 바이너리 다운로드와 라이선스 확인 과정이 필요합니다. 처음 학습할 때는 Windows 네이티브 XE 설치가 더 단순합니다.
 
+## 5. GitHub Actions는 로컬 DB에 연결하지 않습니다
+
+GitHub Actions runner는 사용자 PC의 `localhost`에 접근할 수 없습니다. 대신 MyProject01은 임시 MySQL 서비스 컨테이너를 사용하고, MyProject02는 `snapshot` 프로필의 임시 H2 메모리 DB를 사용합니다.
+
+H2 스냅샷은 Oracle XE 설치를 생략하라는 뜻이 아닙니다. 자동 검증과 문서 생성을 위한 보조 환경이며, 최종 로컬 연동 학습은 위의 Oracle XE 설정을 따라갑니다.

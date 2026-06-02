@@ -1,5 +1,5 @@
 import './App.css';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, HashRouter, Route, Routes } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import HomePage from './pages/HomePage';
 import TodoPage from './pages/TodoPage';
@@ -12,6 +12,7 @@ import useAuthStore from './store/useAuthStore';
 import PrivateRoute from './components/PrivateRoute';
 import GuestBookPage from './pages/GuestBookPage';
 
+const Router = process.env.REACT_APP_USE_HASH_ROUTER === 'true' ? HashRouter : BrowserRouter
 
 function App() {
   // 새로고침(F5) 시 로그인 상태 복원
@@ -24,7 +25,7 @@ function App() {
     }
   },[])
   return (
-    <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+    <Router future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
     <div className='app'>
       <Navbar />
       <hr />
@@ -38,7 +39,7 @@ function App() {
         <Route path="/register" element={<RegisterPage />}></Route>
       </Routes>
     </div>
-    </BrowserRouter>
+    </Router>
   );
 }
 

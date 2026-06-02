@@ -1,0 +1,17 @@
+spring:
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:myproject02_snapshot;MODE=Oracle;DATABASE_TO_UPPER=false;DB_CLOSE_DELAY=-1
+    username: sa
+    password:
+  sql:
+    init:
+      mode: always
+      schema-locations: classpath:db/snapshot-schema.sql
+      data-locations: classpath:db/snapshot-data.sql
+
+# Actions에서만 사용하는 짧은 수명의 학습 스냅샷 토큰이다.
+jwt:
+  secret: learning-only-snapshot-jwt-secret-32bytes
+  access-token-validity: 300000
+  refresh-token-validity: 600000

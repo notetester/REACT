@@ -46,6 +46,8 @@ flowchart LR
 
 자세한 흐름 → **[★ React ↔ Spring Boot JWT 연동 흐름](docs/integration/react-springboot-jwt-flow.md)**
 
+설치 없이 최종 UI를 확인하려면 **[온라인 integration mock 데모](https://notetester.github.io/REACT/demo/integration/)** 를 열어 `study` / `1111`로 로그인하세요. mock, Actions H2, 로컬 Oracle XE의 차이는 **[온라인 mock 데모와 Actions API 스냅샷](docs/integration/online-demo-and-snapshot.md)** 에 정리했습니다.
+
 ---
 
 ## 📖 목차 — 노트 ↔ 코드
@@ -93,7 +95,8 @@ REACT/
 ├── docs/                       # 학습 노트 (이 문서들)
 │   ├── react/        01~11
 │   ├── springboot/   01~03
-│   ├── integration/  연동 흐름
+│   ├── integration/  연동 흐름·온라인 mock·Actions 스냅샷 안내
+│   ├── generated/    Pages 배포 때 생성되는 API 실행 결과
 │   ├── guide/        로컬 실행·시크릿
 │   ├── reference/    취합 범위·이미지·정오표
 │   ├── archive/      추출 당시 원문 Markdown
@@ -118,7 +121,7 @@ npm install && npm start          # http://localhost:3000
 실습 코드에는 클론 직후 실행을 위한 **localhost 전용 기본값**이 있습니다. 외부 환경에서는 `DB_PASSWORD`, `JWT_SECRET` 환경변수나 GitHub Actions Repository secrets로 덮어써야 합니다. 자세한 구분은 **[실습용 시크릿과 GitHub Actions](docs/guide/02-security-and-actions-secrets.md)** 를 참고하세요.
 
 ## ✅ CI 범위
-GitHub Actions는 React 3개와 Spring Boot 2개의 빌드를 확인합니다. 추가로 임시 MySQL 8.4 컨테이너에서 `MyProject01`을 실행해 DB 조회 API까지 호출합니다. Oracle XE 기반 최종 연동은 로컬 체크리스트로 검증합니다.
+GitHub Actions는 React 3개와 Spring Boot 2개의 빌드를 확인합니다. 추가로 임시 MySQL 8.4 컨테이너에서 `MyProject01`의 DB 조회 API를 호출합니다. Pages workflow는 `MyProject02`를 임시 H2 Oracle mode로 실행해 회원가입·로그인·JWT 인증·방명록 CRUD 결과를 [API 스냅샷](docs/generated/integration-snapshot.md)으로 생성합니다. 로컬 최종 연동의 기본 DB는 Oracle XE입니다.
 
 ## 🙏 출처
 강의 필기(Notion)와 실습 코드를 학습 목적으로 분석·정리·보강한 자료입니다. 다이어그램·스크린샷의 원저작권은 원 강의에 있습니다.

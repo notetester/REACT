@@ -1,0 +1,41 @@
+CREATE TABLE members (
+  m_idx BIGINT PRIMARY KEY,
+  m_id VARCHAR(100) NOT NULL UNIQUE,
+  m_pw VARCHAR(255) NOT NULL,
+  m_name VARCHAR(100),
+  m_addr VARCHAR(255),
+  m_addr2 VARCHAR(255),
+  m_email VARCHAR(255),
+  m_phone VARCHAR(100),
+  m_reg TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+  m_active INTEGER DEFAULT 0 NOT NULL,
+  m_active_reg TIMESTAMP,
+  sns_email_naver VARCHAR(255),
+  sns_email_kakao VARCHAR(255),
+  sns_provider VARCHAR(50)
+);
+
+CREATE TABLE refresh_tokens (
+  rt_idx BIGINT PRIMARY KEY,
+  rt_user_id VARCHAR(100) NOT NULL,
+  rt_token VARCHAR(1000) NOT NULL,
+  rt_reg TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+  CONSTRAINT fk_refresh_tokens_members
+    FOREIGN KEY (rt_user_id) REFERENCES members (m_id)
+);
+
+CREATE TABLE guestbook (
+  g_idx BIGINT PRIMARY KEY,
+  g_writer VARCHAR(100) NOT NULL,
+  g_subject VARCHAR(255) NOT NULL,
+  g_email VARCHAR(255),
+  g_pwd VARCHAR(255),
+  g_content CLOB,
+  g_regdate TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+  g_active INTEGER DEFAULT 0 NOT NULL,
+  f_name VARCHAR(255)
+);
+
+CREATE SEQUENCE seq_members START WITH 1 INCREMENT BY 1;
+CREATE SEQUENCE seq_refresh_tokens START WITH 1 INCREMENT BY 1;
+CREATE SEQUENCE seq_guestbook START WITH 1 INCREMENT BY 1;

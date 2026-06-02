@@ -14,6 +14,7 @@ const useAuthStore = create(
 
             zu_logout: ()=>{
                 localStorage.removeItem('tokens')
+                localStorage.removeItem('react-spring-demo-tokens')
                 set({isLoggedIn:false, user:null})
             }
 

@@ -14,6 +14,10 @@ java {
     }
 }
 
+springBoot {
+    mainClass = 'com.study.myproject02.MyProject02Application'
+}
+
 repositories {
     mavenCentral()
 }
@@ -26,6 +30,8 @@ dependencies {
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     // oracle
     runtimeOnly 'com.oracle.database.jdbc:ojdbc11'
+    // GitHub Actions API snapshot: Oracle 문법을 H2 Oracle mode로 재현
+    runtimeOnly 'com.h2database:h2'
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-jdbc-test'

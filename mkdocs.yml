@@ -67,6 +67,8 @@ nav:
       - "03 JWT": springboot/03-jwt.md
   - 연동(최종 응용):
       - "React ↔ Spring Boot JWT 흐름": integration/react-springboot-jwt-flow.md
+      - "온라인 mock 데모와 Actions 스냅샷": integration/online-demo-and-snapshot.md
+      - "Actions API 실행 결과": generated/integration-snapshot.md
   - 실행 가이드:
       - "로컬 실습 실행": guide/01-local-setup.md
       - "Windows 로컬 DB 설치": guide/02-local-db-setup.md

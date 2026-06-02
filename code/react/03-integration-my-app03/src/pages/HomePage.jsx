@@ -3,6 +3,8 @@ import useMemoStore from "../store/useMemoStroe";
 import { Link } from "react-router-dom";
 import useTodoStore from "../store/useTodoStore";
 
+const isMockMode = process.env.REACT_APP_API_MODE === 'mock'
+
 export default function HomePage() {
     // 전체구독: 스토어의 모든 상태를 구독
     // 어떤값이라도 바뀌면 컴포넌트가 리렌더링 된다.
@@ -15,6 +17,14 @@ export default function HomePage() {
     const doneTodos = todos.filter((k)=>k.done).length
     return(
         <div className="page" style={{maxWidth:'400px'}}>
+           {isMockMode && (
+             <div className="card" style={{padding:'14px', marginBottom:'20px', borderColor:'#f59e0b', background:'#fffbeb'}}>
+               <p style={{fontWeight:'bold', color:'#92400e', marginBottom:'4px'}}>GitHub Pages용 mock 데모</p>
+               <p style={{fontSize:'12px', color:'#92400e'}}>
+                 서버와 Oracle XE 없이 브라우저 localStorage로 동작합니다. 학습 계정은 study / 1111 입니다.
+               </p>
+             </div>
+           )}
            <h1 style={{fontSize:'24px', marginBottom:'8px'}}>
                 {isLoggedIn ? `${user.m_name}님 환영합니다. `  : '안녕하세요!'}
            </h1>

@@ -1,13 +1,16 @@
 import {api} from "./Http"
+import * as mockGuestBook from "./mock/MockGuestBook"
+
+const isMockMode = process.env.REACT_APP_API_MODE === 'mock'
 
 export const guestbookList = () =>
-    api.get("/guestbook/list")
+    isMockMode ? mockGuestBook.guestbookList() : api.get("/guestbook/list")
 
 export const guestbookInsert = (gvo) =>
-    api.post("/guestbook/insert", gvo)
+    isMockMode ? mockGuestBook.guestbookInsert(gvo) : api.post("/guestbook/insert", gvo)
 
 export const guestbookUpdate = (gvo) =>
-    api.post("/guestbook/update" ,gvo)
+    isMockMode ? mockGuestBook.guestbookUpdate(gvo) : api.post("/guestbook/update" ,gvo)
 
 export const guestbookDelete = (g_idx, g_pwd) =>
-    api.post(`/guestbook/delete`, {g_idx, g_pwd})
+    isMockMode ? mockGuestBook.guestbookDelete(g_idx, g_pwd) : api.post(`/guestbook/delete`, {g_idx, g_pwd})

@@ -31,10 +31,9 @@ export default function RegisterPage(params) {
         setError('')
         setLoading(true)
         try{
-            // spring에서 결과 정보를 받자 
-            // register는  Auth.jsx의 register 함수 호출
+           // spring에서 결과 정보를 받자
+           // register는  Auth.jsx의 register 함수 호출
            const response = await register(formData)
-           console.log("response:" , response)
            const {success, message} = response.data
            if(success){
              navigate('/login')

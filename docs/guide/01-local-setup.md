@@ -60,6 +60,8 @@ npm start
 
 `my-app03`은 기본적으로 `http://localhost:8080`을 호출합니다. 다른 주소가 필요하면 `.env.example`을 참고해 `.env.development`에 `REACT_APP_API_BASE_URL`을 설정합니다.
 
+GitHub Pages의 [온라인 integration 데모](/REACT/demo/integration/)는 설치 없이 UI 흐름을 둘러보기 위한 localStorage mock입니다. 로컬 Oracle 연동을 실습할 때는 `REACT_APP_API_MODE`를 설정하지 않습니다.
+
 ## 4. 환경변수로 기본값 덮어쓰기
 
 두 Spring Boot 앱은 다음 값을 환경변수로 덮어쓸 수 있습니다.
@@ -74,3 +76,14 @@ npm start
 | `JWT_REFRESH_TOKEN_VALIDITY` | Refresh Token 수명(ms) |
 
 로컬 기본값은 실습 편의를 위한 값입니다. 외부 서버, 공유 DB, 실제 계정에는 재사용하지 않습니다.
+
+## 5. 자동 검증 환경과 로컬 DB의 차이
+
+GitHub Actions는 사용자의 로컬 DB에 연결하지 않습니다.
+
+| 자동 검증 | DB | 검증 범위 |
+|---|---|---|
+| MyProject01 smoke | Actions MySQL 서비스 컨테이너 | DB 초기화와 조회 API |
+| MyProject02 snapshot | Actions H2 메모리 DB, Oracle mode | 회원가입·로그인·JWT 인증·방명록 CRUD |
+
+MyProject02의 로컬 기본값은 여전히 Oracle XE입니다. Actions H2는 문서용 실행 결과를 만들기 위한 임시 프로필입니다. 최신 결과는 [Actions API 실행 스냅샷](../generated/integration-snapshot.md)에서 확인합니다.

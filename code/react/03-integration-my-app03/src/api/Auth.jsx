@@ -5,28 +5,30 @@
 
 import useAuthStore from "../store/useAuthStore";
 import { api } from "./Http";
+import * as mockAuth from "./mock/MockAuth";
 
+const isMockMode = process.env.REACT_APP_API_MODE === 'mock'
 
 // 토큰 저장 위치 : localStorage "tokens" 키에 JSON 으로 저장
 //               {accessToken, refreshToken, user}
 
 export const register = (member) =>
-    api.post('/members/register', member)
+    isMockMode ? mockAuth.register(member) : api.post('/members/register', member)
 
 export const login = (m_id,m_pw) =>
-    api.post('/members/login',{m_id, m_pw})
+    isMockMode ? mockAuth.login(m_id, m_pw) : api.post('/members/login',{m_id, m_pw})
 
 export const logout = () => 
-    api.post('/members/logout')
+    isMockMode ? mockAuth.logout() : api.post('/members/logout')
 
 export const myPage = () =>
-    api.get('/members/myPage')
+    isMockMode ? mockAuth.myPage() : api.get('/members/myPage')
 
 export const deleteMember = () =>
-    api.delete('/members/delAccount')
+    isMockMode ? mockAuth.deleteMember() : api.delete('/members/delAccount')
 
 export const updateMember = (member) =>
-    api.post('/members/updateMember', member)
+    isMockMode ? mockAuth.updateMember(member) : api.post('/members/updateMember', member)
 
 
 // 요청 인터셉터 

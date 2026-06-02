@@ -8,6 +8,9 @@ on:
       - "mkdocs.yml"
       - "code/react/01-basics-my-app01/**"
       - "code/react/02-zustand-my-app02/**"
+      - "code/react/03-integration-my-app03/**"
+      - "code/springboot/02-integration-MyProject02/**"
+      - "scripts/**"
       - ".github/workflows/pages.yml"
   workflow_dispatch:
 
@@ -29,7 +32,25 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
-      # 1) MkDocs Material notes site
+      # 1) Run the final backend against a temporary H2 DB and publish its API snapshot.
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: 21
+      - name: Generate integration API snapshot
+        run: |
+          chmod +x scripts/generate-integration-snapshot.sh
+          chmod +x code/springboot/02-integration-MyProject02/gradlew
+          ./scripts/generate-integration-snapshot.sh
+      - name: Upload integration API JSON artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: integration-api-results
+          path: docs/generated/api-results/*.json
+          if-no-files-found: warn
+
+      # 2) MkDocs Material notes site
       - uses: actions/setup-python@v6
         with:
           python-version: "3.x"
@@ -37,7 +58,7 @@ jobs:
       - name: Build docs site
         run: mkdocs build --strict
 
-      # 2) Static React demos
+      # 3) Static React demos
       - uses: actions/setup-node@v6
         with:
           node-version: 20
@@ -45,6 +66,7 @@ jobs:
           cache-dependency-path: |
             code/react/01-basics-my-app01/package-lock.json
             code/react/02-zustand-my-app02/package-lock.json
+            code/react/03-integration-my-app03/package-lock.json
       - name: Build React basics demo
         working-directory: code/react/01-basics-my-app01
         env:
@@ -63,11 +85,22 @@ jobs:
         run: |
           npm ci
           npm run build
+      - name: Build integration mock demo
+        working-directory: code/react/03-integration-my-app03
+        env:
+          PUBLIC_URL: /REACT/demo/integration
+          REACT_APP_API_MODE: mock
+          REACT_APP_USE_HASH_ROUTER: "true"
+          CI: "true"
+        run: |
+          npm ci
+          npm run build
       - name: Copy demos into site
         run: |
-          mkdir -p site/demo/react-basics site/demo/zustand
+          mkdir -p site/demo/react-basics site/demo/zustand site/demo/integration
           cp -r code/react/01-basics-my-app01/build/* site/demo/react-basics/
           cp -r code/react/02-zustand-my-app02/build/* site/demo/zustand/
+          cp -r code/react/03-integration-my-app03/build/* site/demo/integration/
 
       - uses: actions/upload-pages-artifact@v4
         with:
