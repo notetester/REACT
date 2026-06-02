@@ -65,6 +65,7 @@ nav:
       - "React ↔ Spring Boot JWT 흐름": integration/react-springboot-jwt-flow.md
   - 실행 가이드:
       - "로컬 실습 실행": guide/01-local-setup.md
+      - "Windows 로컬 DB 설치": guide/02-local-db-setup.md
       - "시크릿과 GitHub Actions": guide/02-security-and-actions-secrets.md
   - 자료 보존:
       - "원본 자료 수집 범위": reference/source-coverage.md

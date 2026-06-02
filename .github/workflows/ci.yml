@@ -59,3 +59,56 @@ jobs:
         run: ./gradlew clean build --no-daemon
         env:
           JWT_SECRET: ${{ secrets.CI_JWT_SECRET || 'learning-only-ci-jwt-secret-32bytes' }}
+
+  mysql-smoke:
+    name: MySQL smoke · 01-jwt-MyProject01
+    runs-on: ubuntu-latest
+    services:
+      mysql:
+        image: mysql:8.4
+        env:
+          MYSQL_ROOT_PASSWORD: learning-ci-root
+          MYSQL_DATABASE: dbstudy
+          MYSQL_USER: dbuser
+          MYSQL_PASSWORD: "1234"
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping -h localhost -uroot -plearning-ci-root"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=15
+    defaults:
+      run:
+        working-directory: code/springboot/01-jwt-MyProject01
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: 21
+      - run: chmod +x gradlew
+      - name: Bootstrap temporary MySQL schema
+        run: docker exec -i ${{ job.services.mysql.id }} mysql -uroot -plearning-ci-root < db/mysql-init.sql
+      - name: Start Spring Boot and call DB-backed endpoint
+        env:
+          DB_URL: jdbc:mysql://127.0.0.1:3306/dbstudy?useSSL=false&serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true
+          DB_USERNAME: dbuser
+          DB_PASSWORD: "1234"
+          JWT_SECRET: ${{ secrets.CI_JWT_SECRET || 'learning-only-ci-jwt-secret-32bytes' }}
+        run: |
+          ./gradlew bootRun --no-daemon > app.log 2>&1 &
+          app_pid=$!
+          trap 'kill "$app_pid" 2>/dev/null || true' EXIT
+
+          for attempt in {1..90}; do
+            if curl --fail --silent http://127.0.0.1:8080/guestbook/list > response.json; then
+              cat response.json
+              grep -q '"success":true' response.json
+              exit 0
+            fi
+            sleep 2
+          done
+
+          cat app.log
+          exit 1

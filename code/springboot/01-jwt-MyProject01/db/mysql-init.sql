@@ -1,10 +1,14 @@
 -- MyProject01 learning DB bootstrap
--- Run once against an empty MySQL schema named dbstudy.
+-- Run once as a MySQL administrator such as root.
 -- Seed account: study / 1111
 
 CREATE DATABASE IF NOT EXISTS dbstudy
   CHARACTER SET utf8mb4
   COLLATE utf8mb4_unicode_ci;
+
+CREATE USER IF NOT EXISTS 'dbuser'@'localhost' IDENTIFIED BY '1234';
+ALTER USER 'dbuser'@'localhost' IDENTIFIED BY '1234';
+GRANT ALL PRIVILEGES ON dbstudy.* TO 'dbuser'@'localhost';
 
 USE dbstudy;
 
@@ -53,4 +57,3 @@ VALUES (
   '학습자',
   'study@example.com'
 );
-

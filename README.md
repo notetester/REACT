@@ -112,10 +112,13 @@ npm install && npm start          # http://localhost:3000
 # Spring Boot (각 MyProject 폴더에서)
 ./gradlew bootRun                 # http://localhost:8080
 ```
-> 연동 실행은 백엔드(8080) 먼저 기동 후 프론트(3000)를 실행하세요. DB 초기화 SQL, 접속 정보와 환경변수는 **[로컬 실습 실행 가이드](docs/guide/01-local-setup.md)** 에 정리했습니다.
+> 새 PC에서는 먼저 **[Windows 로컬 DB 설치와 초기화](docs/guide/02-local-db-setup.md)** 를 진행하세요. 연동 실행 순서, 접속 정보와 환경변수는 **[로컬 실습 실행 가이드](docs/guide/01-local-setup.md)** 에 정리했습니다.
 
 ## ⚠️ 보안 주의
 실습 코드에는 클론 직후 실행을 위한 **localhost 전용 기본값**이 있습니다. 외부 환경에서는 `DB_PASSWORD`, `JWT_SECRET` 환경변수나 GitHub Actions Repository secrets로 덮어써야 합니다. 자세한 구분은 **[실습용 시크릿과 GitHub Actions](docs/guide/02-security-and-actions-secrets.md)** 를 참고하세요.
+
+## ✅ CI 범위
+GitHub Actions는 React 3개와 Spring Boot 2개의 빌드를 확인합니다. 추가로 임시 MySQL 8.4 컨테이너에서 `MyProject01`을 실행해 DB 조회 API까지 호출합니다. Oracle XE 기반 최종 연동은 로컬 체크리스트로 검증합니다.
 
 ## 🙏 출처
 강의 필기(Notion)와 실습 코드를 학습 목적으로 분석·정리·보강한 자료입니다. 다이어그램·스크린샷의 원저작권은 원 강의에 있습니다.

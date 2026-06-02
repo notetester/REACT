@@ -54,4 +54,4 @@ React 19 · React Router v6 · Zustand 5 · Axios · MUI / Spring Boot · Spring
 
 ## ▶️ 직접 실행
 
-DB 초기화부터 환경변수 덮어쓰기까지 [로컬 실습 실행 가이드](guide/01-local-setup.md)를 따라가면 됩니다. 실습용 비밀번호와 Actions Repository secrets의 역할은 [시크릿과 GitHub Actions](guide/02-security-and-actions-secrets.md)에 따로 정리했습니다.
+새 PC에서는 [Windows 로컬 DB 설치와 초기화](guide/02-local-db-setup.md)부터 시작합니다. 실행 순서는 [로컬 실습 실행 가이드](guide/01-local-setup.md), 실습용 비밀번호와 CI의 임시 DB 범위는 [시크릿과 GitHub Actions](guide/02-security-and-actions-secrets.md)에 정리했습니다.

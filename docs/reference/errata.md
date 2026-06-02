@@ -13,6 +13,7 @@
 | 로그 | Access Token, Refresh Token 원문 로그 제거 |
 | 회원탈퇴 | 상태 변경 요청을 `GET`에서 `DELETE`로 변경 |
 | DB 재현 | MySQL·Oracle 초기화 SQL과 학습용 `study / 1111` 계정 추가 |
+| DB 설치 | 새 Windows PC에서 MySQL 8.4와 Oracle XE 21c를 준비하는 설치·검증 순서 추가 |
+| CI DB 범위 | Actions 임시 MySQL 8.4 서비스에서 MyProject01 DB 조회 smoke test 추가. Oracle XE는 로컬 체크리스트로 분리 |
 
 `01-jwt-MyProject01`은 JWT 학습 중간 단계라 방명록 상세·수정·삭제가 완성되지 않은 상태입니다. 완성된 CRUD 흐름은 `02-integration-MyProject02`에서 확인합니다.
-

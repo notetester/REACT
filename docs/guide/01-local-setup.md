@@ -2,6 +2,9 @@
 
 이 저장소는 링크가 사라져도 다시 따라 할 수 있도록 코드, 노트, 이미지와 DB 초기화 SQL을 함께 보존합니다.
 
+!!! warning "Spring Boot 실행 전 확인"
+    새 PC라면 먼저 [Windows 로컬 DB 설치와 초기화](02-local-db-setup.md)를 따라 MySQL 또는 Oracle XE를 준비합니다. 아래 명령은 DB가 이미 설치되어 있다는 전제입니다.
+
 ## 1. 프론트 단독 실습
 
 ```bash
@@ -28,7 +31,7 @@ npm start
 | DB 비밀번호 | `1234` |
 | 로그인 실습 계정 | `study` / `1111` |
 
-빈 DB에서 [`mysql-init.sql`](https://github.com/notetester/REACT/blob/main/code/springboot/01-jwt-MyProject01/db/mysql-init.sql)을 한 번 실행한 뒤:
+관리자 계정으로 [`mysql-init.sql`](https://github.com/notetester/REACT/blob/main/code/springboot/01-jwt-MyProject01/db/mysql-init.sql)을 한 번 실행한 뒤:
 
 ```bash
 cd code/springboot/01-jwt-MyProject01
@@ -44,7 +47,7 @@ cd code/springboot/01-jwt-MyProject01
 | DB 비밀번호 | `1111` |
 | 로그인 실습 계정 | `study` / `1111` |
 
-빈 DB에서 [`oracle-init.sql`](https://github.com/notetester/REACT/blob/main/code/springboot/02-integration-MyProject02/db/oracle-init.sql)을 한 번 실행한 뒤 백엔드와 프론트를 순서대로 실행합니다.
+`SYSTEM` 계정으로 [`oracle-create-user.sql`](https://github.com/notetester/REACT/blob/main/code/springboot/02-integration-MyProject02/db/oracle-create-user.sql)을 실행하고, 생성된 `c##dbuser` 계정으로 [`oracle-init.sql`](https://github.com/notetester/REACT/blob/main/code/springboot/02-integration-MyProject02/db/oracle-init.sql)을 한 번 실행합니다. 이후 백엔드와 프론트를 순서대로 실행합니다.
 
 ```bash
 cd code/springboot/02-integration-MyProject02
@@ -71,4 +74,3 @@ npm start
 | `JWT_REFRESH_TOKEN_VALIDITY` | Refresh Token 수명(ms) |
 
 로컬 기본값은 실습 편의를 위한 값입니다. 외부 서버, 공유 DB, 실제 계정에는 재사용하지 않습니다.
-
