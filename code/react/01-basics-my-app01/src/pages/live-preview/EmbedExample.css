@@ -1,0 +1,53 @@
+/* 노트에 삽입되는 소형 임베드 화면 — 갤러리 chrome 없이 결과만 */
+html, body, #root {
+  margin: 0;
+}
+
+.embed-example {
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  color: #0f172a;
+  background: #ffffff;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.embed-example__bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  border-bottom: 1px solid #e2e8f0;
+  background: #f8fafc;
+  font-size: 12px;
+}
+
+.embed-example__badge {
+  font-weight: 700;
+  color: #fff;
+  background: #6366f1;
+  border-radius: 999px;
+  padding: 1px 8px;
+  font-size: 11px;
+}
+
+.embed-example__hint {
+  color: #475569;
+}
+
+.embed-example__src {
+  margin-left: auto;
+  color: #6366f1;
+  text-decoration: none;
+}
+.embed-example__src:hover { text-decoration: underline; }
+
+.embed-example__stage {
+  padding: 14px 16px;
+  flex: 1;
+}
+
+.embed-example--missing {
+  padding: 16px;
+  color: #b91c1c;
+}

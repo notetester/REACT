@@ -37,3 +37,47 @@
     min-height: 980px;
   }
 }
+
+/* ── 코드 ↔ 결과 좌우 배치 (각 코드 블록 옆에 그 예제의 실행 결과) ── */
+.cr {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 0.9rem;
+  align-items: stretch;
+  margin: 0.9rem 0 1.3rem;
+}
+.cr__code { min-width: 0; }
+.cr__code > .highlight,
+.cr__code > pre { margin: 0; height: 100%; }
+.cr__view {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: 0.6rem;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 0.2rem 0.6rem rgba(15, 23, 42, 0.06);
+}
+.cr__label {
+  margin: 0;
+  padding: 4px 10px;
+  font-size: 0.74rem;
+  color: var(--md-default-fg-color--light);
+  background: var(--md-default-fg-color--lightest);
+}
+.cr__frame {
+  display: block;
+  width: 100%;
+  min-height: 360px;
+  flex: 1;
+  border: 0;
+  background: #fff;
+}
+.cr__frame--short { min-height: 270px; }
+.cr__frame--tall { min-height: 470px; }
+
+@media (max-width: 960px) {
+  .cr { grid-template-columns: 1fr; }
+  .cr__frame { min-height: 320px; }
+}

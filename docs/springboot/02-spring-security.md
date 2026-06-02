@@ -99,7 +99,69 @@ Spring Security 공식 [CORS](https://docs.spring.io/spring-security/reference/s
 
 Spring Security 공식 [CSRF](https://docs.spring.io/spring-security/reference/servlet/exploits/csrf.html) 문서는 로그인 가능한 브라우저 애플리케이션에서 CSRF 방어를 검토해야 한다고 설명합니다. 핵심은 “JWT인가?”가 아니라 **브라우저가 인증 정보를 자동으로 전송하는가?**입니다.
 
-## 6. `AppConfig` — 비밀번호 암호화
+## 6. 요청 → 응답으로 확인하는 보안 규칙 (Postman/curl)
+
+`SecurityConfig`의 규칙이 실제 요청에 어떻게 반영되는지, **같은 엔드포인트를 토큰 유무·유효성만 바꿔** 호출한 결과입니다. (요청 = Postman/`curl`, 아래 JSON = 응답 본문) — 실제 자동 실행 기록은 [Actions API 스냅샷](../generated/integration-snapshot.md) 참고.
+
+!!! success "① permitAll — 토큰 없이도 통과 · `GET /guestbook/list`"
+    ```text
+    GET /guestbook/list                 (Authorization 헤더 없음)
+    ```
+    ```json
+    200 OK
+    { "success": true, "message": "데이터 불러오기 성공", "data": [ /* 목록 */ ] }
+    ```
+    규칙: `requestMatchers(HttpMethod.GET, "/guestbook/list").permitAll()` → 인증 없이 허용.
+
+!!! failure "② 보호 자원 — 토큰 없음 · `GET /members/myPage`"
+    ```text
+    GET /members/myPage                 (Authorization 헤더 없음)
+    ```
+    ```json
+    401 Unauthorized
+    { "success": false, "message": "인증이 필요합니다." }
+    ```
+    규칙: `anyRequest().authenticated()` + `exceptionHandling`의 `authenticationEntryPoint` → 인증 없으면 401 JSON.
+
+!!! success "③ 보호 자원 — 유효한 토큰 · `GET /members/myPage`"
+    ```text
+    GET /members/myPage
+    Authorization: Bearer <accessToken>
+    ```
+    ```json
+    200 OK
+    { "success": true, "message": "마이페이지 성공", "data": { "m_id": "study", "m_name": "..." } }
+    ```
+    흐름: `JwtRequestFilter`가 토큰 검증 → `SecurityContextHolder`에 등록 → 컨트롤러가 `getPrincipal()`로 userId 사용.
+
+!!! warning "④ 보호 자원 — 만료된 토큰 · `GET /members/myPage`"
+    ```text
+    GET /members/myPage
+    Authorization: Bearer <expired token>
+    ```
+    ```json
+    401 Unauthorized
+    { "success": false, "message": "token expired" }
+    ```
+    `JwtRequestFilter`의 `ExpiredJwtException` 분기 → 클라이언트는 `POST /members/refresh`로 재발급 시도. → [JWT 편](03-jwt.md), [연동 흐름](../integration/react-springboot-jwt-flow.md)
+
+!!! warning "⑤ 로그인 — 비밀번호 불일치 · `POST /members/login`"
+    ```text
+    POST /members/login
+    Content-Type: application/json
+    { "m_id": "study", "m_pw": "wrong" }
+    ```
+    ```json
+    200 OK
+    { "success": false, "message": "비밀번호가 틀렸습니다.", "data": null }
+    ```
+    인증 실패를 **보안 필터가 아니라 컨트롤러가 `DataVO`로** 처리하므로 HTTP는 200, 본문 `success:false`. (실제 Postman 화면 ↓)
+
+    ![Postman 로그인 실패 — 비밀번호 틀림](../assets/img/springboot-jwt/sbjwt_04.png)
+
+> 정리: **permitAll 경로**는 토큰 없이 통과(①), **그 외 경로**는 토큰이 없거나(②) 만료되면(④) 필터·엔트리포인트가 401을 돌려줍니다. 아이디·비밀번호 자체의 검증 실패(⑤)는 비즈니스 로직(컨트롤러)에서 `DataVO`로 안내합니다.
+
+## 7. `AppConfig` — 비밀번호 암호화
 
 ```java
 @Configuration

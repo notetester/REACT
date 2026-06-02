@@ -12,6 +12,7 @@ import AxiosTest01 from './pages/step18-Axios/AxiosTest01';
 import AxiosTest02 from './pages/step18-Axios/AxiosTest02';
 import AxiosTest02Detail from './pages/step18-Axios/AxiosTest02Detail';
 import LearningGallery from './pages/live-preview/LearningGallery';
+import EmbedExample from './pages/live-preview/EmbedExample';
 
 
 function RouterPractice() {
@@ -51,6 +52,7 @@ function App() {
   return (
     <Router future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
       <Routes>
+        <Route path="/lab/embed/:exampleId" element={<EmbedExample />} />
         <Route path="/lab" element={<LearningGallery />} />
         <Route path="/lab/:exampleId" element={<LearningGallery />} />
         <Route path="*" element={<RouterPractice />} />
