@@ -1,18 +1,28 @@
-# Build and Release Folders
-bin-debug/
-bin-release/
-[Oo]bj/
-[Bb]in/
+# ── Node / React ──
+node_modules/
+/code/**/build/
+/code/**/dist/
+.env.local
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 
-# Other files and folders
-.settings/
+# ── Java / Spring Boot / Gradle ──
+.gradle/
+**/build/
+!src/**/build/
+target/
+*.class
+*.iml
+.idea/
+out/
+bin/
 
-# Executables
-*.swf
-*.air
-*.ipa
-*.apk
+# ── MkDocs / Pages 빌드 산출물 ──
+/site/
+.cache/
 
-# Project files, i.e. `.project`, `.actionScriptProperties` and `.flexProperties`
-# should NOT be excluded as they contain compiler settings and other important
-# information for Eclipse / Flash Builder.
+# ── OS / Editor ──
+.DS_Store
+Thumbs.db
+*.log

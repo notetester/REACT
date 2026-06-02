@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.study.myproject02.members.mapper.MembersMapper">
+
+    <insert id="register" parameterType="MembersVO">
+        insert into members(m_idx, m_id, m_pw, m_name, m_addr, m_email, m_phone)
+        values(seq_members.nextval, #{m_id}, #{m_pw}, #{m_name}, #{m_addr}, #{m_email}, #{m_phone})
+    </insert>
+    <update id="deleteAccount" parameterType="String">
+        update members
+        set m_active = 1, m_active_reg = sysdate
+        where m_id = #{m_id}
+    </update>
+
+    <update id="updateMember" parameterType="MembersVO">
+        update members
+        set m_name = #{m_name}, m_email = #{m_email}, m_phone = #{m_phone},
+            m_addr = #{m_addr}, m_addr2 = #{m_addr2}
+        where m_id = #{m_id} and m_active = 0
+    </update>
+
+
+    <select id="findById" parameterType="String" resultType="MembersVO">
+        select * from members where m_active = 0 and m_id=#{m_id}
+    </select>
+
+    <delete id="deleteRefreshToken" parameterType="String">
+        delete from refresh_tokens where rt_user_id = #{rt_user_id}
+    </delete>
+
+    <insert id="saveRefreshToken" parameterType="RefreshTokenVO">
+        insert into refresh_tokens (rt_idx, rt_user_id, rt_token)
+        values(seq_refresh_tokens.nextval, #{rt_user_id}, #{rt_token})
+    </insert>
+    <select id="findRefreshToken" parameterType="String" resultType="RefreshTokenVO">
+        select * from refresh_tokens where rt_token=#{rt_token}
+    </select>
+</mapper>

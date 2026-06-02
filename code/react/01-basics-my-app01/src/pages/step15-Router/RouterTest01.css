@@ -1,0 +1,14 @@
+.nav{
+    color: red;
+    background-color: yellow;
+    border: 2px solid orange;
+}
+
+.nav a {
+    text-decoration: none;
+}
+
+.lineStyle{
+    display: inline;
+    padding: 30px;
+}

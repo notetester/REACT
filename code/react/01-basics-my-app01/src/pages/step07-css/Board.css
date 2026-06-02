@@ -1,0 +1,13 @@
+.board-row{
+    display: flex;
+}
+
+.square{
+    width: 60px;
+    height: 60px;
+    font-size: 20px;
+    font-weight: bold;
+    border: 2px solid #999;
+    background-color: #fff;
+    cursor: pointer;
+}

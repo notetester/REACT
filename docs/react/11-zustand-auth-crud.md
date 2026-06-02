@@ -1,0 +1,91 @@
+# React 11 — Zustand 응용: 인증 · 로그인 흐름 · CRUD
+
+> 실습 코드: [`code/react/02-zustand-my-app02`](../../code/react/02-zustand-my-app02)
+> (이 단원의 강사 필기는 이미지로 작성되어 있어, 원본 캡처를 함께 싣습니다.)
+
+---
+
+## 1. `useAuthStore` — 로그인 상태 스토어
+
+앱 전체에서 "지금 로그인되어 있는가?"를 확인하는 스토어.
+
+![6. 스토어 ① useAuthStore](../assets/img/zustand2/zustand2_05.png)
+
+| 상태/액션 | 타입 | 설명 |
+|-----------|------|------|
+| `user` | 객체 \| null | 로그인 사용자 정보. 로그아웃 시 null |
+| `isLoggedIn` | boolean | 로그인 여부 |
+| `login(username)` | 함수 | 로그인 처리 |
+| `logout()` | 함수 | 상태 초기화 |
+| `updateProfile(fields)` | 함수 | user 일부 필드 수정 |
+
+![useAuthStore.js 전체 코드](../assets/img/zustand2/zustand2_06.png)
+
+```jsx
+import { create } from 'zustand'
+import { persist } from 'zustand/middleware'
+const useAuthStore = create(persist(
+  (set) => ({
+    user: null,
+    isLoggedIn: false,
+    login: (username) => set({ user: { username, bio: '' }, isLoggedIn: true }),
+    logout: () => set({ user: null, isLoggedIn: false }),
+    // 스프레드(...)로 기존 필드 유지하면서 일부만 변경
+    updateProfile: (fields) => set((state) => ({ user: { ...state.user, ...fields } })),
+  }),
+  { name: 'auth-storage' }
+))
+```
+
+## 2. 로그인 / 로그아웃 흐름
+
+![로그인/로그아웃 흐름](../assets/img/zustand2/zustand2_07.png)
+
+```mermaid
+flowchart TD
+  A[LoginPage 접속] --> B{isLoggedIn?}
+  B -- "false (미로그인)" --> C[이름 입력 폼] --> D[로그인 버튼 클릭]
+  D --> E["login(username) 호출"] --> F["store 업데이트<br/>user 설정, isLoggedIn=true"]
+  F --> G["홈 이동 navigate('/')"]
+  F --> H[Navbar에 프로필·로그아웃 자동 표시]
+  B -- "true (로그인됨)" --> I[프로필/로그아웃 버튼] --> J[로그아웃 클릭]
+  J --> K["logout() 호출 → user=null, isLoggedIn=false"]
+```
+
+### Navbar — 조건부 렌더링 + NavLink
+```jsx
+const { isLoggedIn, logout } = useAuthStore();
+const cls = ({ isActive }) => isActive ? 'active' : '';   // NavLink가 현재경로면 isActive=true
+<NavLink to="/" className={cls}>홈</NavLink>
+{isLoggedIn && <NavLink to="/profile" className={cls}>프로필</NavLink>}   {/* 로그인 시에만 */}
+{isLoggedIn && <button className="danger" onClick={logout}>로그아웃</button>}
+```
+
+### LoginPage
+```jsx
+const { login } = useAuthStore();
+const navigate = useNavigate();
+const handleLogin = () => { if (!input.trim()) return; login(input); navigate('/'); };
+<input value={input} onChange={(e) => setInput(e.target.value)}
+       onKeyDown={(e) => e.key === 'Enter' && handleLogin()} />
+<button onClick={handleLogin}>로그인</button>   {/* 함수 "참조" — 클릭 시 실행 */}
+```
+
+## 3. CRUD 스토어 — Todo / Memo (persist)
+
+`useTodoStore`, `useMemoStore`는 목록 데이터를 persist로 관리합니다. 전형적인 패턴:
+```jsx
+const useTodoStore = create(persist((set) => ({
+  todos: [],
+  addTodo:    (text) => set((s) => ({ todos: [...s.todos, { id: Date.now(), text, done: false }] })),
+  toggleTodo: (id)   => set((s) => ({ todos: s.todos.map(t => t.id === id ? { ...t, done: !t.done } : t) })),
+  removeTodo: (id)   => set((s) => ({ todos: s.todos.filter(t => t.id !== id) })),
+}), { name: 'todo-storage' }))
+```
+> 불변성 유지가 핵심: 추가는 `[...배열, 새값]`, 수정은 `map`, 삭제는 `filter`.
+
+## 4. 다음 단계 — 실제 백엔드 연동
+
+여기까지는 **프론트 단독**(localStorage)입니다. 다음 단계에서는 동일한 Zustand 패턴 위에 **Axios + JWT**를 얹어 Spring Boot 서버와 실제로 연동합니다.
+
+→ **[★ React ↔ Spring Boot JWT 연동 흐름](../integration/react-springboot-jwt-flow.md)** ([`my-app03`](../../code/react/03-integration-my-app03) ↔ [`MyProject02`](../../code/springboot/02-integration-MyProject02))

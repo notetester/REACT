@@ -1,0 +1,65 @@
+site_name: React + Spring Boot 풀스택 학습 아카이브
+site_description: React 기초부터 Spring Boot + JWT 연동까지 정리한 학습 자료
+docs_dir: docs
+
+theme:
+  name: material
+  language: ko
+  features:
+    - navigation.sections
+    - navigation.top
+    - navigation.indexes
+    - content.code.copy
+    - search.suggest
+    - toc.follow
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      toggle:
+        icon: material/weather-night
+        name: 다크 모드
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      toggle:
+        icon: material/weather-sunny
+        name: 라이트 모드
+
+markdown_extensions:
+  - admonition
+  - tables
+  - attr_list
+  - md_in_html
+  - toc:
+      permalink: true
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+
+nav:
+  - 홈: index.md
+  - React:
+      - "01 소개·설치·구조": react/01-intro-setup.md
+      - "02 JSX·컴포넌트·props": react/02-jsx-components.md
+      - "03 state·배열 렌더링": react/03-state-list-events.md
+      - "04 이벤트·조건부·form": react/04-events-forms.md
+      - "05 Hooks": react/05-hooks.md
+      - "06 Context API": react/06-context.md
+      - "07 useReducer": react/07-usereducer.md
+      - "08 React Router": react/08-router.md
+      - "09 Fetch·Axios": react/09-fetch-axios.md
+      - "10 Zustand 기초": react/10-zustand-basics.md
+      - "11 Zustand 인증·CRUD": react/11-zustand-auth-crud.md
+  - Spring Boot:
+      - "01 구조·MyBatis": springboot/01-intro-architecture.md
+      - "02 Spring Security": springboot/02-spring-security.md
+      - "03 JWT": springboot/03-jwt.md
+  - 연동(최종 응용):
+      - "React ↔ Spring Boot JWT 흐름": integration/react-springboot-jwt-flow.md

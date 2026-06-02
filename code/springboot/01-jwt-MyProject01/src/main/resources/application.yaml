@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: MyProject01
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/dbstudy?useSSL=false&serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true
+    username: dbuser
+    password: 1234
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.study.myproject01.*.vo
+
+
+# jwt 관련 정보
+# secret: 32바이트(32글자)
+jwt:
+  secret: mysecretmy1secretmys3ecretmysecr
+  access-token-validity: 300000       #(1000 * 60 * 5)       5분
+  refresh-token-validity: 86400000   #(1000 * 60 * 60 * 24) 1일
+
