@@ -40,8 +40,12 @@ markdown_extensions:
   - pymdownx.superfences:
       custom_fences:
         - name: mermaid
-          class: mermaid
+          class: mermaid-src
           format: !!python/name:pymdownx.superfences.fence_code_format
+
+# Material 기본 mermaid 통합이 빈 블록만 남기는 환경 이슈를 우회: CDN mermaid로 직접 렌더
+extra_javascript:
+  - assets/js/mermaid-init.js
 
 nav:
   - 홈: index.md
