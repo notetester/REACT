@@ -4,6 +4,16 @@
 
 ---
 
+## 바로 확인하는 실행 결과
+
+상단 메뉴의 홈, 첫번째, 두번째, Axios 링크를 눌러 보세요. 주소와 화면이 바뀌지만 HTML 문서 전체를 다시 불러오지 않습니다. `단계별 결과`를 누르면 앞 장의 갤러리로 돌아갑니다.
+
+<div class="react-live-preview">
+  <iframe class="react-live-frame react-live-frame--compact" src="/REACT/demo/react-basics/" title="React Router 실행 결과" loading="lazy"></iframe>
+</div>
+
+<p class="react-live-links"><a href="/REACT/demo/react-basics/" target="_blank" rel="noopener">↗ 새 탭에서 크게 보기</a></p>
+
 ## 1. 라우터란?
 
 **URL(주소 경로)에 따라 어떤 컴포넌트를 화면에 보여줄지 결정**하는 역할. React Router는 **클라이언트 측 라우팅(CSR)**을 구현하는 표준 라이브러리로, 페이지 전체를 새로고침하지 않고 URL에 맞는 컴포넌트만 갈아끼웁니다.

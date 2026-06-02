@@ -47,10 +47,14 @@ markdown_extensions:
 extra_javascript:
   - assets/js/mermaid-init.js
 
+extra_css:
+  - assets/css/live-preview.css
+
 nav:
   - 홈: index.md
   - React:
       - "01 소개·설치·구조": react/01-intro-setup.md
+      - "실습 결과 갤러리": react/live-results.md
       - "02 JSX·컴포넌트·props": react/02-jsx-components.md
       - "03 state·배열 렌더링": react/03-state-list-events.md
       - "04 이벤트·조건부·form": react/04-events-forms.md

@@ -4,6 +4,16 @@
 
 ---
 
+## 바로 확인하는 실행 결과
+
+금액을 입력하고 예금·출금을 눌러 보세요. 버튼의 `dispatch(action)`이 reducer를 거쳐 새 잔고 state를 만드는 흐름을 확인할 수 있습니다.
+
+<div class="react-live-preview">
+  <iframe class="react-live-frame react-live-frame--compact" src="/REACT/demo/react-basics/#/lab/reducer" title="useReducer 은행 실행 결과" loading="lazy"></iframe>
+</div>
+
+<p class="react-live-links"><a href="/REACT/demo/react-basics/#/lab/reducer" target="_blank" rel="noopener">↗ 새 탭에서 크게 보기</a></p>
+
 ## useReducer 란?
 
 복잡한 상태관리를 더 **체계적이고 예측 가능하게** 처리하는 Hook. `useState`의 대체제로, 상태 변화 로직이 복합적일 때 더 명확합니다.

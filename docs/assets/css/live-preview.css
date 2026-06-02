@@ -1,0 +1,39 @@
+.react-live-preview {
+  overflow: hidden;
+  margin: 1rem 0 0.5rem;
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: 0.65rem;
+  background: #fff;
+  box-shadow: 0 0.25rem 0.85rem rgba(15, 23, 42, 0.08);
+}
+
+.react-live-frame {
+  display: block;
+  width: 100%;
+  min-height: 590px;
+  border: 0;
+  background: #fff;
+}
+
+.react-live-frame--compact {
+  min-height: 480px;
+}
+
+.react-live-frame--tall {
+  min-height: 860px;
+}
+
+.react-live-links {
+  margin-top: 0.4rem;
+  font-size: 0.8rem;
+}
+
+@media (max-width: 720px) {
+  .react-live-frame {
+    min-height: 720px;
+  }
+
+  .react-live-frame--tall {
+    min-height: 980px;
+  }
+}

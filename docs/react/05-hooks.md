@@ -4,6 +4,16 @@
 
 ---
 
+## 바로 확인하는 실행 결과
+
+두 버튼은 서로 다른 state를 바꿉니다. 첫 번째 카운터를 바꿀 때만 `[count]`에 연결한 Effect가 실행되는 모습을 브라우저 개발자 도구 Console과 함께 확인하세요.
+
+<div class="react-live-preview">
+  <iframe class="react-live-frame react-live-frame--compact" src="/REACT/demo/react-basics/#/lab/hooks" title="Hooks useEffect 실행 결과" loading="lazy"></iframe>
+</div>
+
+<p class="react-live-links"><a href="/REACT/demo/react-basics/#/lab/hooks" target="_blank" rel="noopener">↗ 새 탭에서 크게 보기</a></p>
+
 ## Hook 이란?
 
 원래 React는 클래스 기반이었으나, 함수형 컴포넌트로 전환되면서 클래스에서 쓰던 기능을 함수형에서도 쓰기 위해 **Hook**이 도입됐습니다. 즉, 함수형 컴포넌트에서 React 기능을 **"갈고리처럼 끌어다 쓰는 함수"**.

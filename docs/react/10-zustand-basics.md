@@ -4,6 +4,16 @@
 
 ---
 
+## 바로 확인하는 실행 결과
+
+Zustand 앱을 직접 조작해 보세요. 로그인한 뒤 Todo와 메모를 추가하고 새로고침하면 `persist` 미들웨어가 `localStorage`에서 상태를 복원합니다.
+
+<div class="react-live-preview">
+  <iframe class="react-live-frame" src="/REACT/demo/zustand/" title="Zustand 상태관리 실행 결과" loading="lazy"></iframe>
+</div>
+
+<p class="react-live-links"><a href="/REACT/demo/zustand/" target="_blank" rel="noopener">↗ 새 탭에서 크게 보기</a></p>
+
 ## 1. Zustand 란? — 왜 필요한가
 
 여러 컴포넌트가 같은 상태를 함께 써야 할 때(예: 로그인 사용자 이름을 `Navbar`·`HomePage`·`ProfilePage`에서 모두 표시) 상태관리가 필요합니다.

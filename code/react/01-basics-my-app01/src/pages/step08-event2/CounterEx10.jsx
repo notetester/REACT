@@ -1,4 +1,4 @@
-import { Button, ToggleButton } from "@mui/material";
+import { ToggleButton } from "@mui/material";
 import { useState } from "react";
 
 // export default function CounterEx10(params) {

@@ -4,6 +4,24 @@
 
 ---
 
+## 먼저 결과부터 둘러보세요
+
+React는 화면을 만들기 위한 라이브러리입니다. 처음부터 모든 코드를 이해하려고 멈추기보다, 아래 결과 탐색기에서 탭을 누르고 화면을 조작한 뒤 각 장의 코드를 읽으세요.
+
+<div class="react-live-preview">
+  <iframe
+    class="react-live-frame react-live-frame--tall"
+    src="/REACT/demo/react-basics/#/lab"
+    title="React 단계별 실습 결과 탐색기"
+    loading="lazy">
+  </iframe>
+</div>
+
+<p class="react-live-links">
+  <a href="/REACT/demo/react-basics/#/lab" target="_blank" rel="noopener">↗ 결과 탐색기를 새 탭에서 크게 보기</a>
+  · <a href="../live-results/">사용 방법과 장별 연결표 보기</a>
+</p>
+
 ## 1. React 란?
 
 페이스북(Meta)이 만든 **자바스크립트 기반 UI 라이브러리**. 최종 프로젝트의 **화면(프론트엔드)**을 담당합니다. (Spring Boot에서 JSP 대신 React/Vue를 사용)

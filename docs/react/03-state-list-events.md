@@ -4,6 +4,16 @@
 
 ---
 
+## 바로 확인하는 실행 결과
+
+카운터의 `+`, `-` 버튼을 누르면 `useState`가 바뀌고 화면도 다시 렌더링됩니다. 오른쪽에는 `filter`와 `map`을 거친 관리자 댓글만 남습니다.
+
+<div class="react-live-preview">
+  <iframe class="react-live-frame" src="/REACT/demo/react-basics/#/lab/state-lists" title="state 배열 고차 메서드 실행 결과" loading="lazy"></iframe>
+</div>
+
+<p class="react-live-links"><a href="/REACT/demo/react-basics/#/lab/state-lists" target="_blank" rel="noopener">↗ 새 탭에서 크게 보기</a></p>
+
 ## 1. 왜 state(상태)가 필요한가? — step03
 
 일반 변수는 값을 바꿔도 **화면이 다시 그려지지 않습니다.**

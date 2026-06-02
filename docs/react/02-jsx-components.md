@@ -4,6 +4,16 @@
 
 ---
 
+## 바로 확인하는 실행 결과
+
+props로 전달한 값이 책 정보로 표시되고, 배열 데이터가 댓글 카드 목록으로 반복 렌더링됩니다.
+
+<div class="react-live-preview">
+  <iframe class="react-live-frame" src="/REACT/demo/react-basics/#/lab/jsx-components" title="JSX 컴포넌트 props 실행 결과" loading="lazy"></iframe>
+</div>
+
+<p class="react-live-links"><a href="/REACT/demo/react-basics/#/lab/jsx-components" target="_blank" rel="noopener">↗ 새 탭에서 크게 보기</a></p>
+
 ## 1. step01 — 첫 컴포넌트와 props
 
 **props(properties)**: 부모가 자식에게 전달하는 데이터. (단방향)

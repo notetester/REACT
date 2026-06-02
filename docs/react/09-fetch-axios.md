@@ -4,6 +4,16 @@
 
 ---
 
+## 바로 확인하는 실행 결과
+
+Axios가 외부 API에서 영화 목록을 가져오는 동안 로딩 상태가 보이고, 요청이 끝나면 이미지와 장르가 렌더링됩니다. 이미지를 누르면 URL 파라미터를 사용하는 상세 화면으로 이동합니다.
+
+<div class="react-live-preview">
+  <iframe class="react-live-frame react-live-frame--tall" src="/REACT/demo/react-basics/#/axios02" title="Axios 영화 API 실행 결과" loading="lazy"></iframe>
+</div>
+
+<p class="react-live-links"><a href="/REACT/demo/react-basics/#/axios02" target="_blank" rel="noopener">↗ 새 탭에서 크게 보기</a></p>
+
 ## 1. Fetch API — 브라우저 내장
 
 별도 설치 없이 `fetch()`로 비동기 요청. `useEffect`와 함께 **최초 1회** 데이터를 가져옵니다.

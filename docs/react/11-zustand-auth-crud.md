@@ -5,6 +5,16 @@
 
 ---
 
+## 바로 확인하는 실행 결과
+
+아래 로그인 화면에서 이름을 입력하세요. 로그인 후 Navbar, Todo, Memo, 프로필 화면을 이동하며 하나의 store 변화가 여러 화면에 반영되는 모습을 확인할 수 있습니다.
+
+<div class="react-live-preview">
+  <iframe class="react-live-frame" src="/REACT/demo/zustand/#/login" title="Zustand 로그인 CRUD 실행 결과" loading="lazy"></iframe>
+</div>
+
+<p class="react-live-links"><a href="/REACT/demo/zustand/#/login" target="_blank" rel="noopener">↗ 새 탭에서 크게 보기</a></p>
+
 ## 1. `useAuthStore` — 로그인 상태 스토어
 
 앱 전체에서 "지금 로그인되어 있는가?"를 확인하는 스토어.

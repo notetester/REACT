@@ -4,6 +4,16 @@
 
 ---
 
+## 바로 확인하는 실행 결과
+
+Footer의 `Mode` 버튼을 누르세요. Context에 공유한 테마 state를 구독하는 Header, Main, Footer가 함께 바뀝니다.
+
+<div class="react-live-preview">
+  <iframe class="react-live-frame" src="/REACT/demo/react-basics/#/lab/context" title="Context API 테마 실행 결과" loading="lazy"></iframe>
+</div>
+
+<p class="react-live-links"><a href="/REACT/demo/react-basics/#/lab/context" target="_blank" rel="noopener">↗ 새 탭에서 크게 보기</a></p>
+
 ## 1. 상태관리와 Props Drilling 문제
 
 React 컴포넌트는 **트리(계층) 구조**이고, 데이터는 상위 → 하위로 **props**로 전달됩니다. 그런데 깊은 곳까지 전달하려면 중간 컴포넌트를 **모두 거쳐야** 합니다 — 이를 **Props Drilling**이라 합니다.

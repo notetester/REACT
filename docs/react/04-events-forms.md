@@ -5,6 +5,16 @@
 
 ---
 
+## 바로 확인하는 실행 결과
+
+버튼, 숫자판, 토글, 사용자 전환, 체크박스를 직접 조작하세요. 이 장에서 다루는 이벤트와 제어 컴포넌트가 화면 변화로 이어지는 모습을 한 번에 비교할 수 있습니다.
+
+<div class="react-live-preview">
+  <iframe class="react-live-frame react-live-frame--tall" src="/REACT/demo/react-basics/#/lab/events-forms" title="이벤트 CSS form 실행 결과" loading="lazy"></iframe>
+</div>
+
+<p class="react-live-links"><a href="/REACT/demo/react-basics/#/lab/events-forms" target="_blank" rel="noopener">↗ 새 탭에서 크게 보기</a></p>
+
 ## 1. 조건부 렌더링 — step05-if
 
 `return()` 안에서는 `if`문을 못 쓰므로, 변수/삼항/논리연산자를 활용합니다.

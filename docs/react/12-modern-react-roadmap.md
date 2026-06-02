@@ -4,6 +4,9 @@
 >
 > 먼저 [React 01~11](01-intro-setup.md)을 따라 컴포넌트, 상태, Router, Axios, Zustand를 직접 만져 본 뒤 읽으세요.
 
+!!! tip "앞 장의 결과를 다시 비교하세요"
+    JSX부터 `useReducer`까지 동작하는 화면은 [React 실습 결과 갤러리](live-results.md)에서 한 번에 비교할 수 있습니다. 이 장에서는 그 결과를 만들 때 지켜야 할 최신 설계 원칙을 정리합니다.
+
 ## 1. 왜 CRA 실습을 보존하면서 새 시작 방법을 따로 배우나요?
 
 이 저장소의 `my-app01`, `my-app02`, `my-app03`은 CRA(Create React App, `react-scripts`) 기반입니다. 강의 당시 파일 구조와 단계별 실습을 그대로 따라가기 좋고, 현재도 빌드와 GitHub Pages 배포가 검증됩니다.
