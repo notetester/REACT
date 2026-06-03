@@ -4,15 +4,7 @@
 
 ---
 
-## 바로 확인하는 실행 결과
-
-상단 메뉴의 홈, 첫번째, 두번째, Axios 링크를 눌러 보세요. 주소와 화면이 바뀌지만 HTML 문서 전체를 다시 불러오지 않습니다. `단계별 결과`를 누르면 앞 장의 갤러리로 돌아갑니다.
-
-<div class="react-live-preview">
-  <iframe class="react-live-frame react-live-frame--compact" src="/REACT/demo/react-basics/" title="React Router 실행 결과" loading="lazy"></iframe>
-</div>
-
-<p class="react-live-links"><a href="/REACT/demo/react-basics/" target="_blank" rel="noopener">↗ 새 탭에서 크게 보기</a></p>
+> **3번 코드의 실제 동작**을 그 자리 바로 아래에 붙였습니다. 데모 안에서 링크를 누르면 새로고침 없이 화면만 바뀝니다. 단, **주소(URL) 변화는 iframe 안에서 보이지 않으니** "↗ 새 탭"으로 열어 브라우저 주소창과 함께 확인하세요.
 
 ## 1. 라우터란?
 
@@ -30,6 +22,9 @@
 | `Link` | 새로고침 없이 주소를 바꾸는 `<a>`의 React 버전 |
 
 ## 3. 기본 사용 (step15)
+<div class="cr" markdown="1">
+<div class="cr__code" markdown="1">
+
 ```jsx
 // 네비게이션
 import { Link } from 'react-router-dom';
@@ -51,6 +46,15 @@ import { Link } from 'react-router-dom';
   </Routes>
 </BrowserRouter>
 ```
+
+</div>
+<div class="cr__view">
+<p class="cr__label">▶ 결과 — 홈·첫번째·두번째·Axios 링크 클릭 → 새로고침 없이 화면만 전환</p>
+<iframe class="cr__frame cr__frame--app" src="/REACT/demo/react-basics/" loading="lazy" title="React Router 실행 결과"></iframe>
+</div>
+</div>
+
+<p class="react-live-links"><a href="/REACT/demo/react-basics/" target="_blank" rel="noopener">↗ 새 탭에서 주소(URL) 변화까지 보기</a> — 같은 화면이지만 주소창의 경로가 바뀌는 것을 확인할 수 있습니다.</p>
 
 ## 4. URL 파라미터 (step16)
 

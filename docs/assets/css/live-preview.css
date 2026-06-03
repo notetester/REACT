@@ -71,6 +71,7 @@
 }
 .cr__frame--short { min-height: 260px; }
 .cr__frame--tall { min-height: 480px; }
+.cr__frame--app { min-height: 600px; }   /* 전체 앱 데모(라우터/Zustand)용 */
 
 @media (max-width: 720px) {
   .cr__frame { min-height: 360px; }

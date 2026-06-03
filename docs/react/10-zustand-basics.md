@@ -4,15 +4,7 @@
 
 ---
 
-## 바로 확인하는 실행 결과
-
-Zustand 앱을 직접 조작해 보세요. 로그인한 뒤 Todo와 메모를 추가하고 새로고침하면 `persist` 미들웨어가 `localStorage`에서 상태를 복원합니다.
-
-<div class="react-live-preview">
-  <iframe class="react-live-frame" src="/REACT/demo/zustand/" title="Zustand 상태관리 실행 결과" loading="lazy"></iframe>
-</div>
-
-<p class="react-live-links"><a href="/REACT/demo/zustand/" target="_blank" rel="noopener">↗ 새 탭에서 크게 보기</a></p>
+> 이 단원의 핵심 결과는 **persist(새로고침해도 유지)** 입니다. 그래서 라이브 데모를 맨 아래 **5. persist 미들웨어** 코드 옆에 두었습니다. 위쪽 카운터 예제는 문법 설명용이라 별도 화면을 붙이지 않았습니다(같은 앱을 위에서 또 띄우면 코드와 결과가 어긋나기 때문).
 
 ## 1. Zustand 란? — 왜 필요한가
 
@@ -97,6 +89,9 @@ const { count, increment, reset } = useCounterStore()
 
 ![persist 미들웨어](../assets/img/zustand2/zustand2_04.png)
 
+<div class="cr" markdown="1">
+<div class="cr__code" markdown="1">
+
 ```jsx
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
@@ -107,6 +102,16 @@ const useStore = create(
   )
 )
 ```
+
+</div>
+<div class="cr__view">
+<p class="cr__label">▶ 결과 — 로그인 후 Todo·메모를 추가하고 새로고침해도 그대로 복원(persist)</p>
+<iframe class="cr__frame cr__frame--app" src="/REACT/demo/zustand/" loading="lazy" title="Zustand persist 실행 결과"></iframe>
+</div>
+</div>
+
+<p class="react-live-links"><a href="/REACT/demo/zustand/" target="_blank" rel="noopener">↗ 새 탭에서 열기</a> — persist는 <strong>새 탭에서 항목을 추가한 뒤 새로고침(F5)</strong> 했을 때 그대로 남는 것으로 확인하는 게 가장 확실합니다(iframe 안에서의 새로고침은 페이지 전체가 새로고침될 수 있습니다).</p>
+
 > `my-app02`에서는 `useTodoStore`(`todo-storage`), `useMemoStore`(`memo-storage`)가 persist로 새로고침 후에도 유지됩니다.
 
 ---

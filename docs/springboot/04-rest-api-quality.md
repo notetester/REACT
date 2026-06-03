@@ -131,7 +131,44 @@ public ResponseEntity<MemberProfileResponse> register(
 }
 ```
 
-검증 실패는 기본적으로 400 Bad Request로 처리됩니다. 필드별 오류 메시지를 프론트 폼 아래에 표시하려면 전역 오류 처리에서 필요한 형태로 변환합니다.
+검증 실패는 기본적으로 400 Bad Request로 처리됩니다. 필드별 오류 메시지를 프론트 폼 아래에 표시하려면 전역 오류 처리에서 필요한 형태로 변환합니다. 같은 엔드포인트가 입력에 따라 어떻게 갈리는지 봅니다(아래는 이 설계를 적용했을 때의 예시 응답입니다).
+
+!!! failure "검증 실패 — 빈 이름·짧은 비밀번호·잘못된 이메일 → 400"
+    위 규칙을 네 군데 어긴 요청입니다(`id` 4자 미만, `password` 8자 미만, `name` 공백, `email` 형식 오류).
+
+    ```http
+    POST /members HTTP/1.1
+    Host: localhost:8080
+    Content-Type: application/json
+    { "id": "ab", "password": "123", "name": "", "email": "not-an-email" }
+    ```
+    ```http
+    HTTP/1.1 400 Bad Request
+    Content-Type: application/json
+    { "type": "about:blank", "title": "Bad Request", "status": 400,
+      "detail": "검증에 실패했습니다. 오류 4건",
+      "errors": [
+        { "field": "id",       "message": "크기가 4에서 30 사이여야 합니다" },
+        { "field": "password", "message": "크기가 8에서 100 사이여야 합니다" },
+        { "field": "name",     "message": "공백일 수 없습니다" },
+        { "field": "email",    "message": "올바른 형식의 이메일 주소여야 합니다" }
+      ] }
+    ```
+    `@Valid`가 컨트롤러 진입 시점에 막으므로 Service·Mapper까지 내려가지 않고 **입구에서** 걸러집니다.
+
+!!! success "검증 통과 — 정상 입력 → 201 Created"
+    ```http
+    POST /members HTTP/1.1
+    Host: localhost:8080
+    Content-Type: application/json
+    { "id": "studyuser", "password": "password123", "name": "스터디", "email": "study@test.com" }
+    ```
+    ```http
+    HTTP/1.1 201 Created
+    Content-Type: application/json
+    { "id": "studyuser", "name": "스터디", "email": "study@test.com" }
+    ```
+    응답 DTO(`MemberProfileResponse`)에는 **비밀번호가 없습니다** — 출력 전용 DTO가 내부 필드 노출을 막습니다(§3).
 
 !!! note "학습 코드와 완성 코드의 차이"
     현재 저장소의 회원가입 비밀번호 `1111`은 로컬 실습 계정입니다. 운영 정책 예시에서는 8자 이상처럼 더 강한 규칙을 적용하세요.
@@ -174,7 +211,17 @@ public class ApiExceptionHandler {
 }
 ```
 
-예상 응답:
+예를 들어 방명록 수정 시 비밀번호가 틀리면 Service가 `IllegalArgumentException`을 던지고, 위 핸들러가 이를 표준 `ProblemDetail`로 변환합니다.
+
+```http
+PUT /guestbook/15 HTTP/1.1
+Host: localhost:8080
+Content-Type: application/json
+
+{ "subject": "수정 제목", "content": "수정 내용", "password": "wrong" }
+```
+
+이 요청의 예상 응답:
 
 ```json
 {

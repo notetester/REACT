@@ -143,14 +143,79 @@ public class DataVO {
   </insert>
   ```
 
-## 6. Postman으로 테스트
+## 6. 요청 → 응답으로 확인하기 (Postman/curl)
 
-엔드포인트를 컬렉션으로 정리해 호출 결과를 확인합니다.
+§5의 레이어를 지나면 요청이 어떤 응답이 되는지, `MembersController`의 **세 가지 요청 패턴**과 GuestBook 목록으로 확인합니다. 모든 REST 응답은 `DataVO`의 `{success, message, data}` 형태로 통일됩니다.
+
+!!! info "① 경로만 — `GET /members/hello`"
+    파라미터 없이 문자열을 반환하는 가장 단순한 형태입니다.
+
+    ```http
+    GET /members/hello HTTP/1.1
+    Host: localhost:8080
+    ```
+    ```http
+    HTTP/1.1 200 OK
+    Content-Type: text/plain
+    hello
+    ```
+
+!!! info "② 쿼리스트링 — `@RequestParam` · `GET /members/hello2?msg=hi`"
+    `?msg=hi`의 값이 메서드 인자로 바인딩됩니다.
+
+    ```http
+    GET /members/hello2?msg=hi HTTP/1.1
+    Host: localhost:8080
+    ```
+    ```java
+    @GetMapping("/hello2")
+    public String hello2(@RequestParam String msg) { return "msg = " + msg; }
+    ```
+    ```http
+    HTTP/1.1 200 OK
+    Content-Type: text/plain
+    msg = hi
+    ```
+
+!!! info "③ JSON 바디 — `@RequestBody` · `POST /members/hi2`"
+    JSON 본문이 `Map`(또는 VO)으로 변환되어 들어옵니다.
+
+    ```http
+    POST /members/hi2 HTTP/1.1
+    Host: localhost:8080
+    Content-Type: application/json
+    { "name": "study", "age": 20 }
+    ```
+    ```java
+    @PostMapping("/hi2")
+    public String hi2(@RequestBody Map<String,Object> body) { return "name = " + body.get("name"); }
+    ```
+    ```http
+    HTTP/1.1 200 OK
+    Content-Type: text/plain
+    name = study
+    ```
+
+!!! success "④ DataVO로 감싼 목록 — `GET /guestbook/list`"
+    §5의 MyBatis `guestBookList` SQL이 조회한 행이 그대로 `DataVO.data` 배열이 됩니다. **공개 목록이라 비밀번호(`g_pwd`)는 응답에서 제외**됩니다.
+
+    ```http
+    GET /guestbook/list HTTP/1.1
+    Host: localhost:8080
+    ```
+    ```http
+    HTTP/1.1 200 OK
+    Content-Type: application/json
+    { "success": true, "message": "데이터 불러오기 성공",
+      "data": [
+        { "g_idx": 1, "g_writer": "study", "g_subject": "첫 글", "g_content": "방가", "g_regdate": "2026-01-02" }
+      ] }
+    ```
+    SQL이 고른 컬럼(`g_idx, g_writer, g_subject, …`)이 곧 `data` 안 객체의 필드가 됩니다.
+
+> 아래는 실제 Postman 컬렉션과 목록 응답 화면입니다.
 
 ![Postman 컬렉션](../assets/img/springboot-day01/sb1_06.png)
-
-`GET /guestbook/list` → `{success, message, data:[...]}`. 공개 목록 응답에는 비밀번호 필드를 포함하지 않습니다.
-
 ![guestbook list 응답](../assets/img/springboot-day01/sb1_11.png)
 
 ---
