@@ -4,6 +4,8 @@
 >
 > 이 문서는 앞선 React·Spring Boot·JWT 학습이 **하나로 합쳐지는** 최종 단계입니다.
 >
+> 👉 **각 기능을 실제 파일·코드로 한 줄씩 따라가려면** → [기능별 코드 흐름 따라가기](code-flow-by-feature.md)
+>
 > 설치 없이 화면부터 확인하려면 [온라인 mock 데모와 Actions API 스냅샷](online-demo-and-snapshot.md)을 먼저 읽으세요.
 
 ---
