@@ -22,6 +22,21 @@
 | `Link` | 새로고침 없이 주소를 바꾸는 `<a>`의 React 버전 |
 
 ## 3. 기본 사용 (step15)
+
+라우팅의 진짜 핵심은 **"화면의 어디에 무엇이 끼워지는가"** 입니다. 앱 골격(→ [React 01 — 앱 골격](01-intro-setup.md#app-skeleton))의 `App.js`에서 화면을 두 부분으로 나눕니다 — **항상 보이는 내비게이션**과, **URL에 따라 컴포넌트가 갈아끼워지는 구멍 `<Routes>`**.
+
+```mermaid
+flowchart TD
+  ROOT["#root (index.html)"] --> APP["App.js"]
+  APP --> NAV["내비게이션 (Link 모음)<br/>Routes 바깥 · 항상 고정"]
+  APP --> SLOT{"Routes 구멍<br/>URL에 맞는 Route가 여기 마운트"}
+  SLOT -->|"주소 = /"| HOME["Home 컴포넌트"]
+  SLOT -->|"주소 = /first"| FIRST["First 컴포넌트"]
+  SLOT -->|"주소 = /second"| SECOND["Second 컴포넌트"]
+```
+
+`<Link>`를 누르면 주소가 바뀌고, **그 주소에 맞는 `<Route>`의 컴포넌트만 `<Routes>` 자리에서 교체**됩니다. 내비게이션은 구멍 밖이라 그대로 남습니다 — 아래 코드에서 `<RouterTest02 />`(내비)가 `<Routes>` *앞에* 있는 이유입니다.
+
 <div class="cr" markdown="1">
 <div class="cr__code" markdown="1">
 
@@ -49,7 +64,7 @@ import { Link } from 'react-router-dom';
 
 </div>
 <div class="cr__view">
-<p class="cr__label">▶ 결과 — 홈·첫번째·두번째·Axios 링크 클릭 → 새로고침 없이 화면만 전환</p>
+<p class="cr__label">▶ 결과 — 위 메뉴는 고정(Routes 밖), 아래 영역이 Routes 구멍 — 링크를 누르면 그 부분만 교체됩니다</p>
 <iframe class="cr__frame cr__frame--app" src="/REACT/demo/react-basics/" loading="lazy" title="React Router 실행 결과"></iframe>
 </div>
 </div>
