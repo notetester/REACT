@@ -6,6 +6,40 @@
 
 읽는 법: 각 기능마다 **① 한 줄 흐름 → ② 파일을 따라가며(번호) → ③ 실제 코드**. 화살표 `──▶`는 "여기서 다음 파일/단계로 넘어간다"는 뜻입니다.
 
+## 직접 눌러보기 (mock 데모)
+
+아래는 **브라우저 localStorage mock** 데모라 설치 없이 흐름을 체험할 수 있습니다(실제 서버 연동은 아래 §1~8 코드대로 동작). `study` / `1111`로 로그인해 보세요.
+
+<div class="cr" markdown="1">
+<div class="cr__view">
+<p class="cr__label">▶ 연동 mock 데모 — 로그인·방명록·프로필을 직접 조작</p>
+<iframe class="cr__frame cr__frame--app" src="/REACT/demo/integration/" loading="lazy" title="React↔Spring 연동 mock 데모"></iframe>
+<p class="cr__mount">📍 이건 브라우저 mock입니다(실서버 X). 실제 Oracle 연동 실행은 아래 "전체 실행 준비" 참고.</p>
+</div>
+</div>
+
+<p class="react-live-links"><a href="/REACT/demo/integration/" target="_blank" rel="noopener">↗ 새 탭에서 크게 보기</a> · mock·Actions·로컬 DB의 차이 → <a href="online-demo-and-snapshot.md">온라인 mock과 Actions 스냅샷</a></p>
+
+??? note "👉 전체 실행 준비 — 내 PC에서 실제 연동(프론트+백엔드+DB) 띄우기"
+    실제 서버 연동은 **DB + 백엔드 + 프론트** 세 가지를 함께 띄웁니다.
+
+    **① DB** — Oracle XE 설치·초기화: [Windows 로컬 DB 설치와 초기화](../guide/02-local-db-setup.md)
+
+    **② 백엔드** — `code/springboot/02-integration-MyProject02` 폴더에서:
+
+    ```bash
+    ./gradlew bootRun     # http://localhost:8080
+    ```
+
+    **③ 프론트** — `code/react/03-integration-my-app03` 폴더에서:
+
+    ```bash
+    npm install
+    npm start             # http://localhost:3000
+    ```
+
+    `.env.development`의 `REACT_APP_API_BASE_URL=http://localhost:8080`을 확인하세요. 자세한 실행 순서·점검은 [로컬 실습 실행 가이드](../guide/01-local-setup.md).
+
 ---
 
 ## 0. 등장 파일 지도 (누가 무슨 일을 하나)
@@ -130,6 +164,11 @@ if (userId != null) {
 
 > 핵심: **비밀번호 암호화는 컨트롤러에서**(`passwordEncoder.encode`) 일어나 DB에는 해시만 저장됩니다. 그래서 로그인 때 `matches`로 비교만 합니다(복호화하지 않음).
 
+??? note "👉 직접 해보기 — 어느 화면에서 무엇을 누르면 이 흐름이 도나"
+    - **화면**: `/register`
+    - **동작**: 폼(아이디·비번·이름·주소·이메일·전화) 작성 → "회원가입" 클릭
+    - **관찰**: 개발자도구 **Network** 탭에 `POST /members/register` 요청이 보이고, 성공하면 `/login`으로 이동합니다.
+
 ---
 
 ## 3. 기능: 로그인 (공개) — 토큰이 발급되는 시작점
@@ -203,6 +242,11 @@ sequenceDiagram
 
 > 두 개의 토큰: **accessToken**(짧음, 매 요청에 사용) + **refreshToken**(김, 재발급 전용 · 서버 DB에도 보관). refresh를 DB에 저장하므로 서버가 로그아웃·회수를 통제할 수 있습니다.
 
+??? note "👉 직접 해보기 — 어느 화면에서 무엇을 누르면 이 흐름이 도나"
+    - **화면**: `/login` (mock 데모면 `study` / `1111`)
+    - **동작**: 아이디·비번 입력 → "로그인"
+    - **관찰**: **Network** `POST /members/login` 응답의 `data.accessToken`·`refreshToken`. **Application 탭 → Local Storage**에 `tokens`가 저장되는 것을 확인하세요.
+
 ---
 
 ## 4. 기능: 인증이 필요한 요청 — "내 정보(myPage)"로 보는 토큰 사용법
@@ -210,6 +254,21 @@ sequenceDiagram
 로그인 뒤 보호된 API를 부르면 **토큰이 자동으로 붙고(프론트), 서버 필터가 검증해 "현재 사용자"를 만들고, 컨트롤러가 그걸 꺼내 씁니다.** 이 3단 릴레이가 핵심입니다.
 
 **한 줄 흐름:** `ProfilePage` → `Auth.myPage` → **요청 인터셉터가 Bearer 부착** → **JwtRequestFilter가 검증→SecurityContext** → `Controller.getMyPage`가 `getPrincipal()`로 사용자 사용
+
+```mermaid
+sequenceDiagram
+  participant P as ProfilePage
+  participant I as 요청 인터셉터(Auth.jsx)
+  participant F as JwtRequestFilter
+  participant C as MembersController.getMyPage
+  P->>I: api.get('/members/myPage')
+  I->>I: Authorization Bearer accessToken 부착
+  I->>F: 요청 전송
+  F->>F: validateToken → SecurityContext에 userId 등록
+  F->>C: 통과
+  C->>C: getPrincipal() → findById(userId)
+  C-->>P: DataVO(내 정보, 비번 제외)
+```
 
 **파일을 따라가며**
 
@@ -236,6 +295,10 @@ sequenceDiagram
    ```
 
 > 컨트롤러는 토큰을 직접 파싱하지 않습니다. **필터가 미리 `SecurityContext`에 넣어 둔 `userId`를 `getPrincipal()`로 꺼내 쓸 뿐**입니다. (토큰이 없거나 만료면 컨트롤러까지 오지 못하고 필터/엔트리포인트가 401)
+
+??? note "👉 직접 해보기 — 어느 화면에서 무엇을 누르면 이 흐름이 도나"
+    - **화면**: 로그인 후 `/profile`(마이페이지)
+    - **관찰**: **Network** `GET /members/myPage`의 **요청 헤더**에 `Authorization: Bearer …`가 자동으로 붙어 있고, 응답 `data`에 내 정보(비밀번호 제외)가 옵니다.
 
 ---
 
@@ -319,9 +382,33 @@ catch (ExpiredJwtException e) {
 
 > **두 겹의 안전장치**: ③ "DB에 저장된 토큰인가"(서버가 회수 가능) + ④ "JWT 서명·만료가 맞나". 둘 다 통과해야 재발급합니다. 재발급 때마다 **refreshToken을 새것으로 교체(로테이션)**하므로 탈취된 옛 refresh는 곧 무효가 됩니다.
 
+??? note "👉 직접 해보기 — 자동 재발급을 눈으로 보기"
+    - MyProject02는 accessToken 수명이 **30초**로 짧게 설정돼 있어 재발급을 빨리 볼 수 있습니다.
+    - **동작**: 로그인 후 **30초 이상** 기다렸다가 보호 기능을 사용합니다(예: 방명록 작성, 프로필 새로고침).
+    - **관찰**: **Network**에서 그 요청이 **401(token expired)** → 곧바로 `POST /members/refresh`가 자동 발생 → 원래 요청이 새 토큰으로 **재시도**되어 성공합니다. (refresh도 만료면 `/login`으로 튕깁니다.)
+
 ---
 
 ## 6. 기능: 방명록 — 목록(공개) · 작성/수정/삭제(인증·소유권)
+
+```mermaid
+sequenceDiagram
+  participant G as GuestBookPage
+  participant API as GuestBook.jsx
+  participant F as JwtRequestFilter
+  participant C as GuestBookController
+  participant DB as DB
+  G->>API: guestbookList()
+  API->>C: GET /guestbook/list (permitAll · 토큰 불필요)
+  C->>DB: select where g_active=0
+  C-->>G: 목록
+  Note over G,DB: 작성/수정/삭제는 인증 필요(Bearer)
+  G->>API: insert / update / delete
+  API->>F: POST /guestbook/* (Bearer 부착)
+  F->>C: 토큰 검증 통과
+  C->>DB: insert · update(+g_writer) · update g_active=1
+  C-->>G: DataVO(성공/실패)
+```
 
 ### 6-1. 목록 보기 (공개 GET)
 
@@ -390,11 +477,32 @@ await guestbookUpdate({ g_idx: editId, g_subject, g_content, g_writer: user.m_na
 !!! warning "학습 코드에서 발견되는 실제 차이 (정직한 관찰)"
     프론트는 삭제 시 비밀번호(`g_pwd`)를 입력받아 보내지만, **삭제 SQL은 `where g_idx`만** 쓰고 비번·작성자를 확인하지 않습니다. 즉 현재 구현의 삭제 권한 통제는 "로그인 필요(인증)"까지이고, **글 단위 소유권 검사는 수정에만** 들어 있습니다. 운영용으로 다듬을 때는 삭제에도 `and g_writer = #{g_writer}` 같은 조건을 더하는 것이 좋습니다. → [Spring 04 — REST API 품질](../springboot/04-rest-api-quality.md)
 
+??? note "👉 직접 해보기 — 어느 화면에서 무엇을 누르면 이 흐름이 도나"
+    - **화면**: `/guestbook`
+    - **목록(공개)**: 로그인하지 않아도 목록이 보입니다 (`GET /guestbook/list`).
+    - **작성/수정/삭제(인증)**: 로그인 후 작성. 본인 글에만 수정/삭제 버튼이 보입니다(`user.m_name === g.g_writer`).
+    - **관찰**: **Network**에서 `GET /guestbook/list`(토큰 없음) vs `POST /guestbook/insert`(요청 헤더에 `Authorization: Bearer …`)의 차이를 비교해 보세요.
+
 ---
 
 ## 7. 기능: 로그아웃 · 회원수정 · 회원탈퇴 (인증, 짧게)
 
 세 기능 모두 **요청 인터셉터(Bearer) → 필터(검증·SecurityContext) → 컨트롤러가 `getPrincipal()`로 본인 확인**이라는 같은 골격입니다.
+
+```mermaid
+sequenceDiagram
+  participant U as ProfilePage
+  participant I as 요청 인터셉터
+  participant F as JwtRequestFilter
+  participant C as MembersController
+  participant DB as DB
+  U->>I: updateMember / deleteMember / logout
+  I->>F: 요청 (Bearer 부착)
+  F->>C: 검증 통과 (SecurityContext에 userId)
+  C->>C: getPrincipal() → 본인 아이디로 강제
+  C->>DB: update members · soft-delete · delete refresh_tokens
+  C-->>U: DataVO
+```
 
 | 기능 | 프론트 호출 | 서버 컨트롤러가 하는 일 |
 |------|------------|------------------------|
@@ -424,6 +532,12 @@ useEffect(() => {
 const hasTokens = !!localStorage.getItem('tokens')
 return (isLoggedIn || hasTokens) ? children : <Navigate to="/login" replace />
 ```
+
+??? note "👉 직접 해보기 — 어느 화면에서 무엇을 누르면 이 흐름이 도나"
+    - **로그아웃**: Navbar/`로그인된 상태` 화면의 로그아웃 → `POST /members/logout` 후 토큰 삭제, 화면이 비로그인으로 돌아감.
+    - **회원수정**: `/profile`에서 정보 수정 → `POST /members/updateMember`.
+    - **회원탈퇴**: `/profile`에서 탈퇴 → `DELETE /members/delAccount`.
+    - **새로고침(F5)**: 로그인 상태가 유지되는지 확인(= `App.js`의 `useEffect`가 `tokens`로 복원).
 
 ---
 
