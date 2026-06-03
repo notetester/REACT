@@ -113,6 +113,20 @@ const useStore = create(
 
 <p class="react-live-links"><a href="/REACT/demo/zustand/" target="_blank" rel="noopener">↗ 새 탭에서 열기</a> — persist는 <strong>새 탭에서 항목을 추가한 뒤 새로고침(F5)</strong> 했을 때 그대로 남는 것으로 확인하는 게 가장 확실합니다(iframe 안에서의 새로고침은 페이지 전체가 새로고침될 수 있습니다).</p>
 
+??? note "👉 직접 따라 하기 — Zustand 앱(my-app02) 전체 실행"
+    이 데모는 **`my-app02` 앱 전체**입니다(이 단원에서 다루는 store들이 이 앱 안에 있습니다).
+
+    **① 설치·실행** — `code/react/02-zustand-my-app02` 폴더에서:
+
+    ```bash
+    npm install
+    npm start
+    ```
+
+    **② 접속** — 브라우저 `http://localhost:3000`
+
+    **③ persist 확인** — 로그인 후 Todo·메모를 추가하고 **브라우저를 새로고침**하면, `persist` 미들웨어가 `localStorage`에서 상태를 복원해 그대로 남습니다.
+
 > `my-app02`에서는 `useTodoStore`(`todo-storage`), `useMemoStore`(`memo-storage`)가 persist로 새로고침 후에도 유지됩니다.
 
 ---

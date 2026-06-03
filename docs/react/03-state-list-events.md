@@ -33,6 +33,26 @@ export default function NumberCount() {
 </div>
 </div>
 
+??? note "👉 직접 따라 하기 — 어느 파일을 어떻게 고치면 이 화면이 나오나"
+    **① 컴포넌트 파일** — `src/pages/step03-state/NumberCount.jsx` (위 코드를 저장).
+
+    **② `src/index.js` 수정** — `import` 한 줄을 추가하고, `<App />` 대신 `<NumberCount />`를 렌더합니다.
+
+    ```jsx
+    import NumberCount from './pages/step03-state/NumberCount';   // ← 추가
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(
+      <React.StrictMode>
+        <NumberCount />    {/* ← 이 줄이 화면에 뜬다 */}
+        {/* <App /> */}    {/* ← 전체 앱은 잠시 끔 */}
+      </React.StrictMode>
+    );
+    ```
+
+    **③ 실행** — 터미널에서 `npm start` → 브라우저 `http://localhost:3000`
+
+    **④ 결과** — `+` 를 눌러도 화면 숫자는 5 그대로(일반 변수)이고, 개발자도구 Console에만 cnt 증가가 찍힙니다.
+
 > **핵심:** "React는 한번 렌더링되면 다시 렌더링될 때까지 화면 변화가 없다. React에게 *상태가 변경됐다*고 지시해야 다시 렌더링하고 변경된 값이 반영된다." → 그 지시 수단이 **상태관리(state)** = `useState`.
 
 <div class="cr" markdown="1">
@@ -50,6 +70,26 @@ const increment = () => setCnt(cnt + 1);   // set함수로 변경 → 자동 리
 <iframe class="cr__frame cr__frame--short" src="/REACT/demo/react-basics/#/lab/embed/state-counter" loading="lazy" title="useState 카운터 결과"></iframe>
 </div>
 </div>
+
+??? note "👉 직접 따라 하기 — 어느 파일을 어떻게 고치면 이 화면이 나오나"
+    **① 컴포넌트 파일** — `src/pages/step08-event2/CounterEx02.jsx` (위 코드를 저장).
+
+    **② `src/index.js` 수정** — `import` 한 줄을 추가하고, `<App />` 대신 `<CounterEx02 />`를 렌더합니다.
+
+    ```jsx
+    import CounterEx02 from './pages/step08-event2/CounterEx02';   // ← 추가
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(
+      <React.StrictMode>
+        <CounterEx02 />    {/* ← 이 줄이 화면에 뜬다 */}
+        {/* <App /> */}    {/* ← 전체 앱은 잠시 끔 */}
+      </React.StrictMode>
+    );
+    ```
+
+    **③ 실행** — 터미널에서 `npm start` → 브라우저 `http://localhost:3000`
+
+    **④ 결과** — `+` / `-` 를 누르면 `useState`가 바뀌어 화면 숫자도 다시 렌더됩니다.
 
 → 자세한 Hook 사용법은 [React 05 — Hooks](05-hooks.md).
 
@@ -89,6 +129,26 @@ comments.filter(k => k.isAdmin).map(k => <Comment key={k.idx} name={k.name} comm
 </div>
 </div>
 
+??? note "👉 직접 따라 하기 — 어느 파일을 어떻게 고치면 이 화면이 나오나"
+    **① 컴포넌트 파일** — `src/pages/step04-map/FilterCommandList.jsx` (위 코드를 저장).
+
+    **② `src/index.js` 수정** — `import` 한 줄을 추가하고, `<App />` 대신 `<FilterCommandList />`를 렌더합니다.
+
+    ```jsx
+    import FilterCommandList from './pages/step04-map/FilterCommandList';   // ← 추가
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(
+      <React.StrictMode>
+        <FilterCommandList />   {/* ← 이 줄이 화면에 뜬다 */}
+        {/* <App /> */}         {/* ← 전체 앱은 잠시 끔 */}
+      </React.StrictMode>
+    );
+    ```
+
+    **③ 실행** — 터미널에서 `npm start` → 브라우저 `http://localhost:3000`
+
+    **④ 결과** — `filter`로 관리자(isAdmin) 댓글만 남아 렌더됩니다.
+
 <div class="cr" markdown="1">
 <div class="cr__code" markdown="1">
 
@@ -104,6 +164,26 @@ const result = comments.find(k => k.isAdmin);
 <iframe class="cr__frame cr__frame--short" src="/REACT/demo/react-basics/#/lab/embed/array-find" loading="lazy" title="find 결과"></iframe>
 </div>
 </div>
+
+??? note "👉 직접 따라 하기 — 어느 파일을 어떻게 고치면 이 화면이 나오나"
+    **① 컴포넌트 파일** — `src/pages/step04-map/FindCommandList.jsx` (위 코드를 저장).
+
+    **② `src/index.js` 수정** — `import` 한 줄을 추가하고, `<App />` 대신 `<FindCommandList />`를 렌더합니다.
+
+    ```jsx
+    import FindCommandList from './pages/step04-map/FindCommandList';   // ← 추가
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(
+      <React.StrictMode>
+        <FindCommandList />   {/* ← 이 줄이 화면에 뜬다 */}
+        {/* <App /> */}       {/* ← 전체 앱은 잠시 끔 */}
+      </React.StrictMode>
+    );
+    ```
+
+    **③ 실행** — 터미널에서 `npm start` → 브라우저 `http://localhost:3000`
+
+    **④ 결과** — `find`로 첫 번째 관리자 1명만 표시됩니다.
 
 <div class="cr" markdown="1">
 <div class="cr__code" markdown="1">
@@ -122,6 +202,26 @@ const stat = comments.reduce((acc, k) => {
 </div>
 </div>
 
+??? note "👉 직접 따라 하기 — 어느 파일을 어떻게 고치면 이 화면이 나오나"
+    **① 컴포넌트 파일** — `src/pages/step04-map/ReduceCommandList.jsx` (위 코드를 저장).
+
+    **② `src/index.js` 수정** — `import` 한 줄을 추가하고, `<App />` 대신 `<ReduceCommandList />`를 렌더합니다.
+
+    ```jsx
+    import ReduceCommandList from './pages/step04-map/ReduceCommandList';   // ← 추가
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(
+      <React.StrictMode>
+        <ReduceCommandList />   {/* ← 이 줄이 화면에 뜬다 */}
+        {/* <App /> */}         {/* ← 전체 앱은 잠시 끔 */}
+      </React.StrictMode>
+    );
+    ```
+
+    **③ 실행** — 터미널에서 `npm start` → 브라우저 `http://localhost:3000`
+
+    **④ 결과** — `reduce`로 전체/관리자 수가 집계되어 표시됩니다.
+
 <div class="cr" markdown="1">
 <div class="cr__code" markdown="1">
 
@@ -137,6 +237,26 @@ comments.every(k => k.isAdmin)   // 모두 관리자 댓글인가?
 <iframe class="cr__frame cr__frame--short" src="/REACT/demo/react-basics/#/lab/embed/array-someevery" loading="lazy" title="some every 결과"></iframe>
 </div>
 </div>
+
+??? note "👉 직접 따라 하기 — 어느 파일을 어떻게 고치면 이 화면이 나오나"
+    **① 컴포넌트 파일** — `src/pages/step04-map/SomeEveryCommandList.jsx` (위 코드를 저장).
+
+    **② `src/index.js` 수정** — `import` 한 줄을 추가하고, `<App />` 대신 `<SomeEveryCommandList />`를 렌더합니다.
+
+    ```jsx
+    import SomeEveryCommandList from './pages/step04-map/SomeEveryCommandList';   // ← 추가
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(
+      <React.StrictMode>
+        <SomeEveryCommandList />   {/* ← 이 줄이 화면에 뜬다 */}
+        {/* <App /> */}            {/* ← 전체 앱은 잠시 끔 */}
+      </React.StrictMode>
+    );
+    ```
+
+    **③ 실행** — 터미널에서 `npm start` → 브라우저 `http://localhost:3000`
+
+    **④ 결과** — `some`/`every`의 true·false 판정 결과가 표시됩니다.
 
 ## 3. 배열 state는 직접 변경하지 않기
 

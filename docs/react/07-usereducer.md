@@ -63,6 +63,26 @@ function Counter() {
 </div>
 </div>
 
+??? note "👉 직접 따라 하기 — 어느 파일을 어떻게 고치면 이 화면이 나오나"
+    **① 컴포넌트 파일** — `src/pages/step14-Reducer/UseReducerTest03.jsx` (위 코드를 저장).
+
+    **② `src/index.js` 수정** — `import` 한 줄을 추가하고, `<App />` 대신 `<UseReducerTest03 />`를 렌더합니다.
+
+    ```jsx
+    import UseReducerTest03 from './pages/step14-Reducer/UseReducerTest03';   // ← 추가
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(
+      <React.StrictMode>
+        <UseReducerTest03 />   {/* ← 이 줄이 화면에 뜬다 */}
+        {/* <App /> */}        {/* ← 전체 앱은 잠시 끔 */}
+      </React.StrictMode>
+    );
+    ```
+
+    **③ 실행** — 터미널에서 `npm start` → 브라우저 `http://localhost:3000`
+
+    **④ 결과** — 금액을 입력하고 예금/출금을 누르면 dispatch→reducer로 잔고가 바뀝니다.
+
 > **useState vs useReducer**: 단순 상태는 `useState`, 여러 값이 함께 바뀌거나 변경 규칙이 복잡하면 `useReducer`가 깔끔합니다. (reducer의 `action` 패턴은 이후 Redux/Zustand 이해에도 도움)
 
 ---

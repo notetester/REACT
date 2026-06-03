@@ -39,6 +39,26 @@ useEffect(() => {
 </div>
 </div>
 
+??? note "👉 직접 따라 하기 — 어느 파일을 어떻게 고치면 이 화면이 나오나"
+    **① 컴포넌트 파일** — `src/pages/step11-hook/EffectTest03.jsx` (위 코드를 저장).
+
+    **② `src/index.js` 수정** — `import` 한 줄을 추가하고, `<App />` 대신 `<EffectTest03 />`를 렌더합니다.
+
+    ```jsx
+    import EffectTest03 from './pages/step11-hook/EffectTest03';   // ← 추가
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(
+      <React.StrictMode>
+        <EffectTest03 />   {/* ← 이 줄이 화면에 뜬다 */}
+        {/* <App /> */}    {/* ← 전체 앱은 잠시 끔 */}
+      </React.StrictMode>
+    );
+    ```
+
+    **③ 실행** — 터미널에서 `npm start` → 브라우저 `http://localhost:3000` (Console도 함께 열기)
+
+    **④ 결과** — 두 카운터 중 첫 번째를 바꿀 때만 Console에 Effect 로그가 찍힙니다.
+
 | 의존성배열 | 실행 시점 |
 |-----------|-----------|
 | 생략 | 렌더링 될 때마다 |
@@ -68,6 +88,26 @@ const cached = useMemo(() => 무거운계산(a, b), [a, b]);
 </div>
 </div>
 
+??? note "👉 직접 따라 하기 — 어느 파일을 어떻게 고치면 이 화면이 나오나"
+    **① 컴포넌트 파일** — `src/pages/step11-hook/UseMemo02.jsx` (위 코드를 저장).
+
+    **② `src/index.js` 수정** — `import` 한 줄을 추가하고, `<App />` 대신 `<UseMemo02 />`를 렌더합니다.
+
+    ```jsx
+    import UseMemo02 from './pages/step11-hook/UseMemo02';   // ← 추가
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(
+      <React.StrictMode>
+        <UseMemo02 />      {/* ← 이 줄이 화면에 뜬다 */}
+        {/* <App /> */}    {/* ← 전체 앱은 잠시 끔 */}
+      </React.StrictMode>
+    );
+    ```
+
+    **③ 실행** — 터미널에서 `npm start` → 브라우저 `http://localhost:3000`
+
+    **④ 결과** — 의존성이 그대로면 무거운 계산을 건너뛰는(캐싱) 동작을 확인합니다.
+
 용도: 무거운 계산(반복문/정렬/필터), 자식에 전달하는 복잡한 값.
 
 ## 4. `useCallback` — 함수 자체를 캐싱
@@ -85,6 +125,26 @@ const memoizedFn = useCallback(() => doSomething(a), [a]);
 <iframe class="cr__frame cr__frame--short" src="/REACT/demo/react-basics/#/lab/embed/usecallback" loading="lazy" title="useCallback 결과"></iframe>
 </div>
 </div>
+
+??? note "👉 직접 따라 하기 — 어느 파일을 어떻게 고치면 이 화면이 나오나"
+    **① 컴포넌트 파일** — `src/pages/step11-hook/UseCallBack02.jsx` (위 코드를 저장).
+
+    **② `src/index.js` 수정** — `import` 한 줄을 추가하고, `<App />` 대신 `<UseCallBack02 />`를 렌더합니다.
+
+    ```jsx
+    import UseCallBack02 from './pages/step11-hook/UseCallBack02';   // ← 추가
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(
+      <React.StrictMode>
+        <UseCallBack02 />   {/* ← 이 줄이 화면에 뜬다 */}
+        {/* <App /> */}     {/* ← 전체 앱은 잠시 끔 */}
+      </React.StrictMode>
+    );
+    ```
+
+    **③ 실행** — 터미널에서 `npm start` → 브라우저 `http://localhost:3000`
+
+    **④ 결과** — 함수 참조가 유지되어 자식의 불필요한 리렌더가 줄어듭니다.
 
 !!! note "메모이제이션은 정확성을 위한 필수 문법이 아닙니다"
     `useMemo`, `useCallback`은 성능 최적화 도구입니다. 모든 값과 함수를 습관적으로 감싸면 의존성 관리만 복잡해질 수 있습니다. 먼저 코드가 정확하게 동작하게 만들고, 실제로 반복 계산이나 불필요한 렌더링이 문제가 될 때 적용하세요.
@@ -113,6 +173,26 @@ const id = useId();
 <iframe class="cr__frame cr__frame--short" src="/REACT/demo/react-basics/#/lab/embed/useid" loading="lazy" title="useId 결과"></iframe>
 </div>
 </div>
+
+??? note "👉 직접 따라 하기 — 어느 파일을 어떻게 고치면 이 화면이 나오나"
+    **① 컴포넌트 파일** — `src/pages/step11-hook/UseIdTest02.jsx` (위 코드를 저장).
+
+    **② `src/index.js` 수정** — `import` 한 줄을 추가하고, `<App />` 대신 `<UseIdTest02 />`를 렌더합니다.
+
+    ```jsx
+    import UseIdTest02 from './pages/step11-hook/UseIdTest02';   // ← 추가
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(
+      <React.StrictMode>
+        <UseIdTest02 />    {/* ← 이 줄이 화면에 뜬다 */}
+        {/* <App /> */}    {/* ← 전체 앱은 잠시 끔 */}
+      </React.StrictMode>
+    );
+    ```
+
+    **③ 실행** — 터미널에서 `npm start` → 브라우저 `http://localhost:3000`
+
+    **④ 결과** — label을 클릭하면 `useId`로 연결된 input에 포커스가 갑니다.
 
 ---
 ### 다음 단계

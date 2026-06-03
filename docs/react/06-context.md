@@ -46,6 +46,26 @@ const { theme } = useContext(ThemeContext);
 </div>
 </div>
 
+??? note "👉 직접 따라 하기 — 어느 파일을 어떻게 고치면 이 화면이 나오나"
+    **① 컴포넌트 파일** — `src/pages/step13-context/ContextTest.jsx` (Context와 Header/Main/Footer를 한 파일/폴더에 포함).
+
+    **② `src/index.js` 수정** — `import` 한 줄을 추가하고, `<App />` 대신 `<ContextTest />`를 렌더합니다.
+
+    ```jsx
+    import ContextTest from './pages/step13-context/ContextTest';   // ← 추가
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(
+      <React.StrictMode>
+        <ContextTest />    {/* ← 이 줄이 화면에 뜬다 */}
+        {/* <App /> */}    {/* ← 전체 앱은 잠시 끔 */}
+      </React.StrictMode>
+    );
+    ```
+
+    **③ 실행** — 터미널에서 `npm start` → 브라우저 `http://localhost:3000`
+
+    **④ 결과** — Footer의 Mode 버튼을 누르면 Header·Main·Footer 테마가 함께 바뀝니다.
+
 실습에서는 `ThemeContext`, `UserContext` 두 개를 만들어 `Header/Main/Footer`에서 소비합니다(`step13-context`).
 
 ## 3. 상태관리 라이브러리 종류

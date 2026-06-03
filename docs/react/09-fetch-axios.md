@@ -66,6 +66,17 @@ return list.map((k) => (
 </div>
 </div>
 
+??? note "👉 직접 따라 하기 — 이 Axios 화면을 내 PC에서 실행"
+    이 화면은 `my-app01`의 `AxiosTest02`(라우트 `/axios02`)입니다. **TVmaze 공개 API**를 쓰므로 백엔드 없이 동작합니다.
+
+    **① 컴포넌트 파일** — `src/pages/step18-Axios/AxiosTest02.jsx` (위 코드).
+
+    **② 라우트 연결** — `src/App.js`에 이미 `<Route path="/axios02" element={<AxiosTest02 />} />`가 있습니다.
+
+    **③ 실행** — `code/react/01-basics-my-app01`에서 `npm install` → `npm start` → 주소창에 `http://localhost:3000/axios02` (또는 상단 메뉴 Axios02 클릭)
+
+    **④ 결과** — 로딩 표시 후 영화 목록이 뜨고, 이미지를 누르면 `/axios02/:id` 상세 화면으로 이동합니다.
+
 > **Fetch vs Axios**: Fetch는 내장(설치 불필요)이지만 JSON 변환·에러 처리를 직접 해야 함. Axios는 자동 JSON 변환 + **인터셉터**(요청/응답 가로채기)가 강력 → 연동 프로젝트에서 **JWT 토큰 자동 주입/재발급**에 활용. → [연동 흐름](../integration/react-springboot-jwt-flow.md)
 
 ## 3. Effect 안의 요청을 정리하기

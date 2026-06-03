@@ -32,6 +32,26 @@
 </div>
 </div>
 
+??? note "👉 직접 따라 하기 — 어느 파일을 어떻게 고치면 이 화면이 나오나"
+    **① 컴포넌트 파일** — `src/pages/step05-if/IfExam02List.jsx` (위 코드를 저장).
+
+    **② `src/index.js` 수정** — `import` 한 줄을 추가하고, `<App />` 대신 `<IfExam02List />`를 렌더합니다.
+
+    ```jsx
+    import IfExam02List from './pages/step05-if/IfExam02List';   // ← 추가
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(
+      <React.StrictMode>
+        <IfExam02List />   {/* ← 이 줄이 화면에 뜬다 */}
+        {/* <App /> */}    {/* ← 전체 앱은 잠시 끔 */}
+      </React.StrictMode>
+    );
+    ```
+
+    **③ 실행** — 터미널에서 `npm start` → 브라우저 `http://localhost:3000`
+
+    **④ 결과** — 조건부 렌더링 목록이 나오고, 항목을 누르면 체크 표시가 토글됩니다.
+
 ## 2. 이벤트 처리 — step06-event
 
 `onClick={fn}`은 **함수 참조**(이벤트 시 실행), `onClick={fn()}`은 **즉시 실행**(렌더 시점). 인자를 넘기려면 화살표로 감쌉니다.
@@ -54,6 +74,26 @@ function handleClick() { console.log("event") }
 <iframe class="cr__frame cr__frame--short" src="/REACT/demo/react-basics/#/lab/embed/event-handlers" loading="lazy" title="이벤트 결과"></iframe>
 </div>
 </div>
+
+??? note "👉 직접 따라 하기 — 어느 파일을 어떻게 고치면 이 화면이 나오나"
+    **① 컴포넌트 파일** — `src/pages/step06-event/Event03.jsx` (위 코드를 저장).
+
+    **② `src/index.js` 수정** — `import` 한 줄을 추가하고, `<App />` 대신 `<Event03 />`를 렌더합니다.
+
+    ```jsx
+    import Event03 from './pages/step06-event/Event03';   // ← 추가
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(
+      <React.StrictMode>
+        <Event03 />        {/* ← 이 줄이 화면에 뜬다 */}
+        {/* <App /> */}    {/* ← 전체 앱은 잠시 끔 */}
+      </React.StrictMode>
+    );
+    ```
+
+    **③ 실행** — 터미널에서 `npm start` → 브라우저 `http://localhost:3000`
+
+    **④ 결과** — MUI 버튼이 나오고, 클릭하면 개발자도구 Console에 로그가 찍힙니다.
 
 ## 3. CSS 적용 — step07-css
 
@@ -83,6 +123,26 @@ export default function Board2() {
 </div>
 </div>
 
+??? note "👉 직접 따라 하기 — 어느 파일을 어떻게 고치면 이 화면이 나오나"
+    **① 컴포넌트 파일** — `src/pages/step07-css/Board2.jsx` 와 같은 폴더의 `Board2.css` (위 코드를 저장).
+
+    **② `src/index.js` 수정** — `import` 한 줄을 추가하고, `<App />` 대신 `<Board2 />`를 렌더합니다.
+
+    ```jsx
+    import Board2 from './pages/step07-css/Board2';   // ← 추가
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(
+      <React.StrictMode>
+        <Board2 />         {/* ← 이 줄이 화면에 뜬다 */}
+        {/* <App /> */}    {/* ← 전체 앱은 잠시 끔 */}
+      </React.StrictMode>
+    );
+    ```
+
+    **③ 실행** — 터미널에서 `npm start` → 브라우저 `http://localhost:3000`
+
+    **④ 결과** — 외부 CSS가 적용된 보드가 나오고, 클릭 이벤트가 동작합니다.
+
 ## 4. state로 만드는 카운터 — step08-event2 (MUI)
 
 값 변경을 화면에 반영하려면 **state**가 필요합니다(일반 변수는 리렌더 X). → [React 03](03-state-list-events.md), [React 05](05-hooks.md)
@@ -106,6 +166,26 @@ const [cnt, setCnt] = useState(0);
 </div>
 </div>
 
+??? note "👉 직접 따라 하기 — 어느 파일을 어떻게 고치면 이 화면이 나오나"
+    **① 컴포넌트 파일** — `src/pages/step08-event2/CounterEx02.jsx` (위 코드를 저장).
+
+    **② `src/index.js` 수정** — `import` 한 줄을 추가하고, `<App />` 대신 `<CounterEx02 />`를 렌더합니다.
+
+    ```jsx
+    import CounterEx02 from './pages/step08-event2/CounterEx02';   // ← 추가
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(
+      <React.StrictMode>
+        <CounterEx02 />    {/* ← 이 줄이 화면에 뜬다 */}
+        {/* <App /> */}    {/* ← 전체 앱은 잠시 끔 */}
+      </React.StrictMode>
+    );
+    ```
+
+    **③ 실행** — 터미널에서 `npm start` → 브라우저 `http://localhost:3000`
+
+    **④ 결과** — `+` / `-` 로 state 카운터가 화면에 반영됩니다.
+
 ## 5. props 심화 — step09-props
 
 부모가 `props`로 데이터·콜백을 내려주고, 자식이 호출해 상태를 바꿉니다(단방향 + 콜백).
@@ -126,6 +206,26 @@ const [user, setUser] = useState(users[0]);
 <iframe class="cr__frame" src="/REACT/demo/react-basics/#/lab/embed/props-profile" loading="lazy" title="props 결과"></iframe>
 </div>
 </div>
+
+??? note "👉 직접 따라 하기 — 어느 파일을 어떻게 고치면 이 화면이 나오나"
+    **① 컴포넌트 파일** — `src/pages/step09-props/ProfileSample3.jsx` (위 코드를 저장).
+
+    **② `src/index.js` 수정** — `import` 한 줄을 추가하고, `<App />` 대신 `<ProfileSample3 />`를 렌더합니다.
+
+    ```jsx
+    import ProfileSample3 from './pages/step09-props/ProfileSample3';   // ← 추가
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(
+      <React.StrictMode>
+        <ProfileSample3 />   {/* ← 이 줄이 화면에 뜬다 */}
+        {/* <App /> */}      {/* ← 전체 앱은 잠시 끔 */}
+      </React.StrictMode>
+    );
+    ```
+
+    **③ 실행** — 터미널에서 `npm start` → 브라우저 `http://localhost:3000`
+
+    **④ 결과** — Switch User로 사용자를 바꾸고, 자식이 콜백으로 부모 상태를 바꿉니다.
 
 ## 6. form 다루기 — step10-form (제어 컴포넌트)
 
@@ -150,6 +250,26 @@ const handleChange = (e) =>
 <iframe class="cr__frame" src="/REACT/demo/react-basics/#/lab/embed/form-controlled" loading="lazy" title="form 결과"></iframe>
 </div>
 </div>
+
+??? note "👉 직접 따라 하기 — 어느 파일을 어떻게 고치면 이 화면이 나오나"
+    **① 컴포넌트 파일** — `src/pages/step10-form/FormSample03.jsx` (위 코드를 저장).
+
+    **② `src/index.js` 수정** — `import` 한 줄을 추가하고, `<App />` 대신 `<FormSample03 />`를 렌더합니다.
+
+    ```jsx
+    import FormSample03 from './pages/step10-form/FormSample03';   // ← 추가
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(
+      <React.StrictMode>
+        <FormSample03 />   {/* ← 이 줄이 화면에 뜬다 */}
+        {/* <App /> */}    {/* ← 전체 앱은 잠시 끔 */}
+      </React.StrictMode>
+    );
+    ```
+
+    **③ 실행** — 터미널에서 `npm start` → 브라우저 `http://localhost:3000`
+
+    **④ 결과** — 메뉴 체크박스를 고르면 제어 컴포넌트로 주문 내역에 반영됩니다.
 
 | 입력 타입 | 읽는 값 |
 |-----------|---------|

@@ -86,6 +86,15 @@ const handleLogin = () => { if (!input.trim()) return; login(input); navigate('/
 
 <p class="react-live-links"><a href="/REACT/demo/zustand/#/login" target="_blank" rel="noopener">↗ 새 탭에서 크게 보기</a></p>
 
+??? note "👉 직접 따라 하기 — 로그인·CRUD 앱(my-app02) 실행"
+    이 화면은 **`my-app02`**의 로그인 화면(`/login`)입니다.
+
+    **① 설치·실행** — `code/react/02-zustand-my-app02`에서 `npm install` → `npm start` → `http://localhost:3000`
+
+    **② 핵심 파일** (모두 `my-app02/src` 아래) — `LoginPage`(로그인 폼), `Navbar`(상단 바), `store/useAuthStore`(로그인 상태).
+
+    **③ 동작** — 이름을 입력해 로그인하면 `useAuthStore`가 바뀌고, 그 한 번의 변화가 Navbar와 여러 화면에 동시에 반영됩니다. Todo·메모도 추가해 보세요.
+
 ## 3. CRUD 스토어 — Todo / Memo (persist)
 
 `useTodoStore`, `useMemoStore`는 목록 데이터를 persist로 관리합니다. 전형적인 패턴:

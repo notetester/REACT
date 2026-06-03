@@ -46,6 +46,26 @@ export default function Library() {
 </div>
 </div>
 
+??? note "👉 직접 따라 하기 — 어느 파일을 어떻게 고치면 이 화면이 나오나"
+    **① 컴포넌트 파일** — `src/pages/step01-jsx/Book.jsx` 와 `src/pages/step01-jsx/Library.jsx` 에 위 코드를 각각 저장합니다.
+
+    **② `src/index.js` 수정** — `import` 한 줄을 추가하고, `<App />` 대신 `<Library />`를 렌더합니다.
+
+    ```jsx
+    import Library from './pages/step01-jsx/Library';   // ← 추가
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(
+      <React.StrictMode>
+        <Library />        {/* ← 이 줄이 화면에 뜬다 */}
+        {/* <App /> */}    {/* ← 전체 앱은 잠시 끔 */}
+      </React.StrictMode>
+    );
+    ```
+
+    **③ 실행** — 터미널에서 `npm start` → 브라우저 `http://localhost:3000`
+
+    **④ 결과** — `props`로 넘긴 책 제목·페이지 수가 화면에 표시됩니다.
+
 > JSX 안에서 `{ }`는 **자바스크립트 표현식** 영역. `{`\`${객체.변수}\`}` 템플릿 리터럴도 가능.
 
 ## 2. step02 — 다양한 컴포넌트 패턴
@@ -96,6 +116,26 @@ export default function CommentList() {
 <iframe class="cr__frame cr__frame--short" src="/REACT/demo/react-basics/#/lab/embed/jsx-comments" loading="lazy" title="map 렌더 결과"></iframe>
 </div>
 </div>
+
+??? note "👉 직접 따라 하기 — 어느 파일을 어떻게 고치면 이 화면이 나오나"
+    **① 컴포넌트 파일** — `src/pages/step02-component/Comment.jsx` 와 `src/pages/step02-component/CommentList.jsx` 에 위 코드를 저장합니다.
+
+    **② `src/index.js` 수정** — `import` 한 줄을 추가하고, `<App />` 대신 `<CommentList />`를 렌더합니다.
+
+    ```jsx
+    import CommentList from './pages/step02-component/CommentList';   // ← 추가
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(
+      <React.StrictMode>
+        <CommentList />    {/* ← 이 줄이 화면에 뜬다 */}
+        {/* <App /> */}    {/* ← 전체 앱은 잠시 끔 */}
+      </React.StrictMode>
+    );
+    ```
+
+    **③ 실행** — 터미널에서 `npm start` → 브라우저 `http://localhost:3000`
+
+    **④ 결과** — 배열의 댓글들이 `map`+`key`로 카드 목록으로 반복 렌더됩니다.
 
 > "원래는 Spring에서 정보를 가져와야 한다" — 실제 데이터는 백엔드에서. (→ [연동 편](../integration/react-springboot-jwt-flow.md))
 

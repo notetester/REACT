@@ -72,6 +72,22 @@ import { Link } from 'react-router-dom';
 
 <p class="react-live-links"><a href="/REACT/demo/react-basics/" target="_blank" rel="noopener">↗ 새 탭에서 주소(URL) 변화까지 보기</a> — 같은 화면이지만 주소창의 경로가 바뀌는 것을 확인할 수 있습니다.</p>
 
+??? note "👉 직접 따라 하기 — 이 라우터 앱 전체를 내 PC에서 실행"
+    이 데모는 단일 컴포넌트가 아니라 **`my-app01` 앱 전체**(라우터 포함)입니다.
+
+    **① 설치·실행** — `code/react/01-basics-my-app01` 폴더에서:
+
+    ```bash
+    npm install
+    npm start
+    ```
+
+    **② 접속** — 브라우저 `http://localhost:3000`
+
+    **③ 핵심 파일** — `src/App.js`에 `<BrowserRouter>`와 `<Routes>`가 있습니다(내비는 `src/pages/step16-Router/RouterTest02.jsx`).
+
+    **④ 동작** — 상단 메뉴의 `<Link>`를 누르면 주소가 바뀌고, `<Routes>` 자리의 컴포넌트만 교체됩니다(위 다이어그램).
+
 ## 4. URL 파라미터 (step16)
 
 `:idx`, `:name` 처럼 콜론으로 시작하는 부분은 **변수 자리**입니다. 자식에서 `useParams`로 읽습니다.
