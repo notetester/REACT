@@ -14,6 +14,7 @@ html, body, #root {
 
 .embed-example__bar {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 8px;
   padding: 6px 10px;
@@ -33,6 +34,16 @@ html, body, #root {
 
 .embed-example__hint {
   color: #475569;
+}
+
+.embed-example__mount {
+  color: #334155;
+}
+.embed-example__mount code {
+  background: #eef2ff;
+  color: #4338ca;
+  padding: 0 4px;
+  border-radius: 4px;
 }
 
 .embed-example__src {

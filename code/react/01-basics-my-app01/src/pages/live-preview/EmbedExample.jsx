@@ -29,29 +29,30 @@ import UseReducerTest03 from "../step14-Reducer/UseReducerTest03";
 import "./EmbedExample.css";
 
 // id → { 컴포넌트, 소스 폴더, 힌트 }
+// n = 화면에 띄우려면 index.js 트리에 넣을 컴포넌트 태그명
 const EXAMPLES = {
-  "jsx-library":     { c: Library,            src: "step01-jsx",     hint: "props로 책 정보 전달" },
-  "jsx-comments":    { c: CommentList,        src: "step02-component", hint: "map + key로 목록 렌더" },
-  "state-why":       { c: NumberCount,        src: "step03-state",   hint: "일반 변수는 화면이 안 바뀜(콘솔만)" },
-  "state-counter":   { c: CounterEx02,        src: "step08-event2",  hint: "useState 카운터" },
-  "array-filter":    { c: FilterCommandList,  src: "step04-map",     hint: "filter로 관리자만" },
-  "array-find":      { c: FindCommandList,    src: "step04-map",     hint: "find로 첫 항목" },
-  "array-reduce":    { c: ReduceCommandList,  src: "step04-map",     hint: "reduce 누적 통계" },
-  "array-someevery": { c: SomeEveryCommandList, src: "step04-map",   hint: "some / every" },
-  "cond-render":     { c: IfExam02List,       src: "step05-if",      hint: "조건부 렌더링" },
-  "event-handlers":  { c: Event03,            src: "step06-event",   hint: "이벤트 핸들러(Console 확인)" },
-  "event-arg":       { c: Event01,            src: "step06-event",   hint: "인자 전달은 화살표로 감싸기" },
-  "css-board":       { c: Board2,             src: "step07-css",     hint: "CSS + 클릭 이벤트" },
-  "counter-toggle":  { c: CounterEx10,        src: "step08-event2",  hint: "토글 state" },
-  "props-profile":   { c: ProfileSample3,     src: "step09-props",   hint: "부모↔자식 props/상태" },
-  "form-basic":      { c: FormSample01,       src: "step10-form",    hint: "제어 컴포넌트 기본" },
-  "form-controlled": { c: FormSample03,       src: "step10-form",    hint: "체크박스 그룹 제어" },
-  "effect-deps":     { c: EffectTest03,       src: "step11-hook",    hint: "useEffect 의존성(Console 확인)" },
-  "usememo":         { c: UseMemo02,          src: "step11-hook",    hint: "useMemo 캐싱" },
-  "usecallback":     { c: UseCallBack02,      src: "step11-hook",    hint: "useCallback 함수 캐싱" },
-  "useid":           { c: UseIdTest02,        src: "step11-hook",    hint: "useId 고유 id" },
-  "context-theme":   { c: ContextTest,        src: "step13-context", hint: "Context로 테마 공유" },
-  "reducer-bank":    { c: UseReducerTest03,   src: "step14-Reducer", hint: "useReducer 잔고" },
+  "jsx-library":     { c: Library,            n: "Library",            src: "step01-jsx",     hint: "props로 책 정보 전달" },
+  "jsx-comments":    { c: CommentList,        n: "CommentList",        src: "step02-component", hint: "map + key로 목록 렌더" },
+  "state-why":       { c: NumberCount,        n: "NumberCount",        src: "step03-state",   hint: "일반 변수는 화면이 안 바뀜(콘솔만)" },
+  "state-counter":   { c: CounterEx02,        n: "CounterEx02",        src: "step08-event2",  hint: "useState 카운터" },
+  "array-filter":    { c: FilterCommandList,  n: "FilterCommandList",  src: "step04-map",     hint: "filter로 관리자만" },
+  "array-find":      { c: FindCommandList,    n: "FindCommandList",    src: "step04-map",     hint: "find로 첫 항목" },
+  "array-reduce":    { c: ReduceCommandList,  n: "ReduceCommandList",  src: "step04-map",     hint: "reduce 누적 통계" },
+  "array-someevery": { c: SomeEveryCommandList, n: "SomeEveryCommandList", src: "step04-map", hint: "some / every" },
+  "cond-render":     { c: IfExam02List,       n: "IfExam02List",       src: "step05-if",      hint: "조건부 렌더링" },
+  "event-handlers":  { c: Event03,            n: "Event03",            src: "step06-event",   hint: "이벤트 핸들러(Console 확인)" },
+  "event-arg":       { c: Event01,            n: "Event01",            src: "step06-event",   hint: "인자 전달은 화살표로 감싸기" },
+  "css-board":       { c: Board2,             n: "Board2",             src: "step07-css",     hint: "CSS + 클릭 이벤트" },
+  "counter-toggle":  { c: CounterEx10,        n: "CounterEx10",        src: "step08-event2",  hint: "토글 state" },
+  "props-profile":   { c: ProfileSample3,     n: "ProfileSample3",     src: "step09-props",   hint: "부모↔자식 props/상태" },
+  "form-basic":      { c: FormSample01,       n: "FormSample01",       src: "step10-form",    hint: "제어 컴포넌트 기본" },
+  "form-controlled": { c: FormSample03,       n: "FormSample03",       src: "step10-form",    hint: "체크박스 그룹 제어" },
+  "effect-deps":     { c: EffectTest03,       n: "EffectTest03",       src: "step11-hook",    hint: "useEffect 의존성(Console 확인)" },
+  "usememo":         { c: UseMemo02,          n: "UseMemo02",          src: "step11-hook",    hint: "useMemo 캐싱" },
+  "usecallback":     { c: UseCallBack02,      n: "UseCallBack02",      src: "step11-hook",    hint: "useCallback 함수 캐싱" },
+  "useid":           { c: UseIdTest02,        n: "UseIdTest02",        src: "step11-hook",    hint: "useId 고유 id" },
+  "context-theme":   { c: ContextTest,        n: "ContextTest",        src: "step13-context", hint: "Context로 테마 공유" },
+  "reducer-bank":    { c: UseReducerTest03,   n: "UseReducerTest03",   src: "step14-Reducer", hint: "useReducer 잔고" },
 };
 
 const githubBase =
@@ -75,6 +76,7 @@ export default function EmbedExample() {
     <div className="embed-example">
       <div className="embed-example__bar">
         <span className="embed-example__badge">▶ live</span>
+        <span className="embed-example__mount">📍 <code>index.js</code>에 <code>{`<${example.n} />`}</code> (주석 해제)</span>
         <span className="embed-example__hint">{example.hint}</span>
         <a
           className="embed-example__src"

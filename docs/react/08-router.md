@@ -66,6 +66,7 @@ import { Link } from 'react-router-dom';
 <div class="cr__view">
 <p class="cr__label">▶ 결과 — 위 메뉴는 고정(Routes 밖), 아래 영역이 Routes 구멍 — 링크를 누르면 그 부분만 교체됩니다</p>
 <iframe class="cr__frame cr__frame--app" src="/REACT/demo/react-basics/" loading="lazy" title="React Router 실행 결과"></iframe>
+<p class="cr__mount">📍 이 화면 = <code>index.js</code>가 <code>&lt;App /&gt;</code>를 #root에 렌더 — 각 페이지는 <code>App.js</code>의 <code>&lt;Route element=…/&gt;</code>로 <code>&lt;Routes&gt;</code> 자리에 끼워짐</p>
 </div>
 </div>
 

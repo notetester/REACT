@@ -62,6 +62,7 @@ return list.map((k) => (
 <div class="cr__view">
 <p class="cr__label">▶ 결과 — 로딩 표시 후 TVmaze 공개 API의 목록 렌더(이미지 클릭 → 상세)</p>
 <iframe class="cr__frame cr__frame--tall" src="/REACT/demo/react-basics/#/axios02" loading="lazy" title="Axios 실행 결과"></iframe>
+<p class="cr__mount">📍 이 결과 = <code>App.js</code>의 <code>&lt;Route path="/axios02" element={&lt;AxiosTest02 /&gt;} /&gt;</code> — <code>index.js</code>가 <code>&lt;App /&gt;</code>를 #root에 렌더</p>
 </div>
 </div>
 

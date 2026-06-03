@@ -73,6 +73,16 @@
 .cr__frame--tall { min-height: 480px; }
 .cr__frame--app { min-height: 600px; }   /* 전체 앱 데모(라우터/Zustand)용 */
 
+/* 결과 카드 하단 '띄우기' 안내 (통짜 앱·Axios 데모용) */
+.cr__mount {
+  margin: 0;
+  padding: 5px 12px;
+  font-size: 0.76rem;
+  color: var(--md-default-fg-color--light);
+  background: var(--md-default-fg-color--lightest);
+}
+.cr__mount code { font-size: 0.85em; }
+
 @media (max-width: 720px) {
   .cr__frame { min-height: 360px; }
 }

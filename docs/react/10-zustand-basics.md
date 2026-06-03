@@ -107,6 +107,7 @@ const useStore = create(
 <div class="cr__view">
 <p class="cr__label">▶ 결과 — 로그인 후 Todo·메모를 추가하고 새로고침해도 그대로 복원(persist)</p>
 <iframe class="cr__frame cr__frame--app" src="/REACT/demo/zustand/" loading="lazy" title="Zustand persist 실행 결과"></iframe>
+<p class="cr__mount">📍 이 앱 = <code>my-app02</code>의 <code>index.js</code>가 <code>&lt;App /&gt;</code>(라우터 포함)를 #root에 렌더한 것 — 각 화면은 <code>App.js</code> 라우트로 연결</p>
 </div>
 </div>
 

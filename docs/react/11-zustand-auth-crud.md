@@ -80,6 +80,7 @@ const handleLogin = () => { if (!input.trim()) return; login(input); navigate('/
 <div class="cr__view">
 <p class="cr__label">▶ 결과 — 이름 입력 후 로그인 → Navbar에 프로필·로그아웃 등장(같은 store가 여러 화면에 반영). Todo·메모도 추가해 보세요</p>
 <iframe class="cr__frame cr__frame--app" src="/REACT/demo/zustand/#/login" loading="lazy" title="Zustand 로그인 CRUD 실행 결과"></iframe>
+<p class="cr__mount">📍 이 앱 = <code>my-app02</code> · <code>index.js</code> → <code>&lt;App /&gt;</code> → <code>App.js</code> 라우트. 로그인 폼=<code>LoginPage</code>, 상단 바=<code>Navbar</code></p>
 </div>
 </div>
 
