@@ -212,7 +212,7 @@ Accept: application/json
     ```http
     HTTP/1.1 401 Unauthorized
     Content-Type: application/json
-    { "success": false, "message": "invalid token" }
+    { "success": false, "message": "token invalid" }
     ```
     흐름: 서버는 자기 비밀키로 서명을 다시 계산해 토큰의 서명과 대조합니다. payload를 손대면 서명이 어긋나 `SignatureException` → 401. **클라이언트가 권한을 위조할 수 없는** 이유입니다.
 
